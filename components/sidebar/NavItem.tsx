@@ -13,9 +13,9 @@ export function NavItem({ href, icon: Icon, label, active = false }: NavItemProp
       <a
         href={href}
         aria-current={active ? "page" : undefined}
-        className={`flex h-9 items-center gap-4 rounded-md px-3 text-[13px] leading-none text-foreground ${
+        className={`-mx-3 flex h-9 items-center gap-4 rounded-md px-3 text-[13px] leading-none text-foreground ${
           active
-            ? "bg-surface-active font-semibold"
+            ? "bg-surface-hover font-semibold"
             : "font-normal hover:bg-surface-hover"
         }`}
       >

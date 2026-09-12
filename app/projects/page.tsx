@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { MobileHeader } from "@/components/navigation/MobileHeader";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { QuickActionsProvider } from "@/components/search/QuickActionsProvider";
-import { Sidebar } from "@/components/sidebar/Sidebar";
+import { SidebarLayout } from "@/components/sidebar/SidebarLayout";
 import { projects } from "@/data/projects";
 
 export const metadata: Metadata = {
@@ -15,9 +15,7 @@ export default function ProjectsPage() {
     <QuickActionsProvider>
       <div className="min-h-svh bg-background text-foreground">
         <MobileHeader activeItem="Projects" />
-        <Sidebar activeItem="Projects" />
-
-        <main className="min-h-[calc(100svh-4rem)] lg:ml-[220px] lg:min-h-svh xl:ml-[280px]">
+        <SidebarLayout activeItem="Projects">
           <section className="mx-auto w-full max-w-[1120px] px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20 xl:px-14 xl:py-24">
             <header className="max-w-[720px]">
               <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted">
@@ -38,7 +36,7 @@ export default function ProjectsPage() {
               ))}
             </div>
           </section>
-        </main>
+        </SidebarLayout>
       </div>
     </QuickActionsProvider>
   );

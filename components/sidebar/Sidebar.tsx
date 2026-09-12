@@ -6,6 +6,7 @@ import {
   House,
   Mail,
   ScrollText,
+  X,
   type LucideIcon,
 } from "lucide-react";
 import { AppearanceControl } from "@/components/theme/AppearanceControl";
@@ -22,14 +23,38 @@ const navigationIcons: Record<NavigationLabel, LucideIcon> = {
   Certifications: ScrollText,
 };
 
-export function Sidebar({ activeItem = "Home" }: { activeItem?: NavigationLabel }) {
+type SidebarProps = {
+  activeItem?: NavigationLabel;
+  isOpen?: boolean;
+  onClose: () => void;
+};
+
+export function Sidebar({ activeItem = "Home", isOpen = true, onClose }: SidebarProps) {
   return (
-    <aside className="fixed inset-y-0 left-0 z-30 hidden h-svh w-[220px] overflow-hidden border-r border-border bg-surface lg:block xl:w-[280px]">
+    <aside
+      id="desktop-sidebar"
+      aria-hidden={!isOpen}
+      inert={!isOpen}
+      className={`fixed inset-y-0 left-0 z-30 hidden h-svh w-[220px] overflow-hidden border-r border-border bg-surface transition-transform duration-300 ease-out motion-reduce:transition-none lg:block xl:w-[280px] ${
+        isOpen ? "translate-x-0" : "pointer-events-none -translate-x-full"
+      }`}
+    >
       <div className="h-full px-5 py-[clamp(1.25rem,3svh,2rem)] xl:px-6">
-        <header className="border-b border-border pb-[clamp(0.875rem,2svh,1.25rem)]">
+        <header className="flex items-center justify-between border-b border-border pb-[clamp(0.875rem,2svh,1.25rem)]">
           <h1 className="whitespace-nowrap font-display text-sm font-semibold leading-tight tracking-[-0.025em] text-foreground xl:text-[15px]">
             Nathaniel Anog
           </h1>
+          <button
+            type="button"
+            aria-label="Close sidebar"
+            aria-controls="desktop-sidebar"
+            aria-expanded="true"
+            title="Close sidebar"
+            onClick={onClose}
+            className="inline-flex size-9 shrink-0 cursor-pointer items-center justify-center text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            <X aria-hidden="true" className="size-[18px]" strokeWidth={2} />
+          </button>
         </header>
 
         <nav

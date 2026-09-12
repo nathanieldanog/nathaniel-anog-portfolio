@@ -2,10 +2,7 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import {
   ArrowUpRight,
-  Atom,
-  Database,
   Download,
-  Zap,
 } from "lucide-react";
 import Image from "next/image";
 import type { SVGProps } from "react";
@@ -55,59 +52,26 @@ const socialLinks = [
 ] as const;
 
 const technologies = [
-  { label: "React", mark: "react" },
-  { label: "Next.js", mark: "next" },
-  { label: "TypeScript", mark: "typescript" },
-  { label: "Node.js", mark: "node" },
-  { label: "PostgreSQL", mark: "postgresql" },
-  { label: "Supabase", mark: "supabase" },
+  { label: "HTML5", logoSrc: "/logos/html5-logo.png", visualScale: 1.21 },
+  { label: "CSS3", logoSrc: "/logos/css3-logo.png", visualScale: 1.28 },
+  { label: "Tailwind CSS", logoSrc: "/logos/tailwind-css-logo.webp", visualScale: 1.08 },
+  { label: "JavaScript", logoSrc: "/logos/javascript-logo.png", visualScale: 1 },
+  { label: "React", logoSrc: "/logos/react-logo.jpg", visualScale: 0.9 },
+  { label: "Next.js", logoSrc: "/logos/nextjs-logo.png", visualScale: 0.9 },
+  { label: "Node.js", logoSrc: "/logos/nodejs-logo.png", visualScale: 0.9 },
 ] as const;
 
-type TechnologyMark = (typeof technologies)[number]["mark"];
-
-function TechMark({ mark }: { mark: TechnologyMark }) {
-  if (mark === "react") {
-    return <Atom aria-hidden="true" className="size-8" strokeWidth={1.8} />;
-  }
-
-  if (mark === "next") {
-    return (
-      <span aria-hidden="true" className="font-display text-3xl font-medium leading-none">
-        N<span className="ml-0.5 text-xl">↗</span>
-      </span>
-    );
-  }
-
-  if (mark === "typescript") {
-    return (
-      <span
-        aria-hidden="true"
-        className="flex size-8 items-end justify-end rounded-[2px] bg-foreground p-1 font-display text-[10px] font-bold leading-none text-background"
-      >
-        TS
-      </span>
-    );
-  }
-
-  if (mark === "node") {
-    return (
-      <span
-        aria-hidden="true"
-        className="inline-flex items-center gap-1.5 font-display leading-none"
-      >
-        <span className="text-[1.65rem] font-bold tracking-[-0.13em]">node</span>
-        <span className="flex size-[18px] items-center justify-center border-[1.5px] border-current text-[5px] font-extrabold tracking-[-0.04em] [clip-path:polygon(25%_6%,75%_6%,100%_50%,75%_94%,25%_94%,0_50%)]">
-          JS
-        </span>
-      </span>
-    );
-  }
-
-  if (mark === "postgresql") {
-    return <Database aria-hidden="true" className="size-8" strokeWidth={1.8} />;
-  }
-
-  return <Zap aria-hidden="true" className="size-8 fill-current" strokeWidth={1.5} />;
+function TechMark({ logoSrc, visualScale }: { logoSrc: string; visualScale: number }) {
+  return (
+    <Image
+      src={logoSrc}
+      alt=""
+      width={40}
+      height={40}
+      className="tech-stack-logo size-9 shrink-0 object-contain sm:size-10"
+      style={{ transform: `scale(${visualScale})` }}
+    />
+  );
 }
 
 function TechnologyItems({ duplicate = false }: { duplicate?: boolean }) {
@@ -117,23 +81,17 @@ function TechnologyItems({ duplicate = false }: { duplicate?: boolean }) {
       aria-label={duplicate ? undefined : "Core technologies"}
       className={`tech-stack-marquee-group flex shrink-0 ${duplicate ? "tech-stack-marquee-duplicate" : ""}`}
     >
-      {technologies.map((technology, index) => (
+      {technologies.map((technology) => (
         <li
           key={technology.label}
-          className="group relative flex min-h-[104px] w-[180px] shrink-0 items-center gap-3 overflow-hidden border-r border-black/10 bg-white/95 px-5 py-5 text-black/55 transition-colors duration-300 hover:bg-[#0b0c0e] hover:text-white sm:min-h-[116px] sm:w-[208px] sm:px-6 lg:min-h-[132px] lg:w-[224px] lg:flex-col lg:items-start lg:justify-end lg:gap-4"
+          className="relative flex min-h-[104px] w-[230px] shrink-0 items-center justify-start gap-4 overflow-hidden bg-background px-6 py-5 text-foreground sm:min-h-[116px] sm:w-[250px] sm:gap-5 sm:px-7 lg:min-h-[132px] lg:w-[270px]"
         >
-          <span className="text-black transition-colors duration-300 group-hover:text-white">
-            <TechMark mark={technology.mark} />
-          </span>
-          <span className="text-sm font-semibold tracking-[-0.02em] sm:text-[15px]">
+          <TechMark
+            logoSrc={technology.logoSrc}
+            visualScale={technology.visualScale}
+          />
+          <span className="whitespace-nowrap font-display text-base font-semibold tracking-[-0.025em]">
             {technology.label}
-          </span>
-
-          <span
-            aria-hidden="true"
-            className="absolute right-4 top-3 font-display text-[10px] font-semibold tabular-nums text-black/25 transition-colors duration-300 group-hover:text-white/35"
-          >
-            {String(index + 1).padStart(2, "0")}
           </span>
         </li>
       ))}
@@ -144,17 +102,15 @@ function TechnologyItems({ duplicate = false }: { duplicate?: boolean }) {
 function TechnologyStrip() {
   return (
     <section
-      id="skills"
+      id="tech-stack"
       aria-label="Technology stack"
-      className="tech-stack-panel relative z-20 scroll-mt-16 border-b border-black/10 bg-white text-[#0b0c0e] lg:scroll-mt-0"
+      className="tech-stack-panel relative z-20 scroll-mt-16 bg-background text-foreground lg:scroll-mt-0"
     >
       <div
         aria-hidden="true"
         className="hero-stack-transition pointer-events-none absolute inset-x-0 top-0 z-30 h-28 -translate-y-full sm:h-32 lg:h-40"
       />
-      <div aria-hidden="true" className="tech-stack-architecture absolute inset-0" />
-
-      <div className="tech-stack-marquee relative mx-auto w-full max-w-[1280px] overflow-hidden border-x border-black/10">
+      <div className="tech-stack-marquee relative mx-auto w-full max-w-[1280px] overflow-hidden">
         <div className="tech-stack-marquee-track flex w-max">
           <TechnologyItems />
           <TechnologyItems duplicate />
@@ -185,7 +141,7 @@ function Portrait() {
         src={portraitPath}
         alt={"Portrait of " + profile.name}
         fill
-        className="object-contain object-bottom"
+        className="portrait-silhouette-glow object-contain object-bottom lg:object-right-bottom"
         sizes="(min-width: 1280px) 540px, (min-width: 1024px) 42vw, (min-width: 640px) 500px, 100vw"
         preload
       />
@@ -221,19 +177,19 @@ export function Hero() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <a
               href={"mailto:" + profile.email}
-              className="group inline-flex h-12 min-w-[180px] items-center justify-center gap-3 rounded-[4px] bg-foreground px-7 text-[13px] font-bold uppercase tracking-[0.01em] text-background transition-[transform,opacity] duration-200 ease-out hover:-translate-y-0.5 hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
+              className="inline-flex h-12 min-w-[180px] items-center justify-center gap-3 rounded-[4px] bg-foreground px-7 text-[13px] font-bold uppercase tracking-[0.01em] text-background transition-[transform,opacity,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:opacity-85 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
             >
               Contact me
               <ArrowUpRight
                 aria-hidden="true"
-                className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
+                className="size-4"
               />
             </a>
             <a
               href={profile.resumePath}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex h-12 min-w-[220px] items-center justify-center gap-4 rounded-[4px] border border-foreground bg-background/70 px-7 text-[13px] font-bold uppercase tracking-[0.01em] text-foreground transition-colors hover:bg-foreground hover:text-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="inline-flex h-12 min-w-[220px] items-center justify-center gap-4 rounded-[4px] border border-foreground/65 bg-background/70 px-7 text-[13px] font-bold uppercase tracking-[0.01em] text-foreground transition-[transform,background-color,border-color,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:border-foreground hover:bg-surface-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
             >
               Download resume
               <Download aria-hidden="true" className="size-5" strokeWidth={2} />
@@ -248,7 +204,7 @@ export function Hero() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={label}
-                className="inline-flex size-10 items-center justify-center rounded-[4px] border border-foreground/20 bg-background/75 text-foreground transition-colors hover:border-foreground hover:bg-foreground hover:text-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="inline-flex size-10 items-center justify-center rounded-[4px] border border-foreground/20 bg-background/75 text-foreground transition-[transform,background-color,border-color,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:border-foreground/45 hover:bg-surface-hover hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
               >
                 <Icon aria-hidden="true" className="size-[18px]" />
               </a>

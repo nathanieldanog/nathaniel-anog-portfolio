@@ -20,7 +20,7 @@ export function QuickActions() {
         <button
           type="button"
           onClick={openCommandPalette}
-          className="flex h-8 w-full items-center justify-between text-left text-xs text-foreground"
+          className="flex h-8 w-full cursor-pointer items-center justify-between text-left text-xs text-foreground"
         >
           <span>Search anything</span>
           <Hotkey shortcutKey="K" />

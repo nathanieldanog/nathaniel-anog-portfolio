@@ -1,3 +1,6 @@
+import { Certifications } from "@/components/home/Certifications";
+import { Education } from "@/components/home/Education";
+import { Experience } from "@/components/home/Experience";
 import { FeaturedProjects } from "@/components/home/FeaturedProjects";
 import { Hero } from "@/components/home/Hero";
 import { MobileHeader } from "@/components/navigation/MobileHeader";
@@ -11,7 +14,10 @@ export default function Home() {
         <MobileHeader />
         <SidebarLayout mainId="home">
           <Hero />
+          <Education />
+          <Experience />
           <FeaturedProjects />
+          <Certifications />
         </SidebarLayout>
       </div>
     </QuickActionsProvider>

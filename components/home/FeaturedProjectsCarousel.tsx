@@ -16,18 +16,18 @@ function GitHubIcon(props: SVGProps<SVGSVGElement>) {
 
 function ProjectVisual({ project }: { project: Project }) {
   return (
-    <div className="relative min-h-[300px] overflow-hidden rounded-[4px] border border-border bg-surface-hover p-4 sm:min-h-[380px] sm:p-5 lg:min-h-[460px]">
-      <span className="relative z-10 inline-flex rounded-[4px] bg-[#0a0b0d] px-4 py-2 text-[13px] font-bold uppercase tracking-[0.04em] text-white">
+    <div className="relative min-h-[260px] overflow-hidden rounded-[4px] border border-border bg-surface-hover p-3 sm:min-h-[320px] sm:p-4 lg:min-h-[380px]">
+      <span className="relative z-10 inline-flex rounded-[4px] bg-[#0a0b0d] px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.04em] text-white">
         {project.category}
       </span>
 
-      <div className="absolute inset-x-4 bottom-4 top-18 overflow-hidden rounded-[4px] bg-[#0a0b0d] sm:inset-x-5 sm:bottom-5 sm:top-20">
+      <div className="absolute inset-x-3 bottom-3 top-14 overflow-hidden rounded-[4px] bg-[#0a0b0d] sm:inset-x-4 sm:bottom-4 sm:top-16">
         <Image
           src={project.image}
           alt={`${project.title} project preview`}
           fill
           className="object-cover"
-          sizes="(min-width: 1280px) 580px, (min-width: 1024px) 48vw, calc(100vw - 72px)"
+          sizes="(min-width: 1280px) 500px, (min-width: 1024px) 42vw, calc(100vw - 72px)"
         />
       </div>
     </div>
@@ -44,7 +44,7 @@ export function FeaturedProjectsCarousel({
       {projects.map((project) => (
         <article
           key={project.slug}
-          className="grid items-stretch gap-5 sm:gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,1fr)] lg:gap-8 xl:gap-10"
+          className="grid items-stretch gap-5 sm:gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(320px,1.15fr)] lg:gap-8 xl:gap-10"
         >
           <ProjectVisual project={project} />
 

@@ -1,6 +1,5 @@
 import { FeaturedProjects } from "@/components/home/FeaturedProjects";
 import { Hero } from "@/components/home/Hero";
-import { Skills } from "@/components/home/Skills";
 import { MobileHeader } from "@/components/navigation/MobileHeader";
 import { QuickActionsProvider } from "@/components/search/QuickActionsProvider";
 import { SidebarLayout } from "@/components/sidebar/SidebarLayout";
@@ -13,7 +12,6 @@ export default function Home() {
         <SidebarLayout mainId="home">
           <Hero />
           <FeaturedProjects />
-          <Skills />
         </SidebarLayout>
       </div>
     </QuickActionsProvider>

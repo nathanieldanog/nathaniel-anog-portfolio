@@ -1,12 +1,8 @@
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { SVGProps } from "react";
 import type { Project } from "@/data/projects";
-
-type CarouselProject = Project & {
-  imageExists: boolean;
-};
 
 const placeholderGithubUrl = "https://github.com/your-username";
 
@@ -18,40 +14,21 @@ function GitHubIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-function ProjectVisual({ project, index }: { project: CarouselProject; index: number }) {
+function ProjectVisual({ project }: { project: Project }) {
   return (
-    <div className="relative min-h-[360px] overflow-hidden rounded-[4px] border border-border bg-surface-hover p-4 sm:min-h-[480px] sm:p-6 lg:min-h-[590px]">
+    <div className="relative min-h-[300px] overflow-hidden rounded-[4px] border border-border bg-surface-hover p-4 sm:min-h-[380px] sm:p-5 lg:min-h-[460px]">
       <span className="relative z-10 inline-flex rounded-[4px] bg-[#0a0b0d] px-4 py-2 text-[13px] font-bold uppercase tracking-[0.04em] text-white">
         {project.category}
       </span>
 
-      <div className="absolute inset-x-4 bottom-4 top-20 overflow-hidden rounded-[4px] bg-[#0a0b0d] sm:inset-x-6 sm:bottom-6 sm:top-24">
-        {project.imageExists ? (
-          <Image
-            src={project.image}
-            alt={`${project.title} project preview`}
-            fill
-            className="object-cover grayscale"
-            sizes="(min-width: 1280px) 690px, (min-width: 1024px) 56vw, calc(100vw - 72px)"
-          />
-        ) : (
-          <div
-            role="img"
-            aria-label={`${project.title} project cover`}
-            className="flex h-full flex-col justify-between p-6 text-white sm:p-9"
-          >
-            <div className="flex items-center justify-between border-b border-white/15 pb-4 text-[13px] font-bold uppercase tracking-[0.12em] text-white/55">
-              <span>Featured work</span>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-            </div>
-            <div className="flex items-end justify-between gap-6">
-              <p className="max-w-[11ch] font-display text-[clamp(2.25rem,6vw,5rem)] font-bold leading-[0.88] tracking-[-0.065em]">
-                {project.title}
-              </p>
-              <ArrowUpRight aria-hidden="true" className="hidden size-10 shrink-0 sm:block" strokeWidth={1.4} />
-            </div>
-          </div>
-        )}
+      <div className="absolute inset-x-4 bottom-4 top-18 overflow-hidden rounded-[4px] bg-[#0a0b0d] sm:inset-x-5 sm:bottom-5 sm:top-20">
+        <Image
+          src={project.image}
+          alt={`${project.title} project preview`}
+          fill
+          className="object-cover"
+          sizes="(min-width: 1280px) 580px, (min-width: 1024px) 48vw, calc(100vw - 72px)"
+        />
       </div>
     </div>
   );
@@ -60,37 +37,37 @@ function ProjectVisual({ project, index }: { project: CarouselProject; index: nu
 export function FeaturedProjectsCarousel({
   projects,
 }: {
-  projects: readonly CarouselProject[];
+  projects: readonly Project[];
 }) {
   return (
-    <div className="mt-12 space-y-20 sm:mt-16 sm:space-y-24 lg:space-y-32">
-      {projects.map((project, index) => (
+    <div className="mt-8 space-y-12 sm:mt-10 sm:space-y-16 lg:mt-12 lg:space-y-20">
+      {projects.map((project) => (
         <article
           key={project.slug}
-          className="grid items-stretch gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:gap-12 xl:gap-16"
+          className="grid items-stretch gap-5 sm:gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,1fr)] lg:gap-8 xl:gap-10"
         >
-          <ProjectVisual project={project} index={index} />
+          <ProjectVisual project={project} />
 
-          <div className="flex flex-col justify-center py-1 lg:py-8">
-            <h3 className="text-[32px] font-bold leading-[1.05] tracking-[-0.045em] text-foreground sm:text-[40px]">
+          <div className="flex flex-col justify-center py-1 lg:py-4">
+            <h3 className="text-[28px] font-bold leading-[1.05] tracking-[-0.045em] text-foreground sm:text-[34px]">
               {project.title}
             </h3>
-            <p className="mt-4 text-[16px] leading-[1.65] text-muted">
+            <p className="mt-3 text-[15px] leading-[1.6] text-muted">
               {project.description}
             </p>
 
-            <div className="mt-7">
+            <div className="mt-5">
               <p className="text-[14px] font-bold uppercase tracking-[0.08em] text-foreground">
                 Project info
               </p>
               <dl className="mt-3 text-[15px]">
-                <div className="flex items-start justify-between gap-6 border-t border-border py-4">
+                <div className="flex items-start justify-between gap-6 border-t border-border py-3">
                   <dt className="font-semibold text-foreground">Category</dt>
                   <dd className="max-w-[65%] text-right font-semibold text-muted">
                     {project.category}
                   </dd>
                 </div>
-                <div className="flex items-start justify-between gap-6 border-y border-border py-4">
+                <div className="flex items-start justify-between gap-6 border-y border-border py-3">
                   <dt className="font-semibold text-foreground">Technology</dt>
                   <dd className="max-w-[70%] text-right font-semibold text-muted">
                     {project.technologies.join(" · ")}
@@ -99,7 +76,7 @@ export function FeaturedProjectsCarousel({
               </dl>
             </div>
 
-            <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-4">
+            <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
               <Link
                 href={`/projects#${project.slug}`}
                 className="inline-flex items-center gap-2 border-b-2 border-foreground pb-1.5 text-[14px] font-bold uppercase tracking-[0.02em] text-foreground transition-[opacity,transform] duration-200 hover:-translate-y-0.5 hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground motion-reduce:transform-none motion-reduce:transition-none"

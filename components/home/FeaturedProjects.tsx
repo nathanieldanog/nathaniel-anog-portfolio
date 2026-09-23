@@ -1,18 +1,9 @@
-import { existsSync } from "node:fs";
-import { join } from "node:path";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { FeaturedProjectsCarousel } from "@/components/home/FeaturedProjectsCarousel";
 import { projects } from "@/data/projects";
 
-const featuredProjects = projects
-  .filter((project) => project.featured)
-  .map((project) => ({
-    ...project,
-    imageExists: existsSync(
-      join(process.cwd(), "public", project.image.replace(/^\//, "")),
-    ),
-  }));
+const featuredProjects = projects.filter((project) => project.featured);
 
 export function FeaturedProjects() {
   if (featuredProjects.length === 0) {
@@ -22,14 +13,14 @@ export function FeaturedProjects() {
   return (
     <section
       aria-labelledby="projects-heading"
-      className="bg-background text-foreground"
+      className="border-t border-border bg-background text-foreground"
     >
-      <div className="mx-auto w-full max-w-[1280px] px-5 pb-0 pt-12 sm:px-8 sm:pt-16 lg:px-10 lg:pt-16 xl:px-12 xl:pt-16">
-        <header className="flex flex-col gap-7 sm:flex-row sm:items-end sm:justify-between">
+      <div className="mx-auto w-full max-w-[1280px] px-5 pb-0 pt-6 sm:px-8 sm:pt-8 lg:px-10 lg:pt-10 xl:px-12">
+        <header className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2
               id="projects-heading"
-              className="text-[48px] font-bold leading-[0.95] tracking-[-0.055em]"
+              className="text-[42px] font-bold leading-[0.95] tracking-[-0.055em] sm:text-[44px]"
             >
               Projects
             </h2>

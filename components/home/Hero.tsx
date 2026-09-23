@@ -51,75 +51,6 @@ const socialLinks = [
   { label: "Instagram", href: profile.instagram, icon: InstagramIcon },
 ] as const;
 
-const technologies = [
-  { label: "HTML5", logoSrc: "/logos/html5-logo.png", visualScale: 1.21 },
-  { label: "CSS3", logoSrc: "/logos/css3-logo.png", visualScale: 1.28 },
-  { label: "Tailwind CSS", logoSrc: "/logos/tailwind-css-logo.webp", visualScale: 1.08 },
-  { label: "JavaScript", logoSrc: "/logos/javascript-logo.png", visualScale: 1 },
-  { label: "React", logoSrc: "/logos/react-logo.jpg", visualScale: 0.9 },
-  { label: "Next.js", logoSrc: "/logos/nextjs-logo.png", visualScale: 0.9 },
-  { label: "Node.js", logoSrc: "/logos/nodejs-logo.png", visualScale: 0.9 },
-] as const;
-
-function TechMark({ logoSrc, visualScale }: { logoSrc: string; visualScale: number }) {
-  return (
-    <Image
-      src={logoSrc}
-      alt=""
-      width={40}
-      height={40}
-      className="tech-stack-logo size-9 shrink-0 object-contain sm:size-10"
-      style={{ transform: `scale(${visualScale})` }}
-    />
-  );
-}
-
-function TechnologyItems({ duplicate = false }: { duplicate?: boolean }) {
-  return (
-    <ul
-      aria-hidden={duplicate || undefined}
-      aria-label={duplicate ? undefined : "Core technologies"}
-      className={`tech-stack-marquee-group flex shrink-0 ${duplicate ? "tech-stack-marquee-duplicate" : ""}`}
-    >
-      {technologies.map((technology) => (
-        <li
-          key={technology.label}
-          className="relative flex min-h-[104px] w-[230px] shrink-0 items-center justify-start gap-4 overflow-hidden bg-background px-6 py-5 text-foreground sm:min-h-[116px] sm:w-[250px] sm:gap-5 sm:px-7 lg:min-h-[132px] lg:w-[270px]"
-        >
-          <TechMark
-            logoSrc={technology.logoSrc}
-            visualScale={technology.visualScale}
-          />
-          <span className="whitespace-nowrap font-display text-base font-semibold tracking-[-0.025em]">
-            {technology.label}
-          </span>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function TechnologyStrip() {
-  return (
-    <section
-      id="tech-stack"
-      aria-label="Technology stack"
-      className="tech-stack-panel relative z-20 scroll-mt-16 bg-background text-foreground lg:scroll-mt-0"
-    >
-      <div
-        aria-hidden="true"
-        className="hero-stack-transition pointer-events-none absolute inset-x-0 top-0 z-30 h-28 -translate-y-full sm:h-32 lg:h-40"
-      />
-      <div className="tech-stack-marquee relative mx-auto w-full max-w-[1280px] overflow-hidden">
-        <div className="tech-stack-marquee-track flex w-max">
-          <TechnologyItems />
-          <TechnologyItems duplicate />
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Portrait() {
   const portraitExists = existsSync(
     join(process.cwd(), "public", "profile-portrait.png"),
@@ -154,11 +85,11 @@ export function Hero() {
     <section
       id="home-hero"
       aria-labelledby="home-heading"
-      className="inspired-hero relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-background text-foreground lg:min-h-svh"
+      className="inspired-hero relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-background text-foreground lg:min-h-[calc(100svh-8rem)]"
     >
       <div aria-hidden="true" className="hero-grid-background absolute inset-0" />
 
-      <div className="relative mx-auto grid w-full max-w-[1280px] flex-1 grid-cols-1 items-center gap-8 px-5 pt-12 sm:px-8 sm:pt-16 lg:grid-cols-[minmax(0,1.08fr)_minmax(300px,0.92fr)] lg:gap-4 lg:px-10 lg:pb-0 lg:pt-8 xl:px-12">
+      <div className="relative mx-auto grid w-full max-w-[1280px] flex-1 grid-cols-1 items-center gap-8 px-5 pt-12 sm:px-8 sm:pt-16 lg:grid-cols-[minmax(0,1.08fr)_minmax(300px,0.92fr)] lg:gap-4 lg:px-10 lg:pt-8 xl:px-12">
         <div className="relative z-30 max-w-[600px] py-4 lg:py-16">
           <h1
             id="home-heading"
@@ -214,8 +145,6 @@ export function Hero() {
 
         <Portrait />
       </div>
-
-      <TechnologyStrip />
     </section>
   );
 }

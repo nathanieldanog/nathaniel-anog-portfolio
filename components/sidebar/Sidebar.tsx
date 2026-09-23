@@ -1,6 +1,5 @@
 import {
   BriefcaseBusiness,
-  ChartNoAxesColumnIncreasing,
   Folder,
   GraduationCap,
   House,
@@ -17,7 +16,6 @@ import { QuickActions } from "./QuickActions";
 const navigationIcons: Record<NavigationLabel, LucideIcon> = {
   Home: House,
   Projects: Folder,
-  Skills: ChartNoAxesColumnIncreasing,
   Experience: BriefcaseBusiness,
   Education: GraduationCap,
   Certifications: ScrollText,

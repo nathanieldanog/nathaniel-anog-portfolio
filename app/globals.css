@@ -106,64 +106,6 @@ h3 {
   opacity: 0.68;
 }
 
-.hero-stack-transition {
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-  background: linear-gradient(
-    to bottom,
-    rgb(var(--background-rgb) / 0%) 0%,
-    rgb(var(--background-rgb) / 3%) 18%,
-    rgb(var(--background-rgb) / 12%) 34%,
-    rgb(var(--background-rgb) / 32%) 50%,
-    rgb(var(--background-rgb) / 64%) 68%,
-    rgb(var(--background-rgb) / 90%) 84%,
-    var(--background) 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgb(0 0 0 / 18%) 18%,
-    rgb(0 0 0 / 72%) 48%,
-    #000 72%,
-    #000 100%
-  );
-}
-
-@keyframes tech-stack-marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.tech-stack-marquee-track {
-  animation: tech-stack-marquee 24s linear infinite;
-  will-change: transform;
-}
-
-.tech-stack-logo {
-  filter: grayscale(1) contrast(1.25);
-}
-
-[data-theme="dark"] .tech-stack-logo {
-  filter: grayscale(1) contrast(1.25) invert(1);
-  mix-blend-mode: screen;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .tech-stack-marquee {
-    overflow-x: auto;
-  }
-
-  .tech-stack-marquee-track {
-    animation: none;
-    transform: none;
-  }
-
-  .tech-stack-marquee-duplicate {
-    display: none;
-  }
-}
-
 @media (max-width: 1023px) {
   .hero-grid-background {
     opacity: 0.55;

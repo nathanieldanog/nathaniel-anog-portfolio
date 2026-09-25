@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { FeaturedProjectsCarousel } from "@/components/home/FeaturedProjectsCarousel";
+import { SectionDivider } from "@/components/home/SectionDivider";
 import { projects } from "@/data/projects";
 
 const featuredProjects = projects.filter((project) => project.featured);
@@ -13,8 +14,9 @@ export function FeaturedProjects() {
   return (
     <section
       aria-labelledby="projects-heading"
-      className="border-t border-border bg-background text-foreground"
+      className="bg-background text-foreground"
     >
+      <SectionDivider />
       <div className="mx-auto w-full max-w-[1280px] px-5 pb-12 pt-6 sm:px-8 sm:pb-16 sm:pt-8 lg:px-10 lg:pb-20 lg:pt-10 xl:px-12">
         <header className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>

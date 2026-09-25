@@ -5,7 +5,7 @@ import { education } from "@/data/education";
 const featuredHonors = [
   {
     label: "Academic Distinction",
-    detail: `GWA: ${education.gwa} | ${education.distinction}`,
+    detail: `${education.distinction} · GWA ${education.gwa}`,
   },
   { label: "Scholarship", detail: education.honors[0] },
   { label: "Awards", detail: education.honors[1] },
@@ -39,13 +39,13 @@ export function Education() {
         </header>
 
         <article className="mt-8 w-full sm:mt-10">
-          <h3 className="text-[34px] font-bold leading-[1.08] tracking-[-0.055em] text-foreground lg:whitespace-nowrap">
+          <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-muted">
             {education.institution}
-          </h3>
-
-          <p className="mt-4 text-[16px] font-bold leading-[1.6] text-foreground">
-            {education.degree} with Specialization in {education.specialization}
           </p>
+
+          <h3 className="mt-3 text-[28px] font-bold leading-[1.05] tracking-[-0.045em] text-foreground sm:text-[34px]">
+            {education.degree} with Specialization in {education.specialization}
+          </h3>
 
           <ul className="mt-8 grid gap-6 text-[15px] leading-[1.55] text-muted sm:grid-cols-3 sm:gap-0">
             {featuredHonors.map((honor, index) => (
@@ -54,7 +54,7 @@ export function Education() {
                 className={`sm:px-6 ${index === 0 ? "sm:pl-0" : "sm:border-l sm:border-border"} ${index === featuredHonors.length - 1 ? "sm:pr-0" : ""}`}
               >
                 <span>
-                  <span className="mb-1 block text-[15px] font-bold tracking-[-0.01em] text-foreground">
+                  <span className="mb-1 block text-[15px] font-semibold text-foreground">
                     {honor.label}
                   </span>
                   {honor.detail}

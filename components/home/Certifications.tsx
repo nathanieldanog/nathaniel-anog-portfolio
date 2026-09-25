@@ -1,5 +1,6 @@
-import { ArrowUpRight, BadgeCheck } from "lucide-react";
+import { ArrowRight, BadgeCheck } from "lucide-react";
 import Image from "next/image";
+import { SectionDivider } from "@/components/home/SectionDivider";
 import { certifications, credlyProfileUrl } from "@/data/certifications";
 
 const featuredCertifications = certifications.slice(0, 4);
@@ -9,8 +10,9 @@ export function Certifications() {
     <section
       id="certifications"
       aria-labelledby="certifications-heading"
-      className="scroll-mt-16 border-t border-border bg-background text-foreground lg:scroll-mt-0"
+      className="scroll-mt-16 bg-background text-foreground lg:scroll-mt-0"
     >
+      <SectionDivider />
       <div className="mx-auto w-full max-w-[1280px] px-5 py-10 sm:px-8 sm:py-12 lg:px-10 lg:py-16 xl:px-12">
         <header className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <h2
@@ -27,7 +29,7 @@ export function Certifications() {
             className="inline-flex h-12 min-w-[150px] shrink-0 items-center justify-center gap-4 rounded-[4px] border border-foreground/65 bg-background/70 px-6 text-[13px] font-bold uppercase tracking-[0.01em] text-foreground transition-[transform,background-color,border-color,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:border-foreground hover:bg-surface-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
           >
             View all
-            <ArrowUpRight aria-hidden="true" className="size-4" />
+            <ArrowRight aria-hidden="true" className="size-4" />
           </a>
         </header>
 

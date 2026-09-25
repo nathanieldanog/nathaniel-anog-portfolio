@@ -9,7 +9,7 @@ export type Experience = {
 export const experiences = [
   {
     role: "IT Support Intern",
-    company: "NexusCloud I.T. Solutions",
+    company: "NexusCloud I.T. Solutions Inc.",
     location: "Ortigas Center, Pasig",
     periods: ["July – August 2024", "July – August 2025"],
     highlights: [

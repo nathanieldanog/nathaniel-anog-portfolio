@@ -1,4 +1,5 @@
 import {
+  Braces,
   BriefcaseBusiness,
   Folder,
   GraduationCap,
@@ -19,6 +20,7 @@ const navigationIcons: Record<NavigationLabel, LucideIcon> = {
   Experience: BriefcaseBusiness,
   Education: GraduationCap,
   Certifications: ScrollText,
+  Skills: Braces,
 };
 
 type SidebarProps = {

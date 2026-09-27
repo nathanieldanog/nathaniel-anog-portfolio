@@ -1,43 +1,28 @@
 import type { Metadata } from "next";
-import { MobileHeader } from "@/components/navigation/MobileHeader";
-import { ProjectCard } from "@/components/projects/ProjectCard";
-import { QuickActionsProvider } from "@/components/search/QuickActionsProvider";
-import { SidebarLayout } from "@/components/sidebar/SidebarLayout";
+import { FeaturedProjectsCarousel } from "@/components/home/FeaturedProjectsCarousel";
+import { DetailPageShell } from "@/components/pages/DetailPageShell";
 import { projects } from "@/data/projects";
 
 export const metadata: Metadata = {
   title: "Projects | Nathaniel Anog",
-  description: "A selection of web development and computer-vision projects.",
+  description: "Applications and systems designed and developed by Nathaniel Anog.",
 };
 
 export default function ProjectsPage() {
   return (
-    <QuickActionsProvider>
-      <div className="min-h-svh bg-background text-foreground">
-        <MobileHeader activeItem="Projects" />
-        <SidebarLayout activeItem="Projects">
-          <section className="mx-auto w-full max-w-[1120px] px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20 xl:px-14 xl:py-24">
-            <header className="max-w-[720px]">
-              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted">
-                Selected Work
-              </p>
-              <h1 className="mt-3 text-[clamp(2.5rem,5.5vw,4.25rem)] font-extrabold uppercase leading-[1.02] tracking-[-0.045em] text-foreground">
-                Projects
-              </h1>
-              <p className="mt-5 max-w-[680px] text-[15px] leading-7 text-muted sm:text-base sm:leading-8">
-                A selection of web development and computer-vision projects focused on
-                practical, user-centered solutions.
-              </p>
-            </header>
-
-            <div className="mt-12 sm:mt-14">
-              {projects.map((project) => (
-                <ProjectCard key={project.slug} project={project} />
-              ))}
-            </div>
-          </section>
-        </SidebarLayout>
-      </div>
-    </QuickActionsProvider>
+    <DetailPageShell
+      activeItem="Projects"
+      title="Projects"
+      titleClassName="text-[48px] font-bold leading-[0.95] tracking-[-0.055em] text-foreground"
+      description="A selection of web, mobile, and AI-powered applications I have designed and developed, combining practical problem-solving with thoughtful user experiences and reliable technical implementation."
+      descriptionClassName="text-[16px] leading-[1.6] text-muted"
+      headerClassName="max-w-[1080px]"
+      descriptionWidthClassName="max-w-[1040px]"
+      showDivider={false}
+    >
+      <section aria-label="Project portfolio">
+        <FeaturedProjectsCarousel projects={projects} />
+      </section>
+    </DetailPageShell>
   );
 }

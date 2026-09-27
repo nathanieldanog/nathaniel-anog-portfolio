@@ -7,8 +7,8 @@ const featuredHonors = [
     label: "Academic Distinction",
     detail: `${education.distinction} · GWA ${education.gwa}`,
   },
-  { label: "Scholarship", detail: education.honors[0] },
-  { label: "Awards", detail: education.honors[1] },
+  { label: "Scholarship", detail: education.scholarships[0] },
+  { label: "Awards", detail: education.scholarships[1] },
 ] as const;
 
 export function Education() {

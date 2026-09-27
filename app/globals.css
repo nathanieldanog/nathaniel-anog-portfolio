@@ -138,3 +138,7 @@ h3 {
 [data-theme="dark"] .theme-thumb {
   transform: translateX(1.25rem);
 }
+
+[data-theme="dark"] .nextjs-brand-logo {
+  filter: invert(1);
+}

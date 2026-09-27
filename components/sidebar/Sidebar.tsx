@@ -9,6 +9,7 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
+import Link from "next/link";
 import { AppearanceControl } from "@/components/theme/AppearanceControl";
 import { navigationItems, type NavigationLabel } from "@/data/navigation";
 import { NavItem } from "./NavItem";
@@ -39,11 +40,14 @@ export function Sidebar({ activeItem = "Home", isOpen = true, onClose }: Sidebar
         isOpen ? "translate-x-0" : "pointer-events-none -translate-x-full"
       }`}
     >
-      <div className="h-full px-5 py-[clamp(1.25rem,3svh,2rem)] xl:px-6">
+      <div className="flex h-full flex-col px-5 py-[clamp(1.25rem,3svh,2rem)] xl:px-6">
         <header className="flex items-center justify-between border-b border-border pb-[clamp(0.875rem,2svh,1.25rem)]">
-          <h1 className="whitespace-nowrap font-display text-sm font-semibold leading-tight tracking-[-0.025em] text-foreground xl:text-[15px]">
+          <Link
+            href="/"
+            className="whitespace-nowrap font-display text-sm font-semibold leading-tight tracking-[-0.025em] text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-surface xl:text-[15px]"
+          >
             Nathaniel Anog
-          </h1>
+          </Link>
           <button
             type="button"
             aria-label="Close sidebar"
@@ -103,22 +107,9 @@ export function Sidebar({ activeItem = "Home", isOpen = true, onClose }: Sidebar
           </div>
         </section>
 
-        <section
-          aria-labelledby="appearance-heading"
-          className="mt-[clamp(0.875rem,2svh,1.25rem)] border-t border-border pt-[clamp(0.875rem,2svh,1.25rem)]"
-        >
-          <h2
-            id="appearance-heading"
-            className="text-[10px] font-medium uppercase tracking-[0.16em] text-muted"
-          >
-            Appearance
-          </h2>
-
-          <div className="mt-2">
-            <AppearanceControl />
-          </div>
-        </section>
-
+        <div className="mt-auto border-t border-border pt-[clamp(0.875rem,2svh,1.25rem)]">
+          <AppearanceControl />
+        </div>
       </div>
     </aside>
   );

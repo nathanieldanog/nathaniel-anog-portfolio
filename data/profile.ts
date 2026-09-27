@@ -6,8 +6,8 @@ export type Profile = {
   bio: readonly string[];
   linkedin: string;
   github: string;
-  facebook: string;
-  instagram: string;
+  facebook: string | null;
+  instagram: string | null;
   resumePath: string;
 };
 
@@ -15,18 +15,14 @@ export const profile = {
   name: "Nathaniel Anog",
   title: "Software Engineer",
   email: "nathanielanog072727@gmail.com",
-  location: "Metro Manila, Philippines",
+  location: "Taguig City, Metro Manila",
   bio: [
     "A graduate with a Bachelor of Science in Computer Engineering, focused on developing reliable, responsive, and user-friendly web applications.",
     "I am committed to transforming ideas into practical digital solutions through clean code and thoughtful design, while continuously developing my technical skills and knowledge as a software developer.",
   ],
-  // TODO: Replace with Nathaniel's LinkedIn profile URL.
-  linkedin: "https://www.linkedin.com/in/your-profile",
-  // TODO: Replace with Nathaniel's GitHub profile URL.
-  github: "https://github.com/your-username",
-  // TODO: Replace with Nathaniel's Facebook profile URL.
-  facebook: "https://www.facebook.com/your-profile",
-  // TODO: Replace with Nathaniel's Instagram profile URL.
-  instagram: "https://www.instagram.com/your-profile",
+  linkedin: "https://www.linkedin.com/in/nathaniel-anog-951403331",
+  github: "https://github.com/nathanieldanog",
+  facebook: "https://www.facebook.com/nathaniel.anog/",
+  instagram: "https://www.instagram.com/nthnlngx/",
   resumePath: "/resume.pdf",
 } satisfies Profile;

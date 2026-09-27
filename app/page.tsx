@@ -16,8 +16,8 @@ export default function Home() {
         <SidebarLayout mainId="home">
           <Hero />
           <Education />
-          <Certifications />
           <FeaturedProjects />
+          <Certifications />
           <Experience />
           <Skills />
         </SidebarLayout>

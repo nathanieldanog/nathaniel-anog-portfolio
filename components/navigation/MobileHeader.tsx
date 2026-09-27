@@ -26,7 +26,7 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
 
   return (
     <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-border bg-surface px-4 sm:px-6 lg:hidden">
-      <Link href="/#home" className="flex min-w-0 flex-col">
+      <Link href="/" className="flex min-w-0 flex-col">
         <span className="truncate font-display text-sm font-bold tracking-[-0.025em] text-foreground">
           {profile.name}
         </span>

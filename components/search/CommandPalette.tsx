@@ -1,18 +1,23 @@
 "use client";
 
 import { ArrowDown, ArrowUp, CornerDownLeft, Search, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { navigationItems } from "@/data/navigation";
-import { projects } from "@/data/projects";
 
-const searchItems = [
-  ...navigationItems.map((item) => ({ ...item, category: "Page" })),
-  ...projects.map((project) => ({
-    label: project.title,
-    href: `/projects#${project.slug}`,
-    category: "Project",
-  })),
-];
+const RECENT_SEARCHES_KEY = "portfolio-recent-searches";
+const MAX_RECENT_SEARCHES = 5;
+
+type SearchItem = {
+  label: string;
+  href: string;
+  category: "Page";
+};
+
+const searchItems: SearchItem[] = navigationItems.map((item) => ({
+  ...item,
+  category: "Page",
+}));
 
 type CommandPaletteProps = {
   open: boolean;
@@ -20,23 +25,43 @@ type CommandPaletteProps = {
 };
 
 export function CommandPalette({ open, onClose }: CommandPaletteProps) {
+  const router = useRouter();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
+  const [recentItems, setRecentItems] = useState<SearchItem[]>([]);
+
+  useEffect(() => {
+    try {
+      const storedItems = JSON.parse(
+        window.localStorage.getItem(RECENT_SEARCHES_KEY) ?? "[]",
+      ) as Array<{ href?: unknown }>;
+      const validItems = storedItems
+        .map((storedItem) =>
+          searchItems.find((searchItem) => searchItem.href === storedItem.href),
+        )
+        .filter((item): item is SearchItem => Boolean(item))
+        .slice(0, MAX_RECENT_SEARCHES);
+
+      setRecentItems(validItems);
+    } catch {
+      window.localStorage.removeItem(RECENT_SEARCHES_KEY);
+    }
+  }, []);
 
   const filteredItems = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase();
 
     if (!normalizedQuery) {
-      return searchItems;
+      return recentItems.length > 0 ? recentItems : searchItems;
     }
 
     return searchItems.filter((item) =>
       item.label.toLocaleLowerCase().includes(normalizedQuery),
     );
-  }, [query]);
+  }, [query, recentItems]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -68,8 +93,15 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
     window.requestAnimationFrame(() => returnFocusElement?.focus());
   }
 
-  function openItem(href: string) {
-    window.location.assign(href);
+  function openItem(item: SearchItem) {
+    const updatedRecentItems = [
+      item,
+      ...recentItems.filter((recentItem) => recentItem.href !== item.href),
+    ].slice(0, MAX_RECENT_SEARCHES);
+
+    setRecentItems(updatedRecentItems);
+    window.localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updatedRecentItems));
+    router.push(item.href);
     closePalette();
   }
 
@@ -100,7 +132,7 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
 
     if (event.key === "Enter" && filteredItems[activeIndex]) {
       event.preventDefault();
-      openItem(filteredItems[activeIndex].href);
+      openItem(filteredItems[activeIndex]);
     }
   }
 
@@ -166,7 +198,7 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
 
       <div className="max-h-[min(360px,50vh)] overflow-y-auto p-2">
         <p className="px-3 pb-2 pt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-muted">
-          Pages and Projects
+          {query.trim() || recentItems.length === 0 ? "Pages" : "Recent searches"}
         </p>
         <div id="command-palette-results" role="listbox" aria-label="Search results">
           {filteredItems.length > 0 ? (
@@ -183,7 +215,7 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
                   role="option"
                   aria-selected={isActive}
                   onMouseEnter={() => setActiveIndex(index)}
-                  onClick={() => openItem(item.href)}
+                  onClick={() => openItem(item)}
                   className={`flex h-11 w-full items-center justify-between rounded-md px-3 text-left text-sm ${
                     isActive
                       ? "bg-surface-hover font-semibold text-foreground"
@@ -193,7 +225,7 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
                   <span>{item.label}</span>
                   <span className="ml-3 flex shrink-0 items-center gap-2">
                     <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted">
-                      {item.category}
+                      {!query.trim() && recentItems.length > 0 ? "Recent" : item.category}
                     </span>
                     {isActive ? (
                       <CornerDownLeft aria-hidden="true" className="size-4 text-muted" />

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { GraduationCap, MapPin } from "lucide-react";
+import { CalendarDays, MapPin } from "lucide-react";
+import { SectionDivider } from "@/components/home/SectionDivider";
 import { MobileHeader } from "@/components/navigation/MobileHeader";
 import { QuickActionsProvider } from "@/components/search/QuickActionsProvider";
 import { SidebarLayout } from "@/components/sidebar/SidebarLayout";
@@ -7,8 +8,69 @@ import { education } from "@/data/education";
 
 export const metadata: Metadata = {
   title: "Education | Nathaniel Anog",
-  description: "Academic background, honors, and relevant coursework of Nathaniel Anog.",
+  description: "Academic background, distinctions, coursework, and achievements.",
 };
+
+const academicStats = [
+  { label: "General weighted average", value: education.gwa },
+  { label: "Academic distinction", value: education.distinction },
+  { label: "Regular semesters with academic recognition", value: "8 / 8" },
+  { label: "Top-five departmental exam rankings", value: "7×" },
+] as const;
+
+const recognitions = [
+  {
+    eyebrow: "Scholarship",
+    title: education.scholarships[0],
+    description:
+      "Selected under the Department of Science and Technology – Science Education Institute undergraduate scholarship program.",
+  },
+  {
+    eyebrow: "Academic award",
+    title: education.scholarships[1],
+    description:
+      "Recognized for academic achievement in science, technology, and engineering education.",
+  },
+] as const;
+
+const achievements = [
+  {
+    eyebrow: "First-year academic ranking",
+    title: "Ranked 1st Overall",
+    description:
+      "Among first-year Bachelor of Science in Computer Engineering students.",
+  },
+  {
+    eyebrow: "Departmental examinations",
+    title: "Top 5 in Seven Departmental Examinations",
+    description:
+      "Achieved seven Top-5 placements, including 1st in Software Design and 4th in Database Management Systems.",
+  },
+  {
+    eyebrow: "Consistent academic recognition",
+    title: "President’s/Dean’s Lister for All 8 Regular Semesters",
+    description:
+      "Maintained academic distinction throughout every regular semester of the Computer Engineering program.",
+  },
+] as const;
+
+const courseworkDescriptions: Record<(typeof education.coursework)[number], string> = {
+  "Software Design":
+    "Software architecture, problem decomposition, and structured solution development.",
+  "Data Structures and Algorithms":
+    "Fundamental data organization, algorithmic thinking, and efficient problem solving.",
+  "Object-Oriented Programming":
+    "Classes, objects, abstraction, inheritance, and reusable software design.",
+  "Database Management Systems":
+    "Relational databases, data modeling, SQL, and structured information management.",
+  "Computer Project Management":
+    "Planning, coordination, documentation, and management of technical projects.",
+  "Cloud Computing":
+    "Cloud concepts, services, deployment models, and modern computing infrastructure.",
+};
+
+const eyebrowClassName =
+  "text-[12px] font-bold uppercase leading-[1.4] tracking-[0.16em] text-muted";
 
 export default function EducationPage() {
   return (
@@ -16,102 +78,161 @@ export default function EducationPage() {
       <div className="min-h-svh bg-background text-foreground">
         <MobileHeader activeItem="Education" />
         <SidebarLayout activeItem="Education">
-          <section className="mx-auto w-full max-w-[1120px] px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20 xl:px-14 xl:py-24">
-            <header className="max-w-[760px]">
-              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted">
-                Academic background
-              </p>
-              <h1 className="mt-3 text-[clamp(2.5rem,5.5vw,4.25rem)] font-extrabold uppercase leading-[1.02] tracking-[-0.045em] text-foreground">
+          <header className="relative overflow-hidden">
+            <div className="relative mx-auto w-full max-w-[1180px] px-5 pb-6 pt-12 sm:px-8 sm:pb-8 sm:pt-16 lg:px-10 lg:pb-10 lg:pt-18 xl:px-12 xl:pb-12 xl:pt-20">
+              <h1 className="max-w-[760px] text-[48px] font-bold leading-[0.95] tracking-[-0.055em] text-foreground">
                 Education
               </h1>
-              <p className="mt-5 max-w-[680px] text-[15px] leading-7 text-muted sm:text-base sm:leading-8">
-                My academic foundation in computer engineering, software development,
-                and network engineering.
+              <p className="mt-5 max-w-[890px] text-[16px] leading-[1.65] text-muted">
+                My academic journey at the Polytechnic University of the Philippines
+                built a strong foundation in computer engineering, software
+                development, networking, databases, and cloud technologies—shaping
+                how I approach practical digital solutions.
               </p>
-            </header>
+            </div>
+          </header>
+          <SectionDivider />
 
-            <article className="mt-12 border-y border-border py-10 sm:mt-14 sm:py-12">
-              <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
-                <div>
-                  <div className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
-                    <GraduationCap aria-hidden="true" className="size-5 text-foreground" strokeWidth={1.8} />
-                    <span>{education.year}</span>
-                  </div>
-                  <h2 className="mt-4 max-w-[760px] text-[clamp(1.75rem,3.5vw,2.75rem)] font-bold leading-[1.08] tracking-[-0.045em] text-foreground">
-                    {education.institution}
-                  </h2>
-                  <div className="mt-4 flex items-center gap-2 text-sm font-semibold text-muted">
-                    <MapPin aria-hidden="true" className="size-4" strokeWidth={1.8} />
-                    {education.location}
-                  </div>
-                </div>
+          <main className="mx-auto w-full max-w-[1180px] px-5 pb-10 pt-6 sm:px-8 sm:pb-14 sm:pt-8 lg:px-10 lg:pb-16 lg:pt-10 xl:px-12">
+            <section aria-labelledby="degree-heading">
+              <p className={eyebrowClassName}>{education.institution}</p>
+              <h2
+                id="degree-heading"
+                className="mt-3 max-w-[1040px] text-[34px] font-bold leading-[1.05] tracking-[-0.05em] text-foreground"
+              >
+                {education.degree} with Specialization in {education.specialization}
+              </h2>
+
+              <div className="mt-6 flex flex-col gap-3 text-[14px] text-muted sm:flex-row sm:flex-wrap sm:items-center sm:gap-7">
+                <span className="inline-flex items-center gap-2.5">
+                  <MapPin aria-hidden="true" className="size-[18px]" strokeWidth={1.8} />
+                  {education.location}
+                </span>
+                <span aria-hidden="true" className="hidden h-4 w-px bg-border sm:block" />
+                <span className="inline-flex items-center gap-2.5">
+                  <CalendarDays aria-hidden="true" className="size-[18px]" strokeWidth={1.8} />
+                  Graduated {education.graduation}
+                </span>
               </div>
 
-              <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(280px,0.85fr)] lg:gap-12">
-                <div>
-                  <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
-                    Degree
-                  </p>
-                  <p className="mt-3 text-[20px] font-bold leading-[1.4] text-foreground sm:text-[22px]">
-                    {education.degree}
-                  </p>
-                  <p className="mt-2 text-[15px] leading-7 text-muted">
-                    Specialization in {education.specialization}
-                  </p>
-                </div>
+              <dl className="mt-8 grid grid-cols-2 sm:grid-cols-4">
+                {academicStats.map((stat, index) => (
+                  <div
+                    key={stat.label}
+                    className={`flex min-h-[126px] flex-col items-center justify-center px-3 py-5 text-center sm:min-h-[138px] sm:px-5 ${
+                      index % 2 === 1 ? "border-l border-border" : ""
+                    } ${index > 0 ? "sm:border-l sm:border-border" : ""}`}
+                  >
+                    <dt className="max-w-[190px] text-[11px] font-bold uppercase leading-[1.4] tracking-[0.11em] text-muted">
+                      {stat.label}
+                    </dt>
+                    <dd className="mt-3 text-[27px] font-bold leading-none tracking-[-0.045em] text-foreground sm:text-[30px]">
+                      {stat.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
 
-                <dl className="grid grid-cols-2 border-y border-border">
-                  <div className="border-r border-border py-4 pr-5">
-                    <dt className="text-[11px] font-bold uppercase tracking-[0.14em] text-muted">
-                      GWA
-                    </dt>
-                    <dd className="mt-1 text-[26px] font-bold tracking-[-0.035em] text-foreground">
-                      {education.gwa}
-                    </dd>
-                  </div>
-                  <div className="py-4 pl-5">
-                    <dt className="text-[11px] font-bold uppercase tracking-[0.14em] text-muted">
-                      Distinction
-                    </dt>
-                    <dd className="mt-1 text-[26px] font-bold tracking-[-0.035em] text-foreground">
-                      {education.distinction}
-                    </dd>
-                  </div>
-                </dl>
+            <section aria-labelledby="recognition-heading" className="mt-12 sm:mt-16">
+              <h2
+                id="recognition-heading"
+                className="text-[28px] font-bold leading-[1.05] tracking-[-0.045em] text-foreground sm:text-[32px]"
+              >
+                Scholarship &amp; Recognition
+              </h2>
+              <div className="mt-6 grid gap-4 md:grid-cols-2">
+                {recognitions.map((recognition) => (
+                  <article
+                    key={recognition.title}
+                    className="rounded-[6px] border border-border bg-surface px-5 py-6 transition-[transform,background-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:bg-surface-hover hover:shadow-sm motion-reduce:transform-none motion-reduce:transition-none sm:px-6"
+                  >
+                    <p className={eyebrowClassName}>{recognition.eyebrow}</p>
+                    <h3 className="mt-3 max-w-[480px] text-[18px] font-bold leading-[1.18] tracking-[-0.035em] text-foreground sm:text-[20px]">
+                      {recognition.title}
+                    </h3>
+                    <p className="mt-3 max-w-[520px] text-[14px] leading-[1.6] text-muted">
+                      {recognition.description}
+                    </p>
+                  </article>
+                ))}
               </div>
+            </section>
 
-              <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)] lg:gap-14">
-                <section aria-labelledby="honors-heading">
-                  <h3 id="honors-heading" className="text-[18px] font-bold text-foreground">
-                    Honors &amp; Awards
-                  </h3>
-                  <ul className="mt-4 divide-y divide-border border-y border-border">
-                    {education.honors.map((honor) => (
-                      <li key={honor} className="py-4 text-[15px] leading-7 text-muted">
-                        {honor}
-                      </li>
-                    ))}
-                  </ul>
-                </section>
+            <section aria-labelledby="achievements-heading" className="mt-12 sm:mt-16">
+              <h2
+                id="achievements-heading"
+                className="text-[28px] font-bold leading-[1.05] tracking-[-0.045em] text-foreground sm:text-[32px]"
+              >
+                Honors &amp; Achievements
+              </h2>
+              <ol className="mt-6">
+                {achievements.map((achievement, index) => (
+                  <li
+                    key={achievement.title}
+                    className="grid grid-cols-[20px_minmax(0,1fr)] gap-4 sm:gap-6"
+                  >
+                    <div className="relative flex justify-center">
+                      {index < achievements.length - 1 ? (
+                        <span
+                          aria-hidden="true"
+                          className="absolute bottom-0 top-3 w-px bg-border"
+                        />
+                      ) : null}
+                      <span
+                        aria-hidden="true"
+                        className="relative z-10 mt-1.5 size-3 rounded-full border-2 border-background bg-foreground ring-1 ring-border"
+                      />
+                    </div>
+                    <div className="pb-7 pt-0.5 sm:pb-8">
+                      <p className={eyebrowClassName}>{achievement.eyebrow}</p>
+                      <h3 className="mt-1.5 text-[18px] font-bold leading-[1.25] tracking-[-0.035em] text-foreground sm:text-[20px]">
+                        {achievement.title}
+                      </h3>
+                      <p className="mt-1.5 text-[14px] leading-[1.6] text-muted">
+                        {achievement.description}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </section>
 
-                <section aria-labelledby="coursework-heading">
-                  <h3 id="coursework-heading" className="text-[18px] font-bold text-foreground">
-                    Relevant Coursework
-                  </h3>
-                  <ul className="mt-4 flex flex-wrap gap-2">
-                    {education.coursework.map((course) => (
-                      <li
-                        key={course}
-                        className="rounded-[4px] border border-border bg-surface-hover px-3 py-2 text-[13px] font-semibold text-foreground"
-                      >
+            <section aria-labelledby="coursework-heading" className="mt-8 sm:mt-10">
+              <h2
+                id="coursework-heading"
+                className="text-[28px] font-bold leading-[1.05] tracking-[-0.045em] text-foreground sm:text-[32px]"
+              >
+                Relevant Coursework
+              </h2>
+              <p className="mt-3 max-w-[720px] text-[14px] leading-[1.6] text-muted">
+                Key subjects that built my technical foundation in software
+                development, systems, and networks.
+              </p>
+
+              <ol className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                {education.coursework.map((course, index) => (
+                  <li
+                    key={course}
+                    className="grid grid-cols-[36px_minmax(0,1fr)] gap-3 rounded-[6px] border border-border bg-surface p-4 transition-colors duration-200 hover:bg-surface-hover"
+                  >
+                    <span className="flex size-9 items-center justify-center rounded-[4px] bg-surface-hover font-display text-[14px] font-semibold text-foreground">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <h3 className="text-[14px] font-bold leading-[1.35] tracking-[-0.025em] text-foreground">
                         {course}
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              </div>
-            </article>
-          </section>
+                      </h3>
+                      <p className="mt-1 text-[13px] leading-[1.5] text-muted">
+                        {courseworkDescriptions[course]}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+          </main>
         </SidebarLayout>
       </div>
     </QuickActionsProvider>

@@ -4,8 +4,6 @@ import Link from "next/link";
 import type { SVGProps } from "react";
 import type { Project } from "@/data/projects";
 
-const placeholderGithubUrl = "https://github.com/your-username";
-
 function GitHubIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -44,7 +42,8 @@ export function FeaturedProjectsCarousel({
       {projects.map((project) => (
         <article
           key={project.slug}
-          className="grid items-stretch gap-5 sm:gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(320px,1.15fr)] lg:gap-8 xl:gap-10"
+          id={project.slug}
+          className="scroll-mt-20 grid items-stretch gap-5 sm:gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(320px,1.15fr)] lg:gap-8 xl:gap-10"
         >
           <ProjectVisual project={project} />
 
@@ -61,6 +60,12 @@ export function FeaturedProjectsCarousel({
                 Project info
               </p>
               <dl className="mt-3 text-[15px]">
+                <div className="flex items-start justify-between gap-6 border-t border-border py-3">
+                  <dt className="font-semibold text-foreground">Year</dt>
+                  <dd className="max-w-[65%] text-right font-semibold text-muted">
+                    {project.year}
+                  </dd>
+                </div>
                 <div className="flex items-start justify-between gap-6 border-t border-border py-3">
                   <dt className="font-semibold text-foreground">Category</dt>
                   <dd className="max-w-[65%] text-right font-semibold text-muted">
@@ -85,15 +90,26 @@ export function FeaturedProjectsCarousel({
                 <ArrowRight aria-hidden="true" className="size-4" />
               </Link>
 
-              <a
-                href={project.githubUrl ?? placeholderGithubUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 border-b-2 border-foreground pb-1.5 text-[14px] font-bold uppercase tracking-[0.02em] text-foreground transition-[opacity,transform] duration-200 hover:-translate-y-0.5 hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground motion-reduce:transform-none motion-reduce:transition-none"
-              >
-                See on GitHub
-                <GitHubIcon aria-hidden="true" className="size-[18px]" />
-              </a>
+              {project.githubUrl ? (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 border-b-2 border-foreground pb-1.5 text-[14px] font-bold uppercase tracking-[0.02em] text-foreground transition-[opacity,transform] duration-200 hover:-translate-y-0.5 hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground motion-reduce:transform-none motion-reduce:transition-none"
+                >
+                  See on GitHub
+                  <GitHubIcon aria-hidden="true" className="size-[18px]" />
+                </a>
+              ) : (
+                <span
+                  aria-disabled="true"
+                  title="GitHub link coming soon"
+                  className="inline-flex cursor-not-allowed items-center gap-2 border-b-2 border-border pb-1.5 text-[14px] font-bold uppercase tracking-[0.02em] text-muted opacity-55"
+                >
+                  See on GitHub
+                  <GitHubIcon aria-hidden="true" className="size-[18px]" />
+                </span>
+              )}
             </div>
           </div>
         </article>

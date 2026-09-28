@@ -4,7 +4,7 @@ import { useQuickActions } from "@/components/search/QuickActionsProvider";
 import { profile } from "@/data/profile";
 import { Hotkey } from "./Hotkey";
 
-export function QuickActions() {
+export function QuickActions({ onAction }: { onAction?: () => void }) {
   const { openCommandPalette } = useQuickActions();
 
   return (
@@ -19,7 +19,10 @@ export function QuickActions() {
       <div className="mt-2 space-y-1">
         <button
           type="button"
-          onClick={openCommandPalette}
+          onClick={() => {
+            onAction?.();
+            openCommandPalette();
+          }}
           className="sidebar-quick-action flex h-8 w-full cursor-pointer items-center justify-between rounded-[5px] text-left text-xs text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
         >
           <span className="sidebar-quick-label">Search anything</span>
@@ -30,6 +33,7 @@ export function QuickActions() {
           href={profile.resumePath}
           target="_blank"
           rel="noreferrer"
+          onClick={onAction}
           className="sidebar-quick-action flex h-8 w-full items-center justify-between rounded-[5px] text-xs text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
         >
           <span className="sidebar-quick-label">View resume</span>

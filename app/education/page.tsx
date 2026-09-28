@@ -212,23 +212,18 @@ export default function EducationPage() {
                 development, systems, and networks.
               </p>
 
-              <Reveal as="ol" stagger delay={100} className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                {education.coursework.map((course, index) => (
+              <Reveal as="ul" stagger delay={100} className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                {education.coursework.map((course) => (
                   <li
                     key={course}
-                    className="grid grid-cols-[36px_minmax(0,1fr)] gap-3 rounded-[6px] border border-border bg-surface p-4 transition-colors duration-200 hover:bg-surface-hover"
+                    className="rounded-[6px] border border-border bg-surface p-4 transition-colors duration-200 hover:bg-surface-hover"
                   >
-                    <span className="flex size-9 items-center justify-center rounded-[4px] bg-surface-hover font-display text-[14px] font-semibold text-foreground">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <div>
-                      <h3 className="text-[14px] font-bold leading-[1.35] tracking-[-0.025em] text-foreground">
-                        {course}
-                      </h3>
-                      <p className="mt-1 text-[13px] leading-[1.5] text-muted">
-                        {courseworkDescriptions[course]}
-                      </p>
-                    </div>
+                    <h3 className="text-[14px] font-bold leading-[1.35] tracking-[-0.025em] text-foreground">
+                      {course}
+                    </h3>
+                    <p className="mt-1 text-[13px] leading-[1.5] text-muted">
+                      {courseworkDescriptions[course]}
+                    </p>
                   </li>
                 ))}
               </Reveal>

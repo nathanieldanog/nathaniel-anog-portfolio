@@ -526,7 +526,7 @@ h3 {
 
 .mobile-menu-panel {
   opacity: 0.96;
-  transform: translateX(100%);
+  transform: translateX(-100%);
   transition:
     opacity 260ms var(--motion-ease-standard),
     transform 320ms var(--motion-ease-emphasized);
@@ -539,7 +539,7 @@ h3 {
 
 .mobile-menu-panel > * {
   opacity: 0;
-  transform: translateX(14px);
+  transform: translateX(-14px);
   transition:
     opacity 260ms var(--motion-ease-standard),
     transform 300ms var(--motion-ease-emphasized);
@@ -563,9 +563,21 @@ h3 {
   transition-delay: 150ms;
 }
 
+.mobile-menu-dialog[data-motion-state="open"] .mobile-menu-panel > :nth-child(4) {
+  opacity: 1;
+  transform: none;
+  transition-delay: 190ms;
+}
+
+.mobile-menu-dialog[data-motion-state="open"] .mobile-menu-panel > :nth-child(5) {
+  opacity: 1;
+  transform: none;
+  transition-delay: 230ms;
+}
+
 .mobile-menu-nav-item {
   opacity: 0;
-  transform: translateX(12px);
+  transform: translateX(-12px);
   transition:
     opacity 240ms var(--motion-ease-standard),
     transform 280ms var(--motion-ease-emphasized);

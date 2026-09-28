@@ -19,7 +19,7 @@ export function Education() {
       aria-labelledby="education-heading"
       className="scroll-mt-16 border-t border-border bg-background text-foreground lg:scroll-mt-0"
     >
-      <div className="mx-auto w-full max-w-[1280px] px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20 xl:px-12">
+      <div className="mx-auto w-full max-w-[1280px] px-5 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12 xl:px-12">
         <Reveal
           as="header"
           stagger

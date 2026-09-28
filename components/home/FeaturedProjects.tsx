@@ -1,7 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { FeaturedProjectsCarousel } from "@/components/home/FeaturedProjectsCarousel";
-import { SectionDivider } from "@/components/home/SectionDivider";
 import { Reveal } from "@/components/motion/Reveal";
 import { projects } from "@/data/projects";
 
@@ -17,8 +16,7 @@ export function FeaturedProjects() {
       aria-labelledby="projects-heading"
       className="bg-background text-foreground"
     >
-      <SectionDivider />
-      <div className="mx-auto w-full max-w-[1280px] px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20 xl:px-12">
+      <div className="mx-auto w-full max-w-[1280px] px-5 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12 xl:px-12">
         <Reveal
           as="header"
           stagger

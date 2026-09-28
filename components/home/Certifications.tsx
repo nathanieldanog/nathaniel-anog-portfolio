@@ -1,7 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { CertificationCard } from "@/components/certifications/CertificationCard";
-import { SectionDivider } from "@/components/home/SectionDivider";
 import { Reveal } from "@/components/motion/Reveal";
 import { certifications } from "@/data/certifications";
 
@@ -14,8 +13,7 @@ export function Certifications() {
       aria-labelledby="certifications-heading"
       className="scroll-mt-16 bg-background text-foreground lg:scroll-mt-0"
     >
-      <SectionDivider />
-      <div className="mx-auto w-full max-w-[1280px] px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20 xl:px-12">
+      <div className="mx-auto w-full max-w-[1280px] px-5 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12 xl:px-12">
         <Reveal
           as="header"
           stagger

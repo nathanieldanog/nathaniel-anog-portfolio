@@ -508,11 +508,7 @@ h3 {
 }
 
 .mobile-menu-dialog::backdrop {
-  background: rgb(0 0 0 / 0%);
-  backdrop-filter: blur(0);
-  transition:
-    backdrop-filter 260ms var(--motion-ease-standard),
-    background-color 260ms var(--motion-ease-standard);
+  background: var(--surface);
 }
 
 .mobile-menu-dialog[data-motion-state="open"] {
@@ -520,8 +516,12 @@ h3 {
 }
 
 .mobile-menu-dialog[data-motion-state="open"]::backdrop {
-  background: rgb(0 0 0 / 28%);
-  backdrop-filter: blur(2px);
+  background: var(--surface);
+}
+
+html:has(.mobile-menu-dialog[open]),
+body:has(.mobile-menu-dialog[open]) {
+  overflow: hidden;
 }
 
 .mobile-menu-panel {
@@ -1402,7 +1402,7 @@ h3 {
   }
 
   .mobile-menu-dialog[open]::backdrop {
-    background: rgb(0 0 0 / 28%);
+    background: var(--surface);
     backdrop-filter: none;
   }
 

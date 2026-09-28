@@ -132,9 +132,9 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
             closeMenu();
           }
         }}
-        className="mobile-menu-dialog fixed inset-0 z-50 m-0 hidden h-dvh max-h-none w-full max-w-none bg-transparent p-0 open:block"
+        className="mobile-menu-dialog fixed inset-0 z-50 m-0 hidden h-dvh max-h-none w-full max-w-none bg-surface p-0 open:block"
       >
-        <div className="mobile-menu-panel flex h-dvh min-h-dvh w-full flex-col overflow-y-auto bg-surface px-5 py-5 sm:px-7 sm:py-7">
+        <div className="mobile-menu-panel flex h-dvh min-h-dvh w-full flex-col overflow-y-auto overscroll-contain bg-surface px-5 py-5 sm:px-7 sm:py-7">
           <div className="flex items-center justify-between border-b border-border pb-5">
             <Link
               href="/"

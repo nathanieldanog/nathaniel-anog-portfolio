@@ -134,8 +134,8 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
         }}
         className="mobile-menu-dialog fixed inset-0 z-50 m-0 hidden h-dvh max-h-none w-full max-w-none bg-surface p-0 open:block"
       >
-        <div className="mobile-menu-panel flex h-dvh min-h-dvh w-full flex-col overflow-hidden bg-surface px-4 py-3 sm:px-7 sm:py-5">
-          <div className="flex shrink-0 items-center justify-between border-b border-border pb-3 sm:pb-5">
+        <div className="mobile-menu-panel flex h-dvh min-h-dvh w-full flex-col overflow-hidden bg-surface px-5 pt-[clamp(0.5rem,1.5dvh,1.25rem)] sm:px-7">
+          <div className="flex shrink-0 items-center justify-between border-b border-border pb-[clamp(0.5rem,1.5dvh,1.25rem)]">
             <Link
               href="/"
               onClick={closeMenu}
@@ -153,9 +153,12 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
             </button>
           </div>
 
-          <div className="-mx-4 min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-3 sm:-mx-7 sm:px-7 sm:pb-5">
-            <nav aria-label="Mobile navigation" className="mt-2 sm:mt-4">
-              <ul className="grid grid-cols-2 gap-1">
+          <div className="-mx-5 min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-[clamp(0.5rem,1.5dvh,1.25rem)] sm:-mx-7 sm:px-7">
+            <nav
+              aria-label="Mobile navigation"
+              className="mt-[clamp(0.375rem,1.2dvh,1rem)]"
+            >
+              <ul className="space-y-1">
                 {navigationItems.map((item) => {
                   const Icon = navigationIcons[item.label];
 
@@ -165,17 +168,13 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
                         href={item.href}
                         aria-current={activeItem === item.label ? "page" : undefined}
                         onClick={closeMenu}
-                        className={`mobile-menu-link flex h-10 min-w-0 items-center gap-2.5 rounded-[6px] px-2 text-[14px] text-foreground sm:h-12 sm:gap-4 sm:px-3 sm:text-[15px] ${
+                        className={`mobile-menu-link flex h-[clamp(2rem,6dvh,3rem)] items-center gap-4 rounded-[6px] px-3 text-[15px] text-foreground ${
                           activeItem === item.label
                             ? "bg-surface-hover font-semibold"
                             : "font-normal"
                         }`}
                       >
-                        <Icon
-                          aria-hidden="true"
-                          className="size-[18px] shrink-0 sm:size-5"
-                          strokeWidth={2}
-                        />
+                        <Icon aria-hidden="true" className="size-5 shrink-0" strokeWidth={2} />
                         <span>{item.label}</span>
                       </Link>
                     </li>
@@ -184,26 +183,26 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
               </ul>
             </nav>
 
-            <div className="mt-3 border-t border-border pt-3 sm:mt-5 sm:pt-5">
+            <div className="mt-[clamp(0.5rem,1.5dvh,1.25rem)] border-t border-border pt-[clamp(0.5rem,1.5dvh,1.25rem)]">
               <QuickActions onAction={closeMenu} />
             </div>
 
             <section
               aria-labelledby="mobile-contact-heading"
-              className="mt-3 border-t border-border pt-3 sm:mt-5 sm:pt-5"
+              className="mt-[clamp(0.5rem,1.5dvh,1.25rem)] border-t border-border pt-[clamp(0.5rem,1.5dvh,1.25rem)]"
             >
               <h2
                 id="mobile-contact-heading"
-                className="text-[10px] font-medium uppercase tracking-[0.16em] text-muted sm:text-[11px]"
+                className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted"
               >
                 Contact
               </h2>
-              <p className="mt-2 text-[13px] leading-[1.45] text-foreground sm:mt-3 sm:text-[14px] sm:leading-[1.6]">
+              <p className="mt-3 text-[14px] leading-[1.6] text-foreground">
                 For employment opportunities and inquiries, please reach out at
               </p>
               <a
                 href={`mailto:${profile.email}`}
-                className="mobile-menu-link mt-2 flex items-center gap-2 text-[12px] tracking-[-0.025em] text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-surface sm:mt-3 sm:text-[13px]"
+                className="mobile-menu-link mt-3 flex items-center gap-2 text-[13px] tracking-[-0.025em] text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
               >
                 <Mail aria-hidden="true" className="size-[18px] shrink-0" strokeWidth={2} />
                 <span className="min-w-0 break-all">{profile.email}</span>
@@ -211,7 +210,7 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
             </section>
           </div>
 
-          <div className="-mx-4 -mb-3 shrink-0 border-t border-border bg-surface px-4 pb-3 pt-3 sm:-mx-7 sm:-mb-5 sm:px-7 sm:pb-5 sm:pt-5">
+          <div className="-mx-5 shrink-0 border-t border-border bg-surface px-5 pb-[clamp(0.5rem,1.5dvh,1.25rem)] pt-[clamp(0.5rem,1.5dvh,1.25rem)] sm:-mx-7 sm:px-7">
             <AppearanceControl />
           </div>
         </div>

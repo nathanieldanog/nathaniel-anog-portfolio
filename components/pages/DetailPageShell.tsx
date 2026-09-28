@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { SectionDivider } from "@/components/home/SectionDivider";
+import { Reveal } from "@/components/motion/Reveal";
 import { MobileHeader } from "@/components/navigation/MobileHeader";
 import { QuickActionsProvider } from "@/components/search/QuickActionsProvider";
 import { SidebarLayout } from "@/components/sidebar/SidebarLayout";
@@ -34,28 +36,31 @@ export function DetailPageShell({
       <div className="min-h-svh bg-background text-foreground">
         <MobileHeader activeItem={activeItem} />
         <SidebarLayout activeItem={activeItem}>
-          <div className="mx-auto w-full max-w-[1180px] px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20 xl:px-12 xl:py-24">
-            <header className={headerClassName}>
-              {eyebrow ? (
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">
-                  {eyebrow}
+          <header className="relative overflow-hidden">
+            <div className="relative mx-auto w-full max-w-[1180px] px-5 pb-6 pt-12 sm:px-8 sm:pb-8 sm:pt-16 lg:px-10 lg:pb-10 lg:pt-18 xl:px-12 xl:pb-12 xl:pt-20">
+              <Reveal stagger className={headerClassName}>
+                {eyebrow ? (
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">
+                    {eyebrow}
+                  </p>
+                ) : null}
+                <h1
+                  className={`${eyebrow ? "mt-3" : ""} ${titleClassName}`}
+                >
+                  {title}
+                </h1>
+                <p className={`mt-5 ${descriptionWidthClassName} ${descriptionClassName}`}>
+                  {description}
                 </p>
-              ) : null}
-              <h1
-                className={`${eyebrow ? "mt-3" : ""} ${titleClassName}`}
-              >
-                {title}
-              </h1>
-              <p className={`mt-5 ${descriptionWidthClassName} ${descriptionClassName}`}>
-                {description}
-              </p>
-            </header>
+              </Reveal>
+            </div>
+          </header>
 
-            {showDivider ? (
-              <div aria-hidden="true" className="mt-12 h-px bg-border sm:mt-14" />
-            ) : null}
+          {showDivider ? <SectionDivider /> : null}
+
+          <main className="mx-auto w-full max-w-[1180px] px-5 pb-10 sm:px-8 sm:pb-14 lg:px-10 lg:pb-16 xl:px-12">
             {children}
-          </div>
+          </main>
         </SidebarLayout>
       </div>
     </QuickActionsProvider>

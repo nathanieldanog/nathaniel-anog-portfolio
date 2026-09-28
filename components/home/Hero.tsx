@@ -51,7 +51,7 @@ const socialLinks = [
   { label: "Instagram", href: profile.instagram, icon: InstagramIcon },
 ] as const;
 
-function Portrait() {
+function Portrait({ className = "" }: { className?: string }) {
   const portraitExists = existsSync(
     join(process.cwd(), "public", "profile-portrait.png"),
   );
@@ -61,13 +61,15 @@ function Portrait() {
       <div
         role="img"
         aria-label="Portrait placeholder"
-        className="relative z-10 h-[460px] w-full self-end bg-surface-hover sm:h-[580px] lg:h-[min(80svh,820px)]"
+        className={`relative z-10 h-[460px] w-full self-end bg-surface-hover sm:h-[580px] lg:h-[min(80svh,820px)] ${className}`}
       />
     );
   }
 
   return (
-    <div className="relative z-10 h-[460px] w-full self-end sm:h-[580px] lg:h-[min(80svh,820px)]">
+    <div
+      className={`relative z-10 h-[460px] w-full self-end sm:h-[580px] lg:h-[min(80svh,820px)] ${className}`}
+    >
       <Image
         src={portraitPath}
         alt={"Portrait of " + profile.name}
@@ -93,41 +95,45 @@ export function Hero() {
         <div className="relative z-30 max-w-[600px] py-4 lg:py-16">
           <h1
             id="home-heading"
-            className="text-[48px] font-normal leading-[0.95] tracking-[-0.055em] text-foreground"
+            className="hero-entrance hero-entrance--heading text-[48px] font-normal leading-[0.95] tracking-[-0.055em] text-foreground"
           >
             <span className="block font-bold">Hi, I am</span>
             <span className="block whitespace-nowrap font-bold">{profile.name}.</span>
           </h1>
 
-          <div className="mt-5 max-w-[560px] space-y-2.5 text-[16px] leading-[1.6] text-muted">
+          <div className="hero-entrance hero-entrance--bio mt-5 max-w-[560px] space-y-2.5 text-[16px] leading-[1.6] text-muted">
             {profile.bio.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
           </div>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <div className="hero-entrance hero-entrance--actions mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <a
               href={"mailto:" + profile.email}
-              className="inline-flex h-12 min-w-[180px] items-center justify-center gap-3 rounded-[4px] bg-foreground px-7 text-[13px] font-bold uppercase tracking-[0.01em] text-background transition-[transform,opacity,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:opacity-85 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
+              className="motion-button motion-button--primary inline-flex h-12 min-w-[180px] items-center justify-center gap-3 rounded-[4px] bg-foreground px-7 text-[13px] font-bold uppercase tracking-[0.01em] text-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               Contact me
               <ArrowUpRight
                 aria-hidden="true"
-                className="size-4"
+                className="motion-action-icon motion-icon-diagonal size-4"
               />
             </a>
             <a
               href={profile.resumePath}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex h-12 min-w-[220px] items-center justify-center gap-4 rounded-[4px] border border-foreground/65 bg-background/70 px-7 text-[13px] font-bold uppercase tracking-[0.01em] text-foreground transition-[transform,background-color,border-color,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:border-foreground hover:bg-surface-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
+              className="resume-download-button motion-button motion-button--secondary inline-flex h-12 min-w-[220px] items-center justify-center gap-4 rounded-[4px] border border-foreground/65 bg-background/70 px-7 text-[13px] font-bold uppercase tracking-[0.01em] text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               Download resume
-              <Download aria-hidden="true" className="size-5" strokeWidth={2} />
+              <Download
+                aria-hidden="true"
+                className="motion-action-icon motion-icon-download size-5"
+                strokeWidth={2}
+              />
             </a>
           </div>
 
-          <div className="mt-5 flex items-center gap-2.5">
+          <div className="hero-entrance hero-entrance--socials mt-5 flex items-center gap-2.5">
             {socialLinks.map(({ label, href, icon: Icon }) => (
               <a
                 key={label}
@@ -135,15 +141,15 @@ export function Hero() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={label}
-                className="inline-flex size-10 items-center justify-center rounded-[4px] border border-foreground/20 bg-background/75 text-foreground transition-[transform,background-color,border-color,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:border-foreground/45 hover:bg-surface-hover hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background active:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
+                className="motion-social inline-flex size-10 items-center justify-center rounded-[4px] border border-foreground/20 bg-background/75 text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
-                <Icon aria-hidden="true" className="size-[18px]" />
+                <Icon aria-hidden="true" className="motion-social-icon size-[18px]" />
               </a>
             ))}
           </div>
         </div>
 
-        <Portrait />
+        <Portrait className="hero-entrance hero-entrance--portrait" />
       </div>
     </section>
   );

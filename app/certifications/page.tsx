@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CertificationCard } from "@/components/certifications/CertificationCard";
+import { Reveal } from "@/components/motion/Reveal";
 import { DetailPageShell } from "@/components/pages/DetailPageShell";
 import { certifications } from "@/data/certifications";
 
@@ -23,11 +24,11 @@ export default function CertificationsPage() {
       activeItem="Certifications"
       title="Certifications and Training"
       titleClassName="text-[42px] font-bold leading-[0.95] tracking-[-0.055em] text-foreground sm:text-[44px]"
-      description="Completed certifications and professional training in web development, cloud computing, computer networking, and cybersecurity, strengthening both software development and IT infrastructure skills."
+      description="Continuous learning through certifications and training in web development, cloud computing, networking, and cybersecurity."
       descriptionClassName="text-[15px] leading-7 text-muted sm:text-base sm:leading-8"
-      headerClassName="max-w-[1080px]"
-      descriptionWidthClassName="max-w-[1040px]"
-      showDivider={false}
+      headerClassName="w-full"
+      descriptionWidthClassName="w-full"
+      showDivider
     >
       <div className="space-y-14 pt-12 sm:pt-14">
         {certificationGroups.map((group) => {
@@ -36,7 +37,8 @@ export default function CertificationsPage() {
           );
 
           return (
-            <section
+            <Reveal
+              as="section"
               key={group.title}
               aria-labelledby={group.id}
             >
@@ -47,7 +49,7 @@ export default function CertificationsPage() {
                 {group.title}
               </h2>
 
-              <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              <Reveal stagger delay={80} className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {groupedCertifications.map((certification) => (
                   <CertificationCard
                     key={certification.name}
@@ -55,8 +57,8 @@ export default function CertificationsPage() {
                     compact
                   />
                 ))}
-              </div>
-            </section>
+              </Reveal>
+            </Reveal>
           );
         })}
       </div>

@@ -2,14 +2,31 @@
 
 import { FileText, Mail, Menu, X } from "lucide-react";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AppearanceControl } from "@/components/theme/AppearanceControl";
 import { navigationItems, type NavigationLabel } from "@/data/navigation";
 import { profile } from "@/data/profile";
 
 export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationLabel }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const closeTimerRef = useRef<number | null>(null);
+  const openFrameRef = useRef<number | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [motionState, setMotionState] = useState<
+    "closed" | "opening" | "open" | "closing"
+  >("closed");
+
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current !== null) {
+        window.clearTimeout(closeTimerRef.current);
+      }
+
+      if (openFrameRef.current !== null) {
+        window.cancelAnimationFrame(openFrameRef.current);
+      }
+    };
+  }, []);
 
   function openMenu() {
     const dialog = dialogRef.current;
@@ -17,15 +34,45 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
     if (dialog && !dialog.open) {
       dialog.showModal();
       setIsOpen(true);
+      setMotionState("opening");
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        setMotionState("open");
+        return;
+      }
+
+      openFrameRef.current = window.requestAnimationFrame(() => {
+        openFrameRef.current = window.requestAnimationFrame(() => {
+          setMotionState("open");
+          openFrameRef.current = null;
+        });
+      });
     }
   }
 
   function closeMenu() {
-    dialogRef.current?.close();
+    const dialog = dialogRef.current;
+
+    if (!dialog?.open || motionState === "closing") {
+      return;
+    }
+
+    setIsOpen(false);
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      dialog.close();
+      return;
+    }
+
+    setMotionState("closing");
+    closeTimerRef.current = window.setTimeout(() => {
+      dialog.close();
+      closeTimerRef.current = null;
+    }, 260);
   }
 
   return (
-    <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-border bg-surface px-4 sm:px-6 lg:hidden">
+    <header className="mobile-site-header sticky top-0 z-40 flex h-16 items-center justify-between border-b border-border bg-surface px-4 sm:px-6 lg:hidden">
       <Link href="/" className="flex min-w-0 flex-col">
         <span className="truncate font-display text-sm font-bold tracking-[-0.025em] text-foreground">
           {profile.name}
@@ -41,24 +88,32 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
         aria-controls="mobile-navigation"
         aria-expanded={isOpen}
         onClick={openMenu}
-        className="inline-flex size-10 items-center justify-center rounded-md border border-border text-foreground"
+        className="mobile-menu-trigger inline-flex size-10 items-center justify-center rounded-md border border-border text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
       >
-        <Menu aria-hidden="true" className="size-5" />
+        <Menu aria-hidden="true" className="mobile-menu-trigger-icon size-5" />
       </button>
 
       <dialog
         ref={dialogRef}
         id="mobile-navigation"
         aria-label="Mobile navigation"
-        onClose={() => setIsOpen(false)}
+        data-motion-state={motionState}
+        onCancel={(event) => {
+          event.preventDefault();
+          closeMenu();
+        }}
+        onClose={() => {
+          setIsOpen(false);
+          setMotionState("closed");
+        }}
         onClick={(event) => {
           if (event.target === event.currentTarget) {
             closeMenu();
           }
         }}
-        className="fixed inset-0 z-50 m-0 hidden h-svh w-full max-w-none bg-transparent p-0 backdrop:bg-black/25 open:block"
+        className="mobile-menu-dialog fixed inset-0 z-50 m-0 hidden h-svh w-full max-w-none bg-transparent p-0 open:block"
       >
-        <div className="ml-auto flex h-full w-[min(86vw,320px)] flex-col border-l border-border bg-surface px-5 py-4 sm:px-6">
+        <div className="mobile-menu-panel ml-auto flex h-full w-[min(86vw,320px)] flex-col border-l border-border bg-surface px-5 py-4 sm:px-6">
           <div className="flex h-11 items-center justify-between border-b border-border pb-3">
             <span className="font-display text-sm font-bold uppercase text-foreground">
               Navigation
@@ -67,21 +122,21 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
               type="button"
               aria-label="Close navigation menu"
               onClick={closeMenu}
-              className="inline-flex size-9 items-center justify-center rounded-md text-foreground hover:bg-surface-hover"
+              className="mobile-menu-close inline-flex size-9 items-center justify-center rounded-md text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
             >
-              <X aria-hidden="true" className="size-5" />
+              <X aria-hidden="true" className="mobile-menu-close-icon size-5" />
             </button>
           </div>
 
           <nav aria-label="Mobile navigation" className="mt-4">
             <ul className="space-y-1">
               {navigationItems.map((item) => (
-                <li key={item.label}>
+                <li key={item.label} className="mobile-menu-nav-item">
                   <Link
                     href={item.href}
                     aria-current={activeItem === item.label ? "page" : undefined}
                     onClick={closeMenu}
-                    className={`flex h-11 items-center rounded-md px-3 text-sm text-foreground ${
+                    className={`mobile-menu-link flex h-11 items-center rounded-md px-3 text-sm text-foreground ${
                       activeItem === item.label
                         ? "bg-surface-hover font-bold"
                         : "font-medium hover:bg-surface-hover"
@@ -101,7 +156,7 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
             <div className="space-y-1">
               <a
                 href={`mailto:${profile.email}`}
-                className="flex h-10 items-center gap-3 rounded-md px-3 text-sm font-medium text-foreground hover:bg-surface-hover"
+                className="mobile-menu-link flex h-10 items-center gap-3 rounded-md px-3 text-sm font-medium text-foreground"
               >
                 <Mail aria-hidden="true" className="size-[18px]" />
                 Contact
@@ -110,7 +165,7 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
                 href={profile.resumePath}
                 target="_blank"
                 rel="noreferrer"
-                className="flex h-10 items-center gap-3 rounded-md px-3 text-sm font-medium text-foreground hover:bg-surface-hover"
+                className="mobile-menu-link flex h-10 items-center gap-3 rounded-md px-3 text-sm font-medium text-foreground"
               >
                 <FileText aria-hidden="true" className="size-[18px]" />
                 Resume

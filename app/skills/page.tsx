@@ -1,18 +1,7 @@
 import type { Metadata } from "next";
+import { MousePointer2 } from "lucide-react";
 import Image from "next/image";
-import {
-  CloudCog,
-  CodeXml,
-  Cpu,
-  Database,
-  Laptop,
-  Languages as LanguagesIcon,
-  Smartphone,
-  Sparkles,
-  UsersRound,
-  Wrench,
-} from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { Reveal } from "@/components/motion/Reveal";
 import { DetailPageShell } from "@/components/pages/DetailPageShell";
 import {
   featuredSkills,
@@ -27,33 +16,147 @@ export const metadata: Metadata = {
     "Technical skills, development tools, and professional strengths of Nathaniel Anog.",
 };
 
-const appliedExperience = [
-  {
-    number: "01",
-    title: "Full-stack web",
-    description: "Next.js, React, TypeScript, Supabase, PostgreSQL, and Vercel",
+type SkillLogo = {
+  src: string;
+  invertInDark?: boolean;
+};
+
+const skillLogos = new Map<string, SkillLogo>(
+  [
+    ...featuredSkills.map(
+      (skill) =>
+        [
+          skill.name,
+          {
+            src: skill.image,
+            invertInDark: skill.name === "Next.js",
+          },
+        ] as const,
+    ),
+    [
+      "Vue.js",
+      {
+        src: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/vuejs/vuejs-original.svg",
+      },
+    ],
+    ["React Native", { src: "/logos/react-logo.svg" }],
+    [
+      "Expo",
+      { src: "https://cdn.simpleicons.org/expo", invertInDark: true },
+    ],
+    [
+      "Expo Router",
+      { src: "/logos/expo-router-logo.png", invertInDark: true },
+    ],
+    [
+      "React Navigation",
+      { src: "https://reactnavigation.org/img/favicon.ico" },
+    ],
+    ["Node.js", { src: "https://cdn.simpleicons.org/nodedotjs" }],
+    [
+      "Flask",
+      { src: "https://cdn.simpleicons.org/flask", invertInDark: true },
+    ],
+    [
+      "OpenCV",
+      {
+        src: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/opencv/opencv-original.svg",
+      },
+    ],
+    ["MediaPipe", { src: "https://cdn.simpleicons.org/mediapipe" }],
+    ["MySQL", { src: "/logos/mysql-logo.png" }],
+    ["SQLite", { src: "/logos/sqlite-logo.png" }],
+    ["Supabase", { src: "https://cdn.simpleicons.org/supabase" }],
+    ["Firebase", { src: "/logos/firebase-logo.png" }],
+    [
+      "Render",
+      { src: "https://cdn.simpleicons.org/render", invertInDark: true },
+    ],
+    [
+      "Vercel",
+      { src: "https://cdn.simpleicons.org/vercel", invertInDark: true },
+    ],
+    ["Git", { src: "https://cdn.simpleicons.org/git" }],
+    [
+      "GitHub",
+      { src: "https://cdn.simpleicons.org/github", invertInDark: true },
+    ],
+    [
+      "Visual Studio Code",
+      {
+        src: "https://cdn.jsdelivr.net/npm/devicon@2.17.0/icons/vscode/vscode-original.svg",
+      },
+    ],
+    [
+      "PyCharm",
+      {
+        src: "https://cdn.jsdelivr.net/npm/devicon@2.17.0/icons/pycharm/pycharm-original.svg",
+      },
+    ],
+    [
+      "Codex",
+      {
+        src: "https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/openai.svg",
+        invertInDark: true,
+      },
+    ],
+    ["Claude Code", { src: "/logos/claude-code-logo.png" }],
+  ],
+);
+
+const skillGroupDetails: Record<string, { title: string; description: string }> = {
+  Frontend: {
+    title: "Frontend Development",
+    description:
+      "Building responsive and user-friendly interfaces with modern web technologies.",
   },
-  {
-    number: "02",
-    title: "Mobile applications",
-    description: "React Native, Expo, TypeScript, navigation, and SQLite",
+  "Mobile Development": {
+    title: "Mobile Development",
+    description:
+      "Creating cross-platform mobile experiences with familiar React-based workflows.",
   },
-  {
-    number: "03",
-    title: "AI-integrated systems",
-    description: "Python, Flask, OpenCV, MediaPipe, Firebase, and Render",
+  Backend: {
+    title: "Backend",
+    description:
+      "Building server-side services and application logic for practical, scalable solutions.",
   },
+  "Databases & Backend Services": {
+    title: "Databases and Services",
+    description:
+      "Working with relational databases and backend services for dependable data-driven features.",
+  },
+  "Cloud & Deployment": {
+    title: "Cloud and Deployment",
+    description:
+      "Deploying and maintaining applications on modern hosting and cloud platforms.",
+  },
+  "Development and AI Tools": {
+    title: "Development and AI Tools",
+    description:
+      "Tools I use for coding, version control, computer vision, AI assistance, and productivity.",
+  },
+};
+
+const skillGroupOrder = [
+  "Frontend",
+  "Development and AI Tools",
+  "Mobile Development",
+  "Databases & Backend Services",
+  "Backend",
+  "Cloud & Deployment",
 ] as const;
 
-const capabilityIcons: Record<string, LucideIcon> = {
-  Frontend: CodeXml,
-  "Mobile Development": Smartphone,
-  "Backend & AI": Cpu,
-  "Databases & Backend Services": Database,
-  "Cloud & Deployment": CloudCog,
-  "Development Tools": Wrench,
-  "IT Support": Laptop,
-  "AI Tools": Sparkles,
+const orderedTechnicalSkills = skillGroupOrder.flatMap((title) => {
+  const group = technicalSkills.find((skillGroup) => skillGroup.title === title);
+  return group ? [group] : [];
+});
+
+const skillGridColumns: Record<number, string> = {
+  2: "sm:grid-cols-2",
+  3: "sm:grid-cols-3",
+  4: "sm:grid-cols-4",
+  5: "sm:grid-cols-5 sm:gap-x-2",
+  8: "sm:grid-cols-4",
 };
 
 export default function SkillsPage() {
@@ -62,211 +165,148 @@ export default function SkillsPage() {
       activeItem="Skills"
       title="Skills"
       titleClassName="text-[48px] font-bold leading-[0.95] tracking-[-0.055em] text-foreground"
-      description="The technologies, tools, and professional strengths I use to build reliable and user-friendly digital products."
+      description="Technical skills and tools I use to build, troubleshoot, and support reliable digital solutions."
       descriptionClassName="text-[16px] leading-[1.6] text-muted"
-      headerClassName="max-w-[1080px]"
-      descriptionWidthClassName="max-w-[760px]"
-      showDivider={false}
+      headerClassName="w-full"
+      descriptionWidthClassName="w-full"
+      showDivider
     >
-      <section aria-labelledby="core-stack-heading" className="pt-16 sm:pt-20">
-        <header className="max-w-[800px]">
-          <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-muted">
-            Core stack
-          </p>
-          <h2
-            id="core-stack-heading"
-            className="mt-3 text-[34px] font-bold leading-[1.05] tracking-[-0.045em] text-foreground"
-          >
-            Technologies I build with
-          </h2>
-          <p className="mt-4 max-w-[680px] text-[16px] leading-[1.6] text-muted">
-            A practical toolkit shaped by full-stack web, mobile, and AI-integrated projects.
-          </p>
-        </header>
-
-        <ul
-          aria-label="Core technologies"
-          className="mt-10 grid grid-cols-2 border-l border-t border-border sm:grid-cols-3 lg:grid-cols-5"
-        >
-          {featuredSkills.map((skill) => (
-            <li
-              key={skill.name}
-              className="group flex min-h-[148px] flex-col justify-between border-b border-r border-border bg-surface p-5 transition-[background-color,transform] duration-200 ease-out hover:-translate-y-0.5 hover:bg-surface-hover motion-reduce:transform-none motion-reduce:transition-none"
-            >
-              <span className="relative flex size-12 items-center justify-center">
-                <Image
-                  src={skill.image}
-                  alt=""
-                  width={48}
-                  height={48}
-                  sizes="48px"
-                  loading={skill.name === "HTML" ? "eager" : "lazy"}
-                  className={`size-full object-contain p-1.5 ${
-                    skill.name === "Next.js" ? "nextjs-brand-logo" : ""
-                  }`}
-                />
-              </span>
-              <span className="mt-6">
-                <span className="block text-[13px] font-semibold leading-[1.3] text-foreground">
-                  {skill.name}
-                </span>
-                <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-muted">
-                  {skill.category}
-                </span>
-              </span>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-6 grid border-l border-t border-border lg:grid-cols-3">
-          {appliedExperience.map((item) => (
-            <article
-              key={item.title}
-              className="grid grid-cols-[32px_1fr] gap-4 border-b border-r border-border p-5 sm:p-6"
-            >
-              <span className="pt-0.5 text-[10px] font-bold tracking-[0.12em] text-muted">
-                {item.number}
-              </span>
-              <div>
-                <h3 className="text-[15px] font-semibold text-foreground">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-[14px] leading-[1.6] text-muted">
-                  {item.description}
-                </p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section
-        aria-labelledby="capabilities-heading"
-        className="grid gap-10 pt-20 sm:pt-24 lg:grid-cols-[minmax(240px,0.72fr)_minmax(0,1.28fr)] lg:gap-16"
-      >
-        <header className="lg:sticky lg:top-20 lg:self-start">
-          <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-muted">
-            Capabilities
-          </p>
-          <h2
-            id="capabilities-heading"
-            className="mt-3 text-[34px] font-bold leading-[1.05] tracking-[-0.045em] text-foreground"
-          >
-            Beyond the core stack
-          </h2>
-          <p className="mt-4 max-w-[430px] text-[16px] leading-[1.6] text-muted">
-            Supporting technologies and practical skills used across development, deployment, and technical support.
-          </p>
-        </header>
-
-        <div className="border-t border-border">
-          {technicalSkills.map((group, index) => {
-            const Icon = capabilityIcons[group.title] ?? CodeXml;
+      <section aria-label="Technical skills" className="pt-12 sm:pt-14">
+        <div className="grid gap-5 md:grid-cols-2">
+          {orderedTechnicalSkills.map((group) => {
+            const details = skillGroupDetails[group.title] ?? {
+              title: group.title.replace(/&/g, "and"),
+              description: "Technologies and tools I use in practical development work.",
+            };
+            const gridColumns =
+              skillGridColumns[group.items.length] ?? "sm:grid-cols-4";
 
             return (
-              <article
+              <Reveal
+                as="article"
                 key={group.title}
-                className="grid gap-5 border-b border-border py-7 sm:grid-cols-[48px_minmax(150px,0.72fr)_minmax(0,1.28fr)] sm:gap-6 sm:py-8"
+                id={group.title
+                  .toLocaleLowerCase()
+                  .replace(/&/g, "and")
+                  .replace(/[^a-z0-9]+/g, "-")
+                  .replace(/^-|-$/g, "")}
+                className="skill-category-card scroll-mt-8 rounded-[12px] border border-border bg-surface p-5 sm:p-6"
               >
-                <div className="flex items-center gap-3 sm:block">
-                  <span className="flex size-10 items-center justify-center rounded-[4px] border border-border bg-surface-hover text-foreground">
-                    <Icon aria-hidden="true" className="size-[18px]" strokeWidth={1.8} />
-                  </span>
-                  <span className="text-[10px] font-bold tracking-[0.12em] text-muted sm:mt-3 sm:block">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                </div>
+                <header>
+                  <h2 className="text-[20px] font-bold leading-[1.15] tracking-[-0.035em] text-foreground sm:text-[22px]">
+                    {details.title}
+                  </h2>
+                  <p className="mt-2 min-h-[52px] text-[14px] leading-[1.55] text-muted">
+                    {details.description}
+                  </p>
+                </header>
 
-                <h3 className="text-[19px] font-bold leading-[1.15] tracking-[-0.03em] text-foreground">
-                  {group.title}
-                </h3>
+                <ul
+                  aria-label={`${details.title} skills`}
+                  className={`mt-5 grid grid-cols-2 gap-x-3 gap-y-4 border-t border-border pt-5 ${gridColumns}`}
+                >
+                  {group.items.map((skill) => {
+                    const logo = skillLogos.get(skill.name);
 
-                <ul className="flex flex-wrap content-start gap-2">
-                  {group.items.map((skill) => (
-                    <li
-                      key={skill.name}
-                      className="rounded-full border border-border bg-surface px-3.5 py-2 text-[12px] font-semibold leading-[1.25] text-foreground"
-                    >
-                      {skill.name}
-                      {skill.proficiency ? (
-                        <span className="ml-2 text-[9px] font-bold uppercase tracking-[0.1em] text-muted">
-                          {skill.proficiency}
+                    return (
+                      <li
+                        key={skill.name}
+                        className="skill-tile group flex min-h-[96px] flex-col items-center justify-center rounded-[8px] px-1.5 py-3 text-center"
+                      >
+                        <span className="skill-logo relative flex size-11 items-center justify-center">
+                          {logo ? (
+                            <Image
+                              src={logo.src}
+                              alt=""
+                              width={44}
+                              height={44}
+                              sizes="44px"
+                              loading={skill.name === "HTML" ? "eager" : "lazy"}
+                              className={`size-full object-contain p-1${
+                                logo.invertInDark ? " skill-logo-dark-invert" : ""
+                              }`}
+                            />
+                          ) : (
+                            <MousePointer2
+                              aria-hidden="true"
+                              className="size-8 text-[#3776AB]"
+                              strokeWidth={1.8}
+                            />
+                          )}
                         </span>
-                      ) : null}
-                    </li>
-                  ))}
+                        <span className="skill-tile-label mt-2.5 text-[12px] font-semibold leading-[1.25] text-foreground">
+                          {skill.name}
+                        </span>
+                      </li>
+                    );
+                  })}
                 </ul>
-              </article>
+              </Reveal>
             );
           })}
         </div>
       </section>
 
-      <div className="mt-20 grid gap-5 sm:mt-24 lg:grid-cols-2">
-        <section
-          aria-labelledby="professional-strengths-heading"
-          className="rounded-[6px] border border-border bg-surface-hover p-6 sm:p-8"
+      <section
+        aria-labelledby="professional-skills-heading"
+        className="mt-5 grid gap-5 md:grid-cols-2"
+      >
+        <Reveal
+          as="article"
+          className="skill-category-card rounded-[12px] border border-border bg-surface p-5 sm:p-6"
         >
-          <div className="flex size-10 items-center justify-center rounded-[4px] border border-border bg-background text-foreground">
-            <UsersRound aria-hidden="true" className="size-[18px]" strokeWidth={1.8} />
-          </div>
-          <p className="mt-7 text-[12px] font-bold uppercase tracking-[0.16em] text-muted">
-            Professional strengths
-          </p>
-          <h2
-            id="professional-strengths-heading"
-            className="mt-3 text-[30px] font-bold leading-[1.05] tracking-[-0.045em] text-foreground"
-          >
-            How I work
-          </h2>
-          <ol className="mt-7 divide-y divide-border border-y border-border">
-            {professionalSkills.map((skill, index) => (
+          <header>
+            <h2
+              id="professional-skills-heading"
+              className="text-[20px] font-bold leading-[1.15] tracking-[-0.035em] text-foreground sm:text-[22px]"
+            >
+              Soft Skills
+            </h2>
+            <p className="mt-2 text-[14px] leading-[1.55] text-muted">
+              Key strengths I apply in academic, project, and team environments.
+            </p>
+          </header>
+
+          <ul className="mt-6 flex flex-wrap gap-2.5">
+            {professionalSkills.map((skill) => (
               <li
-                key={skill}
-                className="flex min-h-14 items-center gap-4 py-3 text-[14px] font-semibold text-foreground"
+                key={skill.name}
+                title={skill.description}
+                className="skill-summary-pill rounded-full border border-border bg-surface-hover px-4 py-2 text-[13px] font-semibold text-foreground"
               >
-                <span className="w-5 text-[10px] font-bold tracking-[0.1em] text-muted">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                {skill}
+                {skill.name}
               </li>
             ))}
-          </ol>
-        </section>
+          </ul>
+        </Reveal>
 
-        <section
-          aria-labelledby="languages-heading"
-          className="rounded-[6px] border border-border bg-surface-hover p-6 sm:p-8"
+        <Reveal
+          as="article"
+          className="skill-category-card rounded-[12px] border border-border bg-surface p-5 sm:p-6"
         >
-          <div className="flex size-10 items-center justify-center rounded-[4px] border border-border bg-background text-foreground">
-            <LanguagesIcon aria-hidden="true" className="size-[18px]" strokeWidth={1.8} />
-          </div>
-          <p className="mt-6 text-[12px] font-bold uppercase tracking-[0.16em] text-muted">
-            Communication
-          </p>
-          <h2
-            id="languages-heading"
-            className="mt-3 text-[30px] font-bold leading-[1.05] tracking-[-0.045em] text-foreground"
-          >
-            Languages
-          </h2>
-          <dl className="mt-7 divide-y divide-border border-y border-border">
+          <header>
+            <h2 className="text-[20px] font-bold leading-[1.15] tracking-[-0.035em] text-foreground sm:text-[22px]">
+              Languages
+            </h2>
+            <p className="mt-2 text-[14px] leading-[1.55] text-muted">
+              Languages I use for communication and collaboration.
+            </p>
+          </header>
+
+          <dl className="mt-6 grid grid-cols-2 gap-2.5">
             {languages.map((language) => (
               <div
                 key={language.name}
-                className="flex min-h-[76px] items-center justify-between gap-5 py-4"
+                title={language.description}
+                className="skill-summary-pill flex items-center justify-center gap-1 whitespace-nowrap rounded-full border border-border bg-surface-hover px-4 py-2.5 text-center text-[13px] font-semibold text-foreground"
               >
-                <dt className="text-[17px] font-bold tracking-[-0.025em] text-foreground">
-                  {language.name}
-                </dt>
-                <dd className="text-[10px] font-bold uppercase tracking-[0.14em] text-muted">
-                  {language.proficiency}
-                </dd>
+                <dt className="leading-[1.2]">{language.name}</dt>
+                <dd className="leading-[1.2]">({language.proficiency})</dd>
               </div>
             ))}
           </dl>
-        </section>
-      </div>
+        </Reveal>
+      </section>
     </DetailPageShell>
   );
 }

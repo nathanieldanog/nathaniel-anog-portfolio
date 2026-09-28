@@ -10,14 +10,6 @@ export type Experience = {
   }[];
 };
 
-export type Activity = {
-  name: string;
-  role: string;
-  location: string;
-  date: string;
-  highlights: readonly string[];
-};
-
 export const experiences = [
   {
     role: "IT Support Intern",
@@ -44,17 +36,3 @@ export const experiences = [
     ],
   },
 ] as const satisfies readonly Experience[];
-
-export const activities = [
-  {
-    name: "Stratum: Career Guidance Seminar",
-    role: "Program Director",
-    location: "Sta. Mesa, Manila",
-    date: "May 12–14, 2026",
-    highlights: [
-      "Led the planning and execution of a career guidance seminar for 200+ attendees, overseeing program flow, scheduling, and event coordination to ensure smooth and timely delivery.",
-      "Coordinated with 20+ committee members across multiple teams, aligning responsibilities and program requirements to support efficient event preparation and execution.",
-      "Directed event-day operations and resolved program and logistical concerns, keeping the seminar on schedule from opening to closing.",
-    ],
-  },
-] as const satisfies readonly Activity[];

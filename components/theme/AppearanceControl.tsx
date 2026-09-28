@@ -18,7 +18,8 @@ export function AppearanceControl({ compact = false }: { compact?: boolean }) {
     >
       <span
         aria-hidden="true"
-        className={`inline-flex size-7 items-center justify-center ${
+        data-active={resolvedTheme === "light" ? "true" : "false"}
+        className={`theme-icon theme-icon--sun inline-flex size-7 items-center justify-center ${
           resolvedTheme === "light" ? "text-foreground" : "text-muted"
         }`}
       >
@@ -31,14 +32,15 @@ export function AppearanceControl({ compact = false }: { compact?: boolean }) {
         aria-label="Dark mode"
         aria-checked={resolvedTheme === "dark"}
         onClick={() => setMode(resolvedTheme === "dark" ? "light" : "dark")}
-        className="mx-1.5 flex h-5 w-10 shrink-0 cursor-pointer items-center rounded-full border border-border bg-background px-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background xl:mx-2"
+        className="theme-toggle mx-1.5 flex h-5 w-10 shrink-0 cursor-pointer items-center rounded-full border border-border bg-background px-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background xl:mx-2"
       >
         <span aria-hidden="true" className="theme-thumb size-4 rounded-full bg-foreground" />
       </button>
 
       <span
         aria-hidden="true"
-        className={`inline-flex size-7 items-center justify-center ${
+        data-active={resolvedTheme === "dark" ? "true" : "false"}
+        className={`theme-icon theme-icon--moon inline-flex size-7 items-center justify-center ${
           resolvedTheme === "dark" ? "text-foreground" : "text-muted"
         }`}
       >
@@ -53,9 +55,13 @@ export function AppearanceControl({ compact = false }: { compact?: boolean }) {
         aria-label="Use system theme"
         aria-pressed={mode === "system"}
         onClick={() => setMode("system")}
-        className="theme-option flex h-7 min-w-0 items-center gap-1 rounded px-1 text-xs"
+        className="theme-option flex h-7 min-w-0 items-center gap-1 rounded px-1 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
-        <Monitor aria-hidden="true" className="size-4 shrink-0" strokeWidth={2} />
+        <Monitor
+          aria-hidden="true"
+          className="theme-system-icon size-4 shrink-0"
+          strokeWidth={2}
+        />
         <span>System</span>
       </button>
     </div>

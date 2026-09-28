@@ -1,12 +1,15 @@
 import Image from "next/image";
+import { Reveal } from "@/components/motion/Reveal";
 import { experiences } from "@/data/experience";
 
 export function ExperienceShowcase() {
   return (
     <div className="mt-8 space-y-10 sm:mt-10">
       {experiences.map((experience) => (
-        <article
+        <Reveal
+          as="article"
           key={`${experience.company}-${experience.role}`}
+          variant="scale-in"
           className="grid gap-8 lg:grid-cols-[minmax(280px,0.7fr)_minmax(0,1.3fr)] lg:gap-10 xl:gap-12"
         >
           <div className="relative min-h-[340px] overflow-hidden rounded-[6px] border border-border bg-surface-hover">
@@ -50,7 +53,7 @@ export function ExperienceShowcase() {
               ))}
             </ul>
           </div>
-        </article>
+        </Reveal>
       ))}
     </div>
   );

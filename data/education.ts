@@ -7,7 +7,7 @@ export const education = {
   gwa: "1.38",
   distinction: "Cum Laude",
   scholarships: [
-    "DOST-SEI S&T Undergraduate Scholar under the Merit Program",
+    "DOST-SEI Science and Technology Undergraduate Scholar under the Merit Program",
     "DOST-SEI Academic Excellence in Science and Technology Awardee",
   ],
   achievements: [

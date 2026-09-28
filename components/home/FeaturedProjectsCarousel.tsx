@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { SVGProps } from "react";
+import { Reveal } from "@/components/motion/Reveal";
 import type { Project } from "@/data/projects";
 
 function GitHubIcon(props: SVGProps<SVGSVGElement>) {
@@ -14,17 +15,17 @@ function GitHubIcon(props: SVGProps<SVGSVGElement>) {
 
 function ProjectVisual({ project }: { project: Project }) {
   return (
-    <div className="relative min-h-[260px] overflow-hidden rounded-[4px] border border-border bg-surface-hover p-3 sm:min-h-[320px] sm:p-4 lg:min-h-[380px]">
-      <span className="relative z-10 inline-flex rounded-[4px] bg-[#0a0b0d] px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.04em] text-white">
+    <div className="project-visual relative min-h-[260px] overflow-hidden rounded-[4px] border border-border bg-surface-hover p-3 sm:min-h-[320px] sm:p-4 lg:min-h-[380px]">
+      <span className="project-category-label relative z-10 inline-flex rounded-[4px] bg-[#0a0b0d] px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.04em] text-white">
         {project.category}
       </span>
 
-      <div className="absolute inset-x-3 bottom-3 top-14 overflow-hidden rounded-[4px] bg-[#0a0b0d] sm:inset-x-4 sm:bottom-4 sm:top-16">
+      <div className="project-image-frame absolute inset-x-3 bottom-3 top-14 overflow-hidden rounded-[4px] bg-[#0a0b0d] sm:inset-x-4 sm:bottom-4 sm:top-16">
         <Image
           src={project.image}
           alt={`${project.title} project preview`}
           fill
-          className="object-cover"
+          className="project-image object-cover"
           sizes="(min-width: 1280px) 500px, (min-width: 1024px) 42vw, calc(100vw - 72px)"
         />
       </div>
@@ -34,26 +35,43 @@ function ProjectVisual({ project }: { project: Project }) {
 
 export function FeaturedProjectsCarousel({
   projects,
+  showHighlights = false,
 }: {
   projects: readonly Project[];
+  showHighlights?: boolean;
 }) {
   return (
     <div className="mt-8 space-y-12 sm:mt-10 sm:space-y-16 lg:mt-12 lg:space-y-20">
       {projects.map((project) => (
-        <article
+        <Reveal
+          as="article"
           key={project.slug}
           id={project.slug}
-          className="scroll-mt-20 grid items-stretch gap-5 sm:gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(320px,1.15fr)] lg:gap-8 xl:gap-10"
+          variant="scale-in"
+          className="project-showcase scroll-mt-20 grid items-stretch gap-5 sm:gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(320px,1.15fr)] lg:gap-8 xl:gap-10"
         >
           <ProjectVisual project={project} />
 
-          <div className="flex flex-col justify-center py-1 lg:py-4">
+          <div className="project-copy flex flex-col justify-center py-1 lg:py-4">
             <h3 className="text-[28px] font-bold leading-[1.05] tracking-[-0.045em] text-foreground sm:text-[34px]">
               {project.title}
             </h3>
-            <p className="mt-3 text-[15px] leading-[1.6] text-muted">
-              {project.description}
-            </p>
+            {showHighlights ? (
+              <ul className="mt-3 space-y-2 text-[15px] leading-[1.6] text-muted">
+                {project.highlights.map((highlight) => (
+                  <li
+                    key={highlight}
+                    className="relative pl-5 before:absolute before:left-0 before:top-[0.7em] before:size-1 before:rounded-full before:bg-foreground"
+                  >
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="mt-3 text-[15px] leading-[1.6] text-muted">
+                {project.description}
+              </p>
+            )}
 
             <div className="mt-5">
               <p className="text-[14px] font-bold uppercase tracking-[0.08em] text-foreground">
@@ -84,10 +102,10 @@ export function FeaturedProjectsCarousel({
             <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
               <Link
                 href={`/projects#${project.slug}`}
-                className="inline-flex items-center gap-2 border-b-2 border-foreground pb-1.5 text-[14px] font-bold uppercase tracking-[0.02em] text-foreground transition-[opacity,transform] duration-200 hover:-translate-y-0.5 hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground motion-reduce:transform-none motion-reduce:transition-none"
+                className="project-action inline-flex items-center gap-2 border-b-2 border-foreground pb-1.5 text-[14px] font-bold uppercase tracking-[0.02em] text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
               >
                 View project
-                <ArrowRight aria-hidden="true" className="size-4" />
+                <ArrowRight aria-hidden="true" className="project-action-arrow size-4" />
               </Link>
 
               {project.githubUrl ? (
@@ -95,10 +113,10 @@ export function FeaturedProjectsCarousel({
                   href={project.githubUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 border-b-2 border-foreground pb-1.5 text-[14px] font-bold uppercase tracking-[0.02em] text-foreground transition-[opacity,transform] duration-200 hover:-translate-y-0.5 hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground motion-reduce:transform-none motion-reduce:transition-none"
+                  className="project-action inline-flex items-center gap-2 border-b-2 border-foreground pb-1.5 text-[14px] font-bold uppercase tracking-[0.02em] text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
                 >
                   See on GitHub
-                  <GitHubIcon aria-hidden="true" className="size-[18px]" />
+                  <GitHubIcon aria-hidden="true" className="project-action-github size-[18px]" />
                 </a>
               ) : (
                 <span
@@ -112,7 +130,7 @@ export function FeaturedProjectsCarousel({
               )}
             </div>
           </div>
-        </article>
+        </Reveal>
       ))}
     </div>
   );

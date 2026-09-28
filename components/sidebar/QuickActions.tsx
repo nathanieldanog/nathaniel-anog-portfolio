@@ -20,9 +20,9 @@ export function QuickActions() {
         <button
           type="button"
           onClick={openCommandPalette}
-          className="flex h-8 w-full cursor-pointer items-center justify-between text-left text-xs text-foreground"
+          className="sidebar-quick-action flex h-8 w-full cursor-pointer items-center justify-between rounded-[5px] text-left text-xs text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
         >
-          <span>Search anything</span>
+          <span className="sidebar-quick-label">Search anything</span>
           <Hotkey shortcutKey="K" />
         </button>
 
@@ -30,9 +30,9 @@ export function QuickActions() {
           href={profile.resumePath}
           target="_blank"
           rel="noreferrer"
-          className="flex h-8 w-full items-center justify-between text-xs text-foreground"
+          className="sidebar-quick-action flex h-8 w-full items-center justify-between rounded-[5px] text-xs text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
         >
-          <span>View resume</span>
+          <span className="sidebar-quick-label">View resume</span>
           <Hotkey shortcutKey="R" />
         </a>
       </div>

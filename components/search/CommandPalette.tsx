@@ -1,67 +1,114 @@
 "use client";
 
-import { ArrowDown, ArrowUp, CornerDownLeft, Search, X } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowUp,
+  CornerDownLeft,
+  Search,
+  X,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
-import { navigationItems } from "@/data/navigation";
+import {
+  findSearchItems,
+  pageSearchItems,
+  searchItems,
+  type SearchItem,
+} from "@/data/search";
 
-const RECENT_SEARCHES_KEY = "portfolio-recent-searches";
-const MAX_RECENT_SEARCHES = 5;
-
-type SearchItem = {
-  label: string;
-  href: string;
-  category: "Page";
-};
-
-const searchItems: SearchItem[] = navigationItems.map((item) => ({
-  ...item,
-  category: "Page",
-}));
+const LAST_OPENED_KEY = "portfolio-last-opened-search-items";
+const LEGACY_RECENT_ITEMS_KEY = "portfolio-recent-searches";
+const MAX_LAST_OPENED = 5;
 
 type CommandPaletteProps = {
   open: boolean;
   onClose: () => void;
 };
 
+function readStoredStrings(key: string, limit: number) {
+  try {
+    const value: unknown = JSON.parse(window.localStorage.getItem(key) ?? "[]");
+    return Array.isArray(value)
+      ? value.filter((item): item is string => typeof item === "string").slice(0, limit)
+      : [];
+  } catch {
+    window.localStorage.removeItem(key);
+    return [];
+  }
+}
+
+function getResultId(item: SearchItem, section: "result" | "last" | "page") {
+  return `command-result-${section}-${item.id}`;
+}
+
 export function CommandPalette({ open, onClose }: CommandPaletteProps) {
   const router = useRouter();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
+  const closeTimerRef = useRef<number | null>(null);
+  const openFrameRef = useRef<number | null>(null);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
-  const [recentItems, setRecentItems] = useState<SearchItem[]>([]);
+  const [lastOpenedItems, setLastOpenedItems] = useState<SearchItem[]>([]);
+  const [motionState, setMotionState] = useState<
+    "closed" | "opening" | "open" | "closing"
+  >("closed");
 
   useEffect(() => {
-    try {
-      const storedItems = JSON.parse(
-        window.localStorage.getItem(RECENT_SEARCHES_KEY) ?? "[]",
-      ) as Array<{ href?: unknown }>;
-      const validItems = storedItems
-        .map((storedItem) =>
-          searchItems.find((searchItem) => searchItem.href === storedItem.href),
-        )
-        .filter((item): item is SearchItem => Boolean(item))
-        .slice(0, MAX_RECENT_SEARCHES);
+    const frame = window.requestAnimationFrame(() => {
+      let storedIds = readStoredStrings(LAST_OPENED_KEY, MAX_LAST_OPENED);
 
-      setRecentItems(validItems);
-    } catch {
-      window.localStorage.removeItem(RECENT_SEARCHES_KEY);
-    }
+      if (storedIds.length === 0) {
+        try {
+          const legacyItems: unknown = JSON.parse(
+            window.localStorage.getItem(LEGACY_RECENT_ITEMS_KEY) ?? "[]",
+          );
+
+          if (Array.isArray(legacyItems)) {
+            storedIds = legacyItems
+              .map((legacyItem) => {
+                if (
+                  typeof legacyItem !== "object" ||
+                  legacyItem === null ||
+                  !("href" in legacyItem) ||
+                  typeof legacyItem.href !== "string"
+                ) {
+                  return null;
+                }
+
+                return searchItems.find((item) => item.href === legacyItem.href)?.id ?? null;
+              })
+              .filter((id): id is string => Boolean(id));
+          }
+        } catch {
+          window.localStorage.removeItem(LEGACY_RECENT_ITEMS_KEY);
+        }
+      }
+
+      setLastOpenedItems(
+        storedIds
+          .map((id) => searchItems.find((item) => item.id === id))
+          .filter((item): item is SearchItem => Boolean(item))
+          .slice(0, MAX_LAST_OPENED),
+      );
+    });
+
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
-  const filteredItems = useMemo(() => {
-    const normalizedQuery = query.trim().toLocaleLowerCase();
-
-    if (!normalizedQuery) {
-      return recentItems.length > 0 ? recentItems : searchItems;
-    }
-
-    return searchItems.filter((item) =>
-      item.label.toLocaleLowerCase().includes(normalizedQuery),
-    );
-  }, [query, recentItems]);
+  const filteredItems = useMemo(() => findSearchItems(query), [query]);
+  const hasQuery = Boolean(query.trim());
+  const primaryItems = hasQuery ? filteredItems : lastOpenedItems;
+  const displayedItems = hasQuery
+    ? filteredItems
+    : [...lastOpenedItems, ...pageSearchItems];
+  const activeItem = displayedItems[activeIndex];
+  const activeSection = hasQuery
+    ? "result"
+    : activeIndex < lastOpenedItems.length
+      ? "last"
+      : "page";
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -74,19 +121,66 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
       returnFocusRef.current =
         document.activeElement instanceof HTMLElement ? document.activeElement : null;
       dialog.showModal();
-      inputRef.current?.focus();
+      setMotionState("opening");
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        openFrameRef.current = window.requestAnimationFrame(() => {
+          setMotionState("open");
+          inputRef.current?.focus();
+          openFrameRef.current = null;
+        });
+      } else {
+        openFrameRef.current = window.requestAnimationFrame(() => {
+          openFrameRef.current = window.requestAnimationFrame(() => {
+            setMotionState("open");
+            inputRef.current?.focus();
+            openFrameRef.current = null;
+          });
+        });
+      }
     } else if (!open && dialog.open) {
       dialog.close();
     }
+
+    return () => {
+      if (openFrameRef.current !== null) {
+        window.cancelAnimationFrame(openFrameRef.current);
+        openFrameRef.current = null;
+      }
+    };
   }, [open]);
 
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current !== null) {
+        window.clearTimeout(closeTimerRef.current);
+      }
+    };
+  }, []);
+
   function closePalette() {
-    dialogRef.current?.close();
+    const dialog = dialogRef.current;
+
+    if (!dialog?.open || motionState === "closing") {
+      return;
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      dialog.close();
+      return;
+    }
+
+    setMotionState("closing");
+    closeTimerRef.current = window.setTimeout(() => {
+      dialog.close();
+      closeTimerRef.current = null;
+    }, 240);
   }
 
   function handleDialogClose() {
     setQuery("");
     setActiveIndex(0);
+    setMotionState("closed");
     onClose();
 
     const returnFocusElement = returnFocusRef.current;
@@ -94,15 +188,24 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
   }
 
   function openItem(item: SearchItem) {
-    const updatedRecentItems = [
+    const updatedItems = [
       item,
-      ...recentItems.filter((recentItem) => recentItem.href !== item.href),
-    ].slice(0, MAX_RECENT_SEARCHES);
+      ...lastOpenedItems.filter((lastOpenedItem) => lastOpenedItem.id !== item.id),
+    ].slice(0, MAX_LAST_OPENED);
 
-    setRecentItems(updatedRecentItems);
-    window.localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updatedRecentItems));
+    setLastOpenedItems(updatedItems);
+    window.localStorage.setItem(
+      LAST_OPENED_KEY,
+      JSON.stringify(updatedItems.map((lastOpenedItem) => lastOpenedItem.id)),
+    );
     router.push(item.href);
     closePalette();
+  }
+
+  function clearLastOpened() {
+    setLastOpenedItems([]);
+    setActiveIndex(0);
+    window.localStorage.removeItem(LAST_OPENED_KEY);
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLDialogElement>) {
@@ -115,7 +218,7 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
     if (event.key === "ArrowDown") {
       event.preventDefault();
       setActiveIndex((currentIndex) =>
-        filteredItems.length === 0 ? 0 : (currentIndex + 1) % filteredItems.length,
+        displayedItems.length === 0 ? 0 : (currentIndex + 1) % displayedItems.length,
       );
       return;
     }
@@ -123,16 +226,16 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
     if (event.key === "ArrowUp") {
       event.preventDefault();
       setActiveIndex((currentIndex) =>
-        filteredItems.length === 0
+        displayedItems.length === 0
           ? 0
-          : (currentIndex - 1 + filteredItems.length) % filteredItems.length,
+          : (currentIndex - 1 + displayedItems.length) % displayedItems.length,
       );
       return;
     }
 
-    if (event.key === "Enter" && filteredItems[activeIndex]) {
+    if (event.key === "Enter" && displayedItems[activeIndex]) {
       event.preventDefault();
-      openItem(filteredItems[activeIndex]);
+      openItem(displayedItems[activeIndex]);
     }
   }
 
@@ -140,6 +243,7 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
     <dialog
       ref={dialogRef}
       aria-labelledby="command-palette-title"
+      data-motion-state={motionState}
       onCancel={(event) => {
         event.preventDefault();
         closePalette();
@@ -151,30 +255,32 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
         }
       }}
       onKeyDown={handleKeyDown}
-      className="fixed inset-0 z-[100] m-auto h-fit w-[min(calc(100%_-_2rem),560px)] max-w-none overflow-hidden rounded-lg border border-border bg-surface p-0 text-foreground backdrop:bg-black/35"
+      className="command-palette-dialog fixed inset-0 z-[100] m-auto h-fit w-[min(calc(100%_-_2rem),620px)] max-w-none overflow-hidden rounded-lg border border-border bg-surface p-0 text-foreground shadow-2xl"
     >
       <h2 id="command-palette-title" className="sr-only">
         Search portfolio
       </h2>
 
-      <div className="flex h-14 items-center gap-3 border-b border-border px-4">
+      <div className="command-palette-header flex h-14 items-center gap-3 border-b border-border px-4">
         <Search aria-hidden="true" className="size-5 shrink-0 text-muted" strokeWidth={2} />
         <label htmlFor="command-palette-input" className="sr-only">
-          Search pages
+          Search portfolio
         </label>
         <input
           ref={inputRef}
           id="command-palette-input"
-          type="search"
+          type="text"
           role="combobox"
           aria-autocomplete="list"
-          aria-controls="command-palette-results"
+          aria-controls={
+            hasQuery
+              ? "command-palette-results"
+              : "command-palette-results command-palette-pages"
+          }
           aria-expanded="true"
           aria-activedescendant={
-            filteredItems[activeIndex]
-              ? `command-result-${filteredItems[activeIndex].label
-                  .toLocaleLowerCase()
-                  .replace(/[^a-z0-9]+/g, "-")}`
+            activeItem
+              ? getResultId(activeItem, activeSection)
               : undefined
           }
           value={query}
@@ -182,65 +288,149 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
             setQuery(event.target.value);
             setActiveIndex(0);
           }}
-          placeholder="Search pages..."
+          placeholder="Search projects, skills, certificates..."
           autoComplete="off"
           className="h-full min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted"
         />
+        {hasQuery ? (
+          <>
+            <button
+              type="button"
+              onClick={() => {
+                setQuery("");
+                setActiveIndex(0);
+                inputRef.current?.focus();
+              }}
+              className="shrink-0 px-1 text-[12px] font-semibold text-muted transition-colors hover:text-foreground"
+            >
+              Clear
+            </button>
+            <span aria-hidden="true" className="h-5 w-px shrink-0 bg-border" />
+          </>
+        ) : null}
         <button
           type="button"
           aria-label="Close search"
           onClick={closePalette}
-          className="inline-flex size-8 shrink-0 items-center justify-center rounded text-muted hover:bg-surface-hover hover:text-foreground"
+          className="inline-flex size-8 shrink-0 items-center justify-center rounded text-muted transition-colors hover:bg-surface-hover hover:text-foreground"
         >
           <X aria-hidden="true" className="size-4" />
         </button>
       </div>
 
-      <div className="max-h-[min(360px,50vh)] overflow-y-auto p-2">
-        <p className="px-3 pb-2 pt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-muted">
-          {query.trim() || recentItems.length === 0 ? "Pages" : "Recent searches"}
-        </p>
-        <div id="command-palette-results" role="listbox" aria-label="Search results">
-          {filteredItems.length > 0 ? (
-            filteredItems.map((item, index) => {
-              const isActive = index === activeIndex;
+      <div className="command-palette-results max-h-[min(460px,65vh)] overflow-y-auto p-2">
+        <section aria-labelledby="search-results-heading">
+          <div className="flex items-center justify-between px-3 pb-2 pt-1">
+            <h3
+              id="search-results-heading"
+              className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted"
+            >
+              {hasQuery
+                ? `${filteredItems.length} ${filteredItems.length === 1 ? "result" : "results"}`
+                : "Last opened"}
+            </h3>
+            {!hasQuery && lastOpenedItems.length > 0 ? (
+              <button
+                type="button"
+                onClick={clearLastOpened}
+                className="text-[10px] font-semibold text-muted hover:text-foreground"
+              >
+                Clear
+              </button>
+            ) : null}
+          </div>
 
-              return (
-                <button
-                  key={item.label}
-                  id={`command-result-${item.label
-                    .toLocaleLowerCase()
-                    .replace(/[^a-z0-9]+/g, "-")}`}
-                  type="button"
-                  role="option"
-                  aria-selected={isActive}
-                  onMouseEnter={() => setActiveIndex(index)}
-                  onClick={() => openItem(item)}
-                  className={`flex h-11 w-full items-center justify-between rounded-md px-3 text-left text-sm ${
-                    isActive
-                      ? "bg-surface-hover font-semibold text-foreground"
-                      : "text-muted hover:bg-surface-hover hover:text-foreground"
-                  }`}
-                >
-                  <span>{item.label}</span>
-                  <span className="ml-3 flex shrink-0 items-center gap-2">
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted">
-                      {!query.trim() && recentItems.length > 0 ? "Recent" : item.category}
+          <div id="command-palette-results" role="listbox" aria-label="Search results">
+            {primaryItems.length > 0 ? (
+              primaryItems.map((item, index) => {
+                const isActive = index === activeIndex;
+
+                return (
+                  <button
+                    key={item.id}
+                    id={getResultId(item, hasQuery ? "result" : "last")}
+                    type="button"
+                    role="option"
+                    aria-selected={isActive}
+                    onMouseEnter={() => setActiveIndex(index)}
+                    onClick={() => openItem(item)}
+                    className={`command-palette-option flex min-h-12 w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm ${
+                      isActive
+                        ? "bg-surface-hover font-semibold text-foreground"
+                        : "text-muted hover:bg-surface-hover hover:text-foreground"
+                    }`}
+                  >
+                    <span className="min-w-0 truncate">{item.label}</span>
+                    <span className="ml-3 flex shrink-0 items-center gap-2">
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted">
+                        {item.category}
+                      </span>
+                      {isActive ? (
+                        <CornerDownLeft aria-hidden="true" className="size-4 text-muted" />
+                      ) : null}
                     </span>
-                    {isActive ? (
-                      <CornerDownLeft aria-hidden="true" className="size-4 text-muted" />
-                    ) : null}
-                  </span>
-                </button>
-              );
-            })
-          ) : (
-            <p className="px-3 py-8 text-center text-sm text-muted">No results found.</p>
-          )}
-        </div>
+                  </button>
+                );
+              })
+            ) : (
+              <p className="px-3 py-7 text-center text-sm text-muted">
+                {hasQuery
+                  ? "No matches. Try a project, technology, certificate, or page name."
+                  : "Items opened from search will appear here."}
+              </p>
+            )}
+          </div>
+        </section>
+
+        {!hasQuery ? (
+          <section
+            aria-labelledby="pages-heading"
+            className="mt-2 border-t border-border pt-2"
+          >
+            <h3
+              id="pages-heading"
+              className="px-3 py-2 text-[10px] font-bold uppercase tracking-[0.16em] text-muted"
+            >
+              Pages
+            </h3>
+            <div id="command-palette-pages" role="listbox" aria-label="Portfolio pages">
+              {pageSearchItems.map((item, index) => {
+                const displayedIndex = lastOpenedItems.length + index;
+                const isActive = displayedIndex === activeIndex;
+
+                return (
+                  <button
+                    key={item.id}
+                    id={getResultId(item, "page")}
+                    type="button"
+                    role="option"
+                    aria-selected={isActive}
+                    onMouseEnter={() => setActiveIndex(displayedIndex)}
+                    onClick={() => openItem(item)}
+                    className={`command-palette-option flex min-h-12 w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm ${
+                      isActive
+                        ? "bg-surface-hover font-semibold text-foreground"
+                        : "text-muted hover:bg-surface-hover hover:text-foreground"
+                    }`}
+                  >
+                    <span>{item.label}</span>
+                    <span className="ml-3 flex shrink-0 items-center gap-2">
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted">
+                        Page
+                      </span>
+                      {isActive ? (
+                        <CornerDownLeft aria-hidden="true" className="size-4 text-muted" />
+                      ) : null}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+        ) : null}
       </div>
 
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border px-4 py-3 text-[10px] text-muted">
+      <div className="command-palette-footer flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border px-4 py-3 text-[10px] text-muted">
         <span className="inline-flex items-center gap-1.5">
           <ArrowUp aria-hidden="true" className="size-3.5" />
           <ArrowDown aria-hidden="true" className="size-3.5" />

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { CalendarDays, MapPin } from "lucide-react";
 import { SectionDivider } from "@/components/home/SectionDivider";
+import { Reveal } from "@/components/motion/Reveal";
 import { MobileHeader } from "@/components/navigation/MobileHeader";
 import { QuickActionsProvider } from "@/components/search/QuickActionsProvider";
 import { SidebarLayout } from "@/components/sidebar/SidebarLayout";
@@ -79,22 +79,25 @@ export default function EducationPage() {
         <MobileHeader activeItem="Education" />
         <SidebarLayout activeItem="Education">
           <header className="relative overflow-hidden">
-            <div className="relative mx-auto w-full max-w-[1180px] px-5 pb-6 pt-12 sm:px-8 sm:pb-8 sm:pt-16 lg:px-10 lg:pb-10 lg:pt-18 xl:px-12 xl:pb-12 xl:pt-20">
+            <Reveal
+              stagger
+              className="relative mx-auto w-full max-w-[1180px] px-5 pb-6 pt-12 sm:px-8 sm:pb-8 sm:pt-16 lg:px-10 lg:pb-10 lg:pt-18 xl:px-12 xl:pb-12 xl:pt-20"
+            >
               <h1 className="max-w-[760px] text-[48px] font-bold leading-[0.95] tracking-[-0.055em] text-foreground">
                 Education
               </h1>
-              <p className="mt-5 max-w-[890px] text-[16px] leading-[1.65] text-muted">
-                My academic journey at the Polytechnic University of the Philippines
-                built a strong foundation in computer engineering, software
-                development, networking, databases, and cloud technologies—shaping
-                how I approach practical digital solutions.
+              <p className="mt-5 w-full text-[16px] leading-[1.65] text-muted">
+                A Cum Laude Computer Engineering graduate from the Polytechnic
+                University of the Philippines, recognized for academic
+                excellence, strong technical foundations, and consistent
+                achievement throughout my undergraduate journey.
               </p>
-            </div>
+            </Reveal>
           </header>
           <SectionDivider />
 
           <main className="mx-auto w-full max-w-[1180px] px-5 pb-10 pt-6 sm:px-8 sm:pb-14 sm:pt-8 lg:px-10 lg:pb-16 lg:pt-10 xl:px-12">
-            <section aria-labelledby="degree-heading">
+            <Reveal as="section" stagger aria-labelledby="degree-heading">
               <p className={eyebrowClassName}>{education.institution}</p>
               <h2
                 id="degree-heading"
@@ -103,19 +106,18 @@ export default function EducationPage() {
                 {education.degree} with Specialization in {education.specialization}
               </h2>
 
-              <div className="mt-6 flex flex-col gap-3 text-[14px] text-muted sm:flex-row sm:flex-wrap sm:items-center sm:gap-7">
-                <span className="inline-flex items-center gap-2.5">
-                  <MapPin aria-hidden="true" className="size-[18px]" strokeWidth={1.8} />
-                  {education.location}
-                </span>
-                <span aria-hidden="true" className="hidden h-4 w-px bg-border sm:block" />
-                <span className="inline-flex items-center gap-2.5">
-                  <CalendarDays aria-hidden="true" className="size-[18px]" strokeWidth={1.8} />
-                  Graduated {education.graduation}
-                </span>
-              </div>
+              <p className="mt-6 flex flex-wrap items-center gap-x-2 text-[14px] text-muted">
+                <span>{education.location}</span>
+                <span aria-hidden="true">·</span>
+                <span>Graduated {education.graduation}</span>
+              </p>
 
-              <dl className="mt-8 grid grid-cols-2 sm:grid-cols-4">
+              <Reveal
+                as="dl"
+                stagger
+                delay={100}
+                className="mt-8 grid grid-cols-2 sm:grid-cols-4"
+              >
                 {academicStats.map((stat, index) => (
                   <div
                     key={stat.label}
@@ -131,17 +133,17 @@ export default function EducationPage() {
                     </dd>
                   </div>
                 ))}
-              </dl>
-            </section>
+              </Reveal>
+            </Reveal>
 
-            <section aria-labelledby="recognition-heading" className="mt-12 sm:mt-16">
+            <Reveal as="section" aria-labelledby="recognition-heading" className="mt-12 sm:mt-16">
               <h2
                 id="recognition-heading"
                 className="text-[28px] font-bold leading-[1.05] tracking-[-0.045em] text-foreground sm:text-[32px]"
               >
-                Scholarship &amp; Recognition
+                Scholarship and Recognition
               </h2>
-              <div className="mt-6 grid gap-4 md:grid-cols-2">
+              <Reveal stagger delay={80} className="mt-6 grid gap-4 md:grid-cols-2">
                 {recognitions.map((recognition) => (
                   <article
                     key={recognition.title}
@@ -156,17 +158,17 @@ export default function EducationPage() {
                     </p>
                   </article>
                 ))}
-              </div>
-            </section>
+              </Reveal>
+            </Reveal>
 
-            <section aria-labelledby="achievements-heading" className="mt-12 sm:mt-16">
+            <Reveal as="section" aria-labelledby="achievements-heading" className="mt-12 sm:mt-16">
               <h2
                 id="achievements-heading"
                 className="text-[28px] font-bold leading-[1.05] tracking-[-0.045em] text-foreground sm:text-[32px]"
               >
-                Honors &amp; Achievements
+                Honors and Achievements
               </h2>
-              <ol className="mt-6">
+              <Reveal as="ol" stagger delay={80} className="mt-6">
                 {achievements.map((achievement, index) => (
                   <li
                     key={achievement.title}
@@ -195,10 +197,10 @@ export default function EducationPage() {
                     </div>
                   </li>
                 ))}
-              </ol>
-            </section>
+              </Reveal>
+            </Reveal>
 
-            <section aria-labelledby="coursework-heading" className="mt-8 sm:mt-10">
+            <Reveal as="section" stagger aria-labelledby="coursework-heading" className="mt-8 sm:mt-10">
               <h2
                 id="coursework-heading"
                 className="text-[28px] font-bold leading-[1.05] tracking-[-0.045em] text-foreground sm:text-[32px]"
@@ -210,7 +212,7 @@ export default function EducationPage() {
                 development, systems, and networks.
               </p>
 
-              <ol className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              <Reveal as="ol" stagger delay={100} className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                 {education.coursework.map((course, index) => (
                   <li
                     key={course}
@@ -229,8 +231,8 @@ export default function EducationPage() {
                     </div>
                   </li>
                 ))}
-              </ol>
-            </section>
+              </Reveal>
+            </Reveal>
 
           </main>
         </SidebarLayout>

@@ -14,7 +14,9 @@ export type TechnicalSkill = {
 
 export type Language = {
   name: string;
+  code: string;
   proficiency: string;
+  description: string;
 };
 
 export const featuredSkills = [
@@ -41,11 +43,12 @@ export const featuredSkills = [
     category: "Framework",
     image: "/logos/tailwind-css-logo.svg",
   },
-  { name: "Python", category: "Language", image: "/logos/python-logo.svg" },
+  { name: "Python", category: "Language", image: "/logos/python-logo.png" },
   {
     name: "PostgreSQL",
     category: "Database",
-    image: "/logos/postgresql-logo.svg",
+    image:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/postgresql/postgresql-original.svg",
   },
 ] as const satisfies readonly FeaturedSkill[];
 
@@ -73,14 +76,11 @@ export const technicalSkills = [
     ],
   },
   {
-    title: "Backend & AI",
+    title: "Backend",
     items: [
       { name: "Node.js", proficiency: "Familiar" },
       { name: "Python", proficiency: "Familiar" },
       { name: "Flask", proficiency: null },
-      { name: "OpenCV", proficiency: null },
-      { name: "MediaPipe", proficiency: null },
-      { name: "PyAutoGUI", proficiency: null },
     ],
   },
   {
@@ -101,42 +101,58 @@ export const technicalSkills = [
     ],
   },
   {
-    title: "Development Tools",
+    title: "Development and AI Tools",
     items: [
       { name: "Git", proficiency: null },
       { name: "GitHub", proficiency: null },
       { name: "Visual Studio Code", proficiency: null },
       { name: "PyCharm", proficiency: null },
-    ],
-  },
-  {
-    title: "IT Support",
-    items: [
-      { name: "Hardware & Software Troubleshooting", proficiency: null },
-      { name: "System Configuration", proficiency: null },
-      { name: "Preventive Maintenance", proficiency: null },
-      { name: "Training & Webinar Setup", proficiency: null },
-    ],
-  },
-  {
-    title: "AI Tools",
-    items: [
-      { name: "ChatGPT", proficiency: null },
-      { name: "Codex", proficiency: null },
+      { name: "OpenCV", proficiency: null },
+      { name: "MediaPipe", proficiency: null },
       { name: "Claude Code", proficiency: null },
+      { name: "Codex", proficiency: null },
     ],
   },
 ] as const satisfies readonly TechnicalSkill[];
 
 export const professionalSkills = [
-  "Problem Solving",
-  "Team Collaboration",
-  "Communication",
-  "Attention to Detail",
-  "Time Management",
+  {
+    name: "Problem Solving",
+    description:
+      "Breaks complex challenges into practical, reliable solutions.",
+  },
+  {
+    name: "Team Collaboration",
+    description:
+      "Works openly with teammates to coordinate and achieve shared goals.",
+  },
+  {
+    name: "Communication",
+    description: "Explains ideas clearly and keeps collaborators aligned.",
+  },
+  {
+    name: "Attention to Detail",
+    description:
+      "Reviews work carefully for quality, accuracy, and consistency.",
+  },
+  {
+    name: "Time Management",
+    description:
+      "Prioritizes responsibilities and delivers dependable work on schedule.",
+  },
 ] as const;
 
 export const languages = [
-  { name: "English", proficiency: "Fluent" },
-  { name: "Filipino", proficiency: "Native" },
+  {
+    name: "English",
+    code: "EN",
+    proficiency: "Fluent",
+    description: "Professional, technical, and everyday communication.",
+  },
+  {
+    name: "Filipino",
+    code: "FIL",
+    proficiency: "Native",
+    description: "Natural communication and collaboration in Filipino.",
+  },
 ] as const satisfies readonly Language[];

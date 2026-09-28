@@ -468,6 +468,7 @@ h3 {
 .mobile-menu-trigger-icon,
 .mobile-menu-close,
 .mobile-menu-close-icon,
+.mobile-menu-morph-icon,
 .mobile-menu-link {
   transition-duration: var(--motion-duration-base);
   transition-timing-function: var(--motion-ease-emphasized);
@@ -480,8 +481,33 @@ h3 {
 }
 
 .mobile-menu-trigger-icon,
-.mobile-menu-close-icon {
+.mobile-menu-close-icon,
+.mobile-menu-morph-icon {
   transition-property: transform;
+}
+
+.mobile-menu-morph-icon {
+  transition-property: opacity, transform;
+}
+
+.mobile-menu-morph-menu {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.mobile-menu-morph-close {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.75);
+}
+
+.mobile-menu-dialog[data-motion-state="open"] .mobile-menu-morph-menu {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.75);
+}
+
+.mobile-menu-dialog[data-motion-state="open"] .mobile-menu-morph-close {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
 }
 
 .mobile-menu-trigger:focus-visible,
@@ -503,8 +529,7 @@ h3 {
 }
 
 .mobile-menu-dialog {
-  opacity: 0;
-  transition: opacity 220ms var(--motion-ease-standard);
+  opacity: 1;
 }
 
 .mobile-menu-dialog::backdrop {
@@ -525,11 +550,8 @@ body:has(.mobile-menu-dialog[open]) {
 }
 
 .mobile-menu-panel {
-  opacity: 0.96;
-  transform: translateX(-100%);
-  transition:
-    opacity 260ms var(--motion-ease-standard),
-    transform 320ms var(--motion-ease-emphasized);
+  opacity: 1;
+  transform: none;
 }
 
 .mobile-menu-dialog[data-motion-state="open"] .mobile-menu-panel {
@@ -573,6 +595,12 @@ body:has(.mobile-menu-dialog[open]) {
   opacity: 1;
   transform: none;
   transition-delay: 230ms;
+}
+
+.mobile-menu-panel > .mobile-menu-header {
+  opacity: 1;
+  transform: none;
+  transition: none;
 }
 
 .mobile-menu-nav-item {
@@ -1373,6 +1401,7 @@ body:has(.mobile-menu-dialog[open]) {
   .mobile-menu-trigger-icon,
   .mobile-menu-close,
   .mobile-menu-close-icon,
+  .mobile-menu-morph-icon,
   .mobile-menu-link,
   .mobile-menu-dialog,
   .mobile-menu-dialog::backdrop,

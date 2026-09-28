@@ -94,8 +94,11 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
 
   return (
     <header className="mobile-site-header sticky top-0 z-40 flex h-16 items-center justify-between border-b border-border bg-surface px-4 sm:px-6 lg:hidden">
-      <Link href="/" className="min-w-0">
-        <span className="truncate font-display text-sm font-bold tracking-[-0.025em] text-foreground">
+      <Link
+        href="/"
+        className="min-w-0 font-display text-[18px] font-semibold leading-tight tracking-[-0.025em] text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+      >
+        <span className="block truncate">
           {profile.name}
         </span>
       </Link>
@@ -106,7 +109,7 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
         aria-controls="mobile-navigation"
         aria-expanded={isOpen}
         onClick={openMenu}
-        className="mobile-menu-trigger inline-flex size-10 items-center justify-center rounded-md border border-border text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+        className="mobile-menu-trigger inline-flex size-10 items-center justify-center rounded-md text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
       >
         <Menu aria-hidden="true" className="mobile-menu-trigger-icon size-5" />
       </button>
@@ -131,26 +134,35 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
         }}
         className="mobile-menu-dialog fixed inset-0 z-50 m-0 hidden h-dvh max-h-none w-full max-w-none bg-surface p-0 open:block"
       >
-        <div className="mobile-menu-panel flex h-dvh min-h-dvh w-full flex-col overflow-hidden bg-surface px-5 pt-[clamp(0.5rem,1.5dvh,1.25rem)] sm:px-7">
-          <div className="flex shrink-0 items-center justify-between border-b border-border pb-[clamp(0.5rem,1.5dvh,1.25rem)]">
+        <div className="mobile-menu-panel flex h-dvh min-h-dvh w-full flex-col overflow-hidden bg-surface">
+          <div className="mobile-menu-header flex h-16 shrink-0 items-center justify-between border-b border-border bg-surface px-4 sm:px-6">
             <Link
               href="/"
               onClick={closeMenu}
-              className="font-display text-[18px] font-semibold leading-tight tracking-[-0.025em] text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+              className="min-w-0 font-display text-[18px] font-semibold leading-tight tracking-[-0.025em] text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
             >
-              {profile.name}
+              <span className="block truncate">{profile.name}</span>
             </Link>
             <button
               type="button"
               aria-label="Close navigation menu"
+              aria-controls="mobile-navigation"
+              aria-expanded="true"
               onClick={closeMenu}
-              className="mobile-menu-close inline-flex size-9 items-center justify-center rounded-md text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+              className="mobile-menu-close mobile-menu-trigger relative inline-flex size-10 items-center justify-center rounded-md text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
             >
-              <X aria-hidden="true" className="mobile-menu-close-icon size-5" />
+              <Menu
+                aria-hidden="true"
+                className="mobile-menu-morph-icon mobile-menu-morph-menu absolute size-5"
+              />
+              <X
+                aria-hidden="true"
+                className="mobile-menu-morph-icon mobile-menu-morph-close absolute size-5"
+              />
             </button>
           </div>
 
-          <div className="-mx-5 min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-[clamp(0.5rem,1.5dvh,1.25rem)] sm:-mx-7 sm:px-7">
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-[clamp(0.5rem,1.25dvh,1.25rem)] sm:px-7">
             <nav
               aria-label="Mobile navigation"
               className="mt-[clamp(0.375rem,1.2dvh,1rem)]"
@@ -180,13 +192,13 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
               </ul>
             </nav>
 
-            <div className="mt-[clamp(0.5rem,1.5dvh,1.25rem)] border-t border-border pt-[clamp(0.5rem,1.5dvh,1.25rem)]">
+            <div className="mt-[clamp(0.5rem,1.25dvh,1.25rem)] border-t border-border pt-[clamp(0.5rem,1.25dvh,1.25rem)]">
               <QuickActions onAction={closeMenu} />
             </div>
 
             <section
               aria-labelledby="mobile-contact-heading"
-              className="mt-[clamp(0.5rem,1.5dvh,1.25rem)] border-t border-border pt-[clamp(0.5rem,1.5dvh,1.25rem)]"
+              className="mt-[clamp(0.5rem,1.25dvh,1.25rem)] border-t border-border pt-[clamp(0.5rem,1.25dvh,1.25rem)]"
             >
               <h2
                 id="mobile-contact-heading"
@@ -207,7 +219,7 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
             </section>
           </div>
 
-          <div className="-mx-5 shrink-0 border-t border-border bg-surface px-5 pb-[clamp(0.5rem,1.5dvh,1.25rem)] pt-[clamp(0.5rem,1.5dvh,1.25rem)] sm:-mx-7 sm:px-7">
+          <div className="shrink-0 border-t border-border bg-surface px-5 pb-[clamp(0.5rem,1.25dvh,1.25rem)] pt-[clamp(0.5rem,1.25dvh,1.25rem)] sm:px-7">
             <AppearanceControl />
           </div>
         </div>

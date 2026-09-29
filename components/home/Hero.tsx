@@ -61,14 +61,14 @@ function Portrait({ className = "" }: { className?: string }) {
       <div
         role="img"
         aria-label="Portrait placeholder"
-        className={`relative z-10 h-[460px] w-full self-center bg-surface-hover sm:h-[580px] lg:h-[min(80svh,720px)] min-[1024px]:h-[min(80svh,820px)] ${className}`}
+        className={`relative z-10 h-[460px] w-full self-center bg-surface-hover sm:h-[580px] lg:h-[min(80svh,720px)] lg:self-end min-[1024px]:h-[min(80svh,820px)] min-[1024px]:self-center ${className}`}
       />
     );
   }
 
   return (
     <div
-      className={`relative z-10 h-[460px] w-full self-center sm:h-[580px] lg:h-[min(80svh,720px)] min-[1024px]:h-[min(80svh,820px)] ${className}`}
+      className={`relative z-10 h-[460px] w-full self-center sm:h-[580px] lg:h-[min(80svh,720px)] lg:self-end min-[1024px]:h-[min(80svh,820px)] min-[1024px]:self-center ${className}`}
     >
       <div
         aria-hidden="true"
@@ -80,7 +80,7 @@ function Portrait({ className = "" }: { className?: string }) {
         src={portraitPath}
         alt={"Portrait of " + profile.name}
         fill
-        className="portrait-silhouette-glow z-10 object-contain object-center"
+        className="portrait-silhouette-glow z-10 object-contain object-center lg:object-bottom min-[1024px]:object-center"
         sizes="(min-width: 1280px) 540px, (min-width: 960px) 42vw, (min-width: 640px) 500px, 100vw"
         preload
       />

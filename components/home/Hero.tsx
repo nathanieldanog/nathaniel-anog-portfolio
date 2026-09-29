@@ -109,7 +109,10 @@ export function Hero() {
             className="hero-entrance hero-entrance--heading text-[48px] font-normal leading-[0.95] tracking-[-0.055em] text-foreground"
           >
             <span className="block font-bold">Hi, I am</span>
-            <span className="block whitespace-nowrap font-bold">{profile.name}.</span>
+            <span className="block whitespace-nowrap font-bold">
+              {profile.name}
+              <span className="hidden lg:inline">.</span>
+            </span>
           </h1>
 
           <div className="hero-entrance hero-entrance--bio mt-5 max-w-[560px] space-y-2.5 text-[16px] leading-[1.6] text-muted">

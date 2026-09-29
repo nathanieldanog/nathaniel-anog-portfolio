@@ -61,14 +61,14 @@ function Portrait({ className = "" }: { className?: string }) {
       <div
         role="img"
         aria-label="Portrait placeholder"
-        className={`relative z-10 h-[460px] w-full self-center bg-surface-hover sm:h-[580px] lg:h-[min(80svh,720px)] lg:self-end min-[1024px]:h-[min(80svh,820px)] min-[1024px]:self-center ${className}`}
+        className={`relative z-10 h-[460px] w-full self-center bg-surface-hover sm:h-[580px] min-[960px]:max-[1023px]:h-[min(80svh,62vw)] min-[960px]:max-[1023px]:self-end min-[1024px]:h-[min(80svh,720px)] ${className}`}
       />
     );
   }
 
   return (
     <div
-      className={`relative z-10 h-[460px] w-full self-center sm:h-[580px] lg:h-[min(80svh,720px)] lg:self-end min-[1024px]:h-[min(80svh,820px)] min-[1024px]:self-center ${className}`}
+      className={`relative z-10 h-[460px] w-full self-center sm:h-[580px] min-[960px]:max-[1023px]:h-[min(80svh,62vw)] min-[960px]:max-[1023px]:self-end min-[1024px]:h-[min(80svh,720px)] ${className}`}
     >
       <div
         aria-hidden="true"
@@ -80,7 +80,7 @@ function Portrait({ className = "" }: { className?: string }) {
         src={portraitPath}
         alt={"Portrait of " + profile.name}
         fill
-        className="portrait-silhouette-glow z-10 object-contain object-center lg:object-bottom min-[1024px]:object-center"
+        className="portrait-silhouette-glow z-10 object-contain object-center min-[960px]:max-[1023px]:object-bottom"
         sizes="(min-width: 1280px) 540px, (min-width: 960px) 42vw, (min-width: 640px) 500px, 100vw"
         preload
       />
@@ -93,7 +93,7 @@ export function Hero() {
     <section
       id="home-hero"
       aria-labelledby="home-heading"
-      className="inspired-hero relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-background text-foreground lg:min-h-[min(calc(100svh-4rem),48rem)] min-[1024px]:min-h-[calc(100svh-8rem)]"
+      className="inspired-hero relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-background text-foreground min-[960px]:max-[1023px]:min-h-[min(calc(100svh-4rem),67vw)] min-[1024px]:min-h-[min(calc(100svh-4rem),48rem)]"
     >
       <div
         aria-hidden="true"

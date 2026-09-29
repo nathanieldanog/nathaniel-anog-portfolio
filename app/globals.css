@@ -1327,7 +1327,18 @@ body:has(.mobile-menu-dialog[open]) {
 
 @media (max-width: 1023px) {
   .hero-grid-background {
-    opacity: 0.55;
+    inset: 4% 0 0;
+    background-size: 48px 48px;
+    mask-image: radial-gradient(
+      ellipse 72% 68% at 50% 44%,
+      #000 18%,
+      rgb(0 0 0 / 70%) 45%,
+      transparent 78%
+    );
+    opacity: 0.4;
+    transform: none;
+    animation: none;
+    will-change: auto;
   }
 }
 

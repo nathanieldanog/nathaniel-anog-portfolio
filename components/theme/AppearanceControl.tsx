@@ -52,10 +52,10 @@ export function AppearanceControl({ compact = false }: { compact?: boolean }) {
       <button
         type="button"
         data-theme-option="system"
-        aria-label="Use system theme"
+        aria-label={`Use system theme${mode === "system" ? `, currently ${resolvedTheme}` : ""}`}
         aria-pressed={mode === "system"}
         onClick={() => setMode("system")}
-        className="theme-option flex h-7 min-w-0 items-center gap-1 rounded px-1 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        className="theme-option flex h-7 min-w-0 items-center gap-1 rounded-[5px] border border-transparent px-1.5 text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
         <Monitor
           aria-hidden="true"

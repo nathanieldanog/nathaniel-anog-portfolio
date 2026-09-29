@@ -26,7 +26,7 @@ function ProjectVisual({ project }: { project: Project }) {
           alt={`${project.title} project preview`}
           fill
           className="project-image object-cover"
-          sizes="(min-width: 1280px) 500px, (min-width: 1024px) 42vw, calc(100vw - 72px)"
+          sizes="(min-width: 1280px) 500px, (min-width: 960px) 42vw, calc(100vw - 72px)"
         />
       </div>
     </div>

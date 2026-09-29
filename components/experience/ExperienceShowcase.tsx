@@ -17,7 +17,7 @@ export function ExperienceShowcase() {
               src="/images/experience-it-support.png"
               alt="Computer training room with networking equipment and IT support tools"
               fill
-              sizes="(min-width: 1024px) 36vw, 100vw"
+              sizes="(min-width: 960px) 36vw, 100vw"
               className="object-cover object-center"
             />
             <div
@@ -41,7 +41,7 @@ export function ExperienceShowcase() {
               {experience.responsibilities.map((responsibility) => (
                 <li
                   key={responsibility.title}
-                  className="border-b border-border py-5"
+                  className="border-b border-border py-5 last:border-b-0 lg:last:border-b"
                 >
                   <h4 className="text-[15px] font-semibold text-foreground">
                     {responsibility.title}

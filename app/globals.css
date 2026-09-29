@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --breakpoint-lg: 60rem;
+}
+
 :root,
 [data-theme="light"] {
   --background: #ffffff;
@@ -938,7 +942,7 @@ body:has(.mobile-menu-dialog[open]) {
 }
 
 .theme-option {
-  transition-property: background-color, color, transform;
+  transition-property: background-color, border-color, box-shadow, color, transform;
 }
 
 .theme-system-icon {
@@ -951,7 +955,7 @@ body:has(.mobile-menu-dialog[open]) {
 }
 
 [data-theme-mode="system"] .theme-system-icon {
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 
 @media (hover: hover) {
@@ -1022,6 +1026,7 @@ body:has(.mobile-menu-dialog[open]) {
   .theme-option:hover .theme-system-icon {
     transform: scale(1.08);
   }
+
 }
 
 .project-visual {
@@ -1149,7 +1154,7 @@ body:has(.mobile-menu-dialog[open]) {
 .certification-badge-frame,
 .certification-badge,
 .certification-verify,
-.certification-verify-brace,
+.certification-verify-icon,
 .skill-tile,
 .skill-logo,
 .skill-tile-label,
@@ -1180,7 +1185,7 @@ body:has(.mobile-menu-dialog[open]) {
   transition-property: opacity, transform;
 }
 
-.certification-verify-brace {
+.certification-verify-icon {
   transition-property: transform;
 }
 
@@ -1200,12 +1205,8 @@ body:has(.mobile-menu-dialog[open]) {
   transform: translateY(-1px);
 }
 
-.certification-card:focus-visible .certification-verify-brace:first-child {
-  transform: translateX(-2px);
-}
-
-.certification-card:focus-visible .certification-verify-brace:last-child {
-  transform: translateX(2px);
+.certification-card:focus-visible .certification-verify-icon {
+  transform: translate(2px, -2px);
 }
 
 .skill-tile {
@@ -1220,6 +1221,22 @@ body:has(.mobile-menu-dialog[open]) {
 .skill-tile-label,
 .skill-tile-meta {
   transition-property: transform;
+}
+
+.skill-more-dot {
+  display: inline-block;
+}
+
+@keyframes skill-more-dot-wave {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+
+  30% {
+    transform: translateY(-6px);
+  }
 }
 
 .skill-category-card {
@@ -1272,12 +1289,8 @@ body:has(.mobile-menu-dialog[open]) {
     transform: translateY(-1px);
   }
 
-  .certification-card:hover .certification-verify-brace:first-child {
-    transform: translateX(-2px);
-  }
-
-  .certification-card:hover .certification-verify-brace:last-child {
-    transform: translateX(2px);
+  .certification-card:hover .certification-verify-icon {
+    transform: translate(2px, -2px);
   }
 
   .skill-tile:hover {
@@ -1298,6 +1311,18 @@ body:has(.mobile-menu-dialog[open]) {
   .skill-tile:hover .skill-tile-label,
   .skill-tile:hover .skill-tile-meta {
     transform: translateY(-1px);
+  }
+
+  .skill-more-tile:hover .skill-more-dot {
+    animation: skill-more-dot-wave 720ms ease-in-out infinite;
+  }
+
+  .skill-more-tile:hover .skill-more-dot:nth-child(2) {
+    animation-delay: 120ms;
+  }
+
+  .skill-more-tile:hover .skill-more-dot:nth-child(3) {
+    animation-delay: 240ms;
   }
 
   .skill-category-card:hover {
@@ -1325,7 +1350,7 @@ body:has(.mobile-menu-dialog[open]) {
   }
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 959px) {
   .hero-grid-background {
     inset: 4% 0 0;
     mask-image: radial-gradient(
@@ -1364,9 +1389,10 @@ body:has(.mobile-menu-dialog[open]) {
   .certification-badge-frame,
   .certification-badge,
   .certification-verify,
-  .certification-verify-brace,
+  .certification-verify-icon,
   .skill-tile,
   .skill-logo,
+  .skill-more-dot,
   .skill-tile-label,
   .skill-tile-meta,
   .skill-category-card,
@@ -1474,9 +1500,10 @@ body:has(.mobile-menu-dialog[open]) {
   .certification-badge-frame,
   .certification-badge,
   .certification-verify,
-  .certification-verify-brace,
+  .certification-verify-icon,
   .skill-tile,
   .skill-logo,
+  .skill-more-dot,
   .skill-tile-label,
   .skill-tile-meta,
   .skill-category-card,
@@ -1537,7 +1564,7 @@ body:has(.mobile-menu-dialog[open]) {
 [data-theme-mode="light"] .theme-option[data-theme-option="light"],
 [data-theme-mode="dark"] .theme-option[data-theme-option="dark"],
 [data-theme-mode="system"] .theme-option[data-theme-option="system"] {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .theme-thumb {

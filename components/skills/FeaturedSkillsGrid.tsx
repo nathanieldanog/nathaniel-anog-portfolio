@@ -48,12 +48,14 @@ export function FeaturedSkillsGrid({
       ))}
 
       {showOthersTile ? (
-        <li className="flex min-h-[122px] flex-col items-center justify-center border-b border-r border-border px-3 py-4 text-center">
+        <li className="skill-tile skill-more-tile group flex min-h-[122px] flex-col items-center justify-center border-b border-r border-border px-3 py-4 text-center">
           <span
             aria-hidden="true"
             className="skill-logo skill-more-glyph flex size-12 items-center justify-center text-[24px] font-light leading-none text-foreground"
           >
-            &middot;&middot;&middot;
+            <span className="skill-more-dot">&middot;</span>
+            <span className="skill-more-dot">&middot;</span>
+            <span className="skill-more-dot">&middot;</span>
           </span>
           <span className="skill-tile-label mt-3 text-[13px] font-semibold leading-[1.3] text-foreground">
             and many more

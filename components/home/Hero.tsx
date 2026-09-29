@@ -81,7 +81,7 @@ function Portrait({ className = "" }: { className?: string }) {
         alt={"Portrait of " + profile.name}
         fill
         className="portrait-silhouette-glow z-10 object-contain object-bottom lg:object-right-bottom"
-        sizes="(min-width: 1280px) 540px, (min-width: 1024px) 42vw, (min-width: 640px) 500px, 100vw"
+        sizes="(min-width: 1280px) 540px, (min-width: 960px) 42vw, (min-width: 640px) 500px, 100vw"
         preload
       />
     </div>

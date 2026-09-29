@@ -5,7 +5,7 @@ import { ViewAllLink } from "./ViewAllLink";
 const featuredHonors = [
   {
     label: "Academic Distinction",
-    detail: `${education.distinction} · GWA ${education.gwa}`,
+    detail: `Graduated ${education.distinction} with a General Weighted Average of ${education.gwa}`,
   },
   { label: "Scholarship", detail: education.scholarships[0] },
   { label: "Awards", detail: education.scholarships[1] },

@@ -1,4 +1,4 @@
-import { ScrollText } from "lucide-react";
+import { ExternalLink, ScrollText } from "lucide-react";
 import Image from "next/image";
 import type { Certification } from "@/data/certifications";
 
@@ -48,13 +48,12 @@ function CardContent({ certification, compact = false }: CertificationCardProps)
 
       {certification.credentialUrl ? (
         <span className="certification-verify mt-auto inline-flex items-center gap-2 pt-4 text-[10px] font-bold uppercase tracking-[0.16em] text-foreground">
-          <span aria-hidden="true" className="certification-verify-brace text-muted">
-            {"{"}
-          </span>
           <span>View on Credly</span>
-          <span aria-hidden="true" className="certification-verify-brace text-muted">
-            {"}"}
-          </span>
+          <ExternalLink
+            aria-hidden="true"
+            className="certification-verify-icon size-3.5"
+            strokeWidth={2}
+          />
         </span>
       ) : (
         <span className="mt-auto pt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted">

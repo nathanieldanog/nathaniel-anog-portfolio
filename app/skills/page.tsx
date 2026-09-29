@@ -170,7 +170,7 @@ export default function SkillsPage() {
       headerClassName="w-full"
       descriptionWidthClassName="w-full"
     >
-      <section aria-label="Technical skills" className="pt-12 sm:pt-14">
+      <section aria-label="Technical skills" className="pt-8 sm:pt-10">
         <div className="grid gap-5 md:grid-cols-2">
           {orderedTechnicalSkills.map((group) => {
             const details = skillGroupDetails[group.title] ?? {

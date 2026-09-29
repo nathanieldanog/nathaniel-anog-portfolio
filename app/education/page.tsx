@@ -80,7 +80,7 @@ export default function EducationPage() {
           <header className="relative overflow-hidden">
             <Reveal
               stagger
-              className="relative mx-auto w-full max-w-[1180px] px-5 pb-6 pt-12 sm:px-8 sm:pb-8 sm:pt-16 lg:px-10 lg:pb-10 lg:pt-18 xl:px-12 xl:pb-12 xl:pt-20"
+              className="relative mx-auto w-full max-w-[1180px] px-5 pt-12 sm:px-8 sm:pt-16 lg:px-10 lg:pt-18 xl:px-12 xl:pt-20"
             >
               <h1 className="max-w-[760px] text-[48px] font-bold leading-[0.95] tracking-[-0.055em] text-foreground">
                 Education

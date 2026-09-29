@@ -29,7 +29,7 @@ export default function CertificationsPage() {
       headerClassName="w-full"
       descriptionWidthClassName="w-full"
     >
-      <div className="space-y-14 pt-12 sm:pt-14">
+      <div className="space-y-14 pt-8 sm:pt-10">
         {certificationGroups.map((group) => {
           const groupedCertifications = certifications.filter(
             (certification) => certification.category === group.title,

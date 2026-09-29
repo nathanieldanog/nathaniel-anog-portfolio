@@ -34,7 +34,7 @@ export function DetailPageShell({
         <MobileHeader activeItem={activeItem} />
         <SidebarLayout activeItem={activeItem}>
           <header className="relative overflow-hidden">
-            <div className="relative mx-auto w-full max-w-[1180px] px-5 pb-6 pt-12 sm:px-8 sm:pb-8 sm:pt-16 lg:px-10 lg:pb-10 lg:pt-18 xl:px-12 xl:pb-12 xl:pt-20">
+            <div className="relative mx-auto w-full max-w-[1180px] px-5 pt-12 sm:px-8 sm:pt-16 lg:px-10 lg:pt-18 xl:px-12 xl:pt-20">
               <Reveal stagger className={headerClassName}>
                 {eyebrow ? (
                   <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">

@@ -70,11 +70,17 @@ function Portrait({ className = "" }: { className?: string }) {
     <div
       className={`relative z-10 h-[460px] w-full self-end sm:h-[580px] lg:h-[min(80svh,820px)] ${className}`}
     >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden lg:hidden"
+      >
+        <div className="hero-grid-background absolute" />
+      </div>
       <Image
         src={portraitPath}
         alt={"Portrait of " + profile.name}
         fill
-        className="portrait-silhouette-glow object-contain object-bottom lg:object-right-bottom"
+        className="portrait-silhouette-glow z-10 object-contain object-bottom lg:object-right-bottom"
         sizes="(min-width: 1280px) 540px, (min-width: 1024px) 42vw, (min-width: 640px) 500px, 100vw"
         preload
       />
@@ -89,7 +95,10 @@ export function Hero() {
       aria-labelledby="home-heading"
       className="inspired-hero relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-background text-foreground lg:min-h-[calc(100svh-8rem)]"
     >
-      <div aria-hidden="true" className="hero-grid-background absolute inset-0" />
+      <div
+        aria-hidden="true"
+        className="hero-grid-background absolute hidden lg:block"
+      />
 
       <div className="relative mx-auto grid w-full max-w-[1280px] flex-1 grid-cols-1 items-center gap-8 px-5 pt-12 sm:px-8 sm:pt-16 lg:grid-cols-[minmax(0,1.08fr)_minmax(300px,0.92fr)] lg:gap-4 lg:px-10 lg:pt-8 xl:px-12">
         <Portrait className="hero-entrance hero-entrance--portrait lg:order-2" />

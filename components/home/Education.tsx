@@ -48,11 +48,11 @@ export function Education() {
             {education.degree} with Specialization in {education.specialization}
           </h3>
 
-          <ul className="mt-8 grid gap-6 border-t border-border text-[15px] leading-[1.55] text-muted sm:grid-cols-3 sm:gap-0">
+          <ul className="mt-8 grid border-t border-border text-[15px] leading-[1.55] text-muted sm:grid-cols-3">
             {featuredHonors.map((honor, index) => (
               <li
                 key={honor.label}
-                className={`pt-6 sm:px-6 ${index === 0 ? "sm:pl-0" : "sm:border-l sm:border-border"} ${index === featuredHonors.length - 1 ? "sm:pr-0" : ""}`}
+                className={`pt-6 sm:px-6 ${index === 0 ? "sm:pl-0" : "mt-6 border-t border-border sm:mt-0 sm:border-l sm:border-t-0"} ${index === featuredHonors.length - 1 ? "sm:pr-0" : ""}`}
               >
                 <span>
                   <span className="mb-1 block text-[15px] font-semibold text-foreground">

@@ -61,14 +61,14 @@ function Portrait({ className = "" }: { className?: string }) {
       <div
         role="img"
         aria-label="Portrait placeholder"
-        className={`relative z-10 h-[460px] w-full self-end bg-surface-hover sm:h-[580px] lg:h-[min(80svh,820px)] ${className}`}
+        className={`relative z-10 h-[460px] w-full self-center bg-surface-hover sm:h-[580px] lg:h-[min(80svh,820px)] ${className}`}
       />
     );
   }
 
   return (
     <div
-      className={`relative z-10 h-[460px] w-full self-end sm:h-[580px] lg:h-[min(80svh,820px)] ${className}`}
+      className={`relative z-10 h-[460px] w-full self-center sm:h-[580px] lg:h-[min(80svh,820px)] ${className}`}
     >
       <div
         aria-hidden="true"
@@ -80,7 +80,7 @@ function Portrait({ className = "" }: { className?: string }) {
         src={portraitPath}
         alt={"Portrait of " + profile.name}
         fill
-        className="portrait-silhouette-glow z-10 object-contain object-bottom lg:object-right-bottom"
+        className="portrait-silhouette-glow z-10 object-contain object-center"
         sizes="(min-width: 1280px) 540px, (min-width: 960px) 42vw, (min-width: 640px) 500px, 100vw"
         preload
       />
@@ -101,9 +101,9 @@ export function Hero() {
       />
 
       <div className="relative mx-auto grid w-full max-w-[1280px] flex-1 grid-cols-1 items-center gap-8 px-5 pt-12 sm:px-8 sm:pt-16 lg:grid-cols-[minmax(0,1.08fr)_minmax(300px,0.92fr)] lg:gap-4 lg:px-10 lg:pt-8 xl:px-12">
-        <Portrait className="hero-entrance hero-entrance--portrait lg:order-2" />
+        <Portrait className="hero-entrance hero-entrance--portrait order-1 justify-self-center lg:order-2 lg:col-start-2 lg:row-start-1 lg:justify-self-stretch" />
 
-        <div className="relative z-30 max-w-[600px] py-4 lg:order-1 lg:py-16">
+        <div className="relative z-30 order-2 w-full max-w-[600px] py-4 lg:order-1 lg:col-start-1 lg:row-start-1 lg:py-16">
           <h1
             id="home-heading"
             className="hero-entrance hero-entrance--heading text-[48px] font-normal leading-[0.95] tracking-[-0.055em] text-foreground"

@@ -1328,7 +1328,6 @@ body:has(.mobile-menu-dialog[open]) {
 @media (max-width: 1023px) {
   .hero-grid-background {
     inset: 4% 0 0;
-    background-size: 48px 48px;
     mask-image: radial-gradient(
       ellipse 72% 68% at 50% 44%,
       #000 18%,

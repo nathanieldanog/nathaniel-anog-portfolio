@@ -266,7 +266,7 @@ export default function SkillsPage() {
             </p>
           </header>
 
-          <ul className="mt-5 flex flex-wrap gap-2.5 border-t border-border pt-5">
+          <ul className="mt-6 flex flex-wrap gap-2.5">
             {professionalSkills.map((skill) => (
               <li
                 key={skill.name}
@@ -292,7 +292,7 @@ export default function SkillsPage() {
             </p>
           </header>
 
-          <dl className="mt-5 grid grid-cols-2 gap-2.5 border-t border-border pt-5">
+          <dl className="mt-6 grid grid-cols-2 gap-2.5">
             {languages.map((language) => (
               <div
                 key={language.name}

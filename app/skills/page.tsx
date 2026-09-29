@@ -169,7 +169,6 @@ export default function SkillsPage() {
       descriptionClassName="text-[16px] leading-[1.6] text-muted"
       headerClassName="w-full"
       descriptionWidthClassName="w-full"
-      showDivider
     >
       <section aria-label="Technical skills" className="pt-12 sm:pt-14">
         <div className="grid gap-5 md:grid-cols-2">

@@ -51,7 +51,7 @@ function CardContent({ certification, compact = false }: CertificationCardProps)
           <span aria-hidden="true" className="certification-verify-brace text-muted">
             {"{"}
           </span>
-          <span>Verify</span>
+          <span>View on Credly</span>
           <span aria-hidden="true" className="certification-verify-brace text-muted">
             {"}"}
           </span>
@@ -81,7 +81,7 @@ export function CertificationCard({
         href={certification.credentialUrl}
         target="_blank"
         rel="noreferrer"
-        aria-label={`Verify ${certification.name}`}
+        aria-label={`View ${certification.name} on Credly`}
         className={`${className} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background`}
       >
         <CardContent certification={certification} compact={compact} />

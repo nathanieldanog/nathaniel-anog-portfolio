@@ -56,7 +56,7 @@ export function FeaturedSkillsGrid({
             &middot;&middot;&middot;
           </span>
           <span className="skill-tile-label mt-3 text-[13px] font-semibold leading-[1.3] text-foreground">
-            Many more
+            and many more
           </span>
         </li>
       ) : null}

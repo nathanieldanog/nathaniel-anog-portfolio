@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { FeaturedProjectsCarousel } from "@/components/home/FeaturedProjectsCarousel";
-import { SectionDivider } from "@/components/home/SectionDivider";
 import { Reveal } from "@/components/motion/Reveal";
 import { MobileHeader } from "@/components/navigation/MobileHeader";
 import { QuickActionsProvider } from "@/components/search/QuickActionsProvider";
@@ -33,7 +32,6 @@ export default function ProjectsPage() {
               </p>
             </Reveal>
           </header>
-          <SectionDivider />
 
           <main className="mx-auto w-full max-w-[1180px] px-5 pb-10 sm:px-8 sm:pb-14 lg:px-10 lg:pb-16 xl:px-12">
             <section aria-label="Project portfolio">

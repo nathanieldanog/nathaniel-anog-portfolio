@@ -1,14 +1,8 @@
 "use client";
 
-import {
-  ArrowDown,
-  ArrowUp,
-  CornerDownLeft,
-  Search,
-  X,
-} from "lucide-react";
+import { Search, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   findSearchItems,
   pageSearchItems,
@@ -208,37 +202,6 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
     window.localStorage.removeItem(LAST_OPENED_KEY);
   }
 
-  function handleKeyDown(event: KeyboardEvent<HTMLDialogElement>) {
-    if (event.key === "Escape") {
-      event.preventDefault();
-      closePalette();
-      return;
-    }
-
-    if (event.key === "ArrowDown") {
-      event.preventDefault();
-      setActiveIndex((currentIndex) =>
-        displayedItems.length === 0 ? 0 : (currentIndex + 1) % displayedItems.length,
-      );
-      return;
-    }
-
-    if (event.key === "ArrowUp") {
-      event.preventDefault();
-      setActiveIndex((currentIndex) =>
-        displayedItems.length === 0
-          ? 0
-          : (currentIndex - 1 + displayedItems.length) % displayedItems.length,
-      );
-      return;
-    }
-
-    if (event.key === "Enter" && displayedItems[activeIndex]) {
-      event.preventDefault();
-      openItem(displayedItems[activeIndex]);
-    }
-  }
-
   return (
     <dialog
       ref={dialogRef}
@@ -246,7 +209,6 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
       data-motion-state={motionState}
       onCancel={(event) => {
         event.preventDefault();
-        closePalette();
       }}
       onClose={handleDialogClose}
       onClick={(event) => {
@@ -254,7 +216,6 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
           closePalette();
         }
       }}
-      onKeyDown={handleKeyDown}
       className="command-palette-dialog fixed inset-0 z-[100] m-auto h-fit w-[min(calc(100%_-_2rem),620px)] max-w-none overflow-hidden rounded-lg border border-border bg-surface p-0 text-foreground shadow-2xl"
     >
       <h2 id="command-palette-title" className="sr-only">
@@ -361,13 +322,8 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
                     }`}
                   >
                     <span className="min-w-0 truncate">{item.label}</span>
-                    <span className="ml-3 flex shrink-0 items-center gap-2">
-                      <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted">
-                        {item.category}
-                      </span>
-                      {isActive ? (
-                        <CornerDownLeft aria-hidden="true" className="size-4 text-muted" />
-                      ) : null}
+                    <span className="ml-3 shrink-0 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted">
+                      {item.category}
                     </span>
                   </button>
                 );
@@ -414,13 +370,8 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
                     }`}
                   >
                     <span>{item.label}</span>
-                    <span className="ml-3 flex shrink-0 items-center gap-2">
-                      <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted">
-                        Page
-                      </span>
-                      {isActive ? (
-                        <CornerDownLeft aria-hidden="true" className="size-4 text-muted" />
-                      ) : null}
+                    <span className="ml-3 shrink-0 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted">
+                      Page
                     </span>
                   </button>
                 );
@@ -430,18 +381,6 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
         ) : null}
       </div>
 
-      <div className="command-palette-footer flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border px-4 py-3 text-[10px] text-muted">
-        <span className="inline-flex items-center gap-1.5">
-          <ArrowUp aria-hidden="true" className="size-3.5" />
-          <ArrowDown aria-hidden="true" className="size-3.5" />
-          Navigate
-        </span>
-        <span className="inline-flex items-center gap-1.5">
-          <CornerDownLeft aria-hidden="true" className="size-3.5" />
-          Open
-        </span>
-        <span>Esc Close</span>
-      </div>
     </dialog>
   );
 }

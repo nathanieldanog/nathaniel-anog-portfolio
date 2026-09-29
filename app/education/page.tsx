@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { SectionDivider } from "@/components/home/SectionDivider";
 import { Reveal } from "@/components/motion/Reveal";
 import { MobileHeader } from "@/components/navigation/MobileHeader";
 import { QuickActionsProvider } from "@/components/search/QuickActionsProvider";
@@ -94,7 +93,6 @@ export default function EducationPage() {
               </p>
             </Reveal>
           </header>
-          <SectionDivider />
 
           <main className="mx-auto w-full max-w-[1180px] px-5 pb-10 pt-6 sm:px-8 sm:pb-14 sm:pt-8 lg:px-10 lg:pb-16 lg:pt-10 xl:px-12">
             <Reveal as="section" stagger aria-labelledby="degree-heading">

@@ -28,7 +28,6 @@ export default function CertificationsPage() {
       descriptionClassName="text-[15px] leading-7 text-muted sm:text-base sm:leading-8"
       headerClassName="w-full"
       descriptionWidthClassName="w-full"
-      showDivider
     >
       <div className="space-y-14 pt-12 sm:pt-14">
         {certificationGroups.map((group) => {

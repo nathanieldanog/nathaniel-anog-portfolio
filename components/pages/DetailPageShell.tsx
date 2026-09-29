@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { SectionDivider } from "@/components/home/SectionDivider";
 import { Reveal } from "@/components/motion/Reveal";
 import { MobileHeader } from "@/components/navigation/MobileHeader";
 import { QuickActionsProvider } from "@/components/search/QuickActionsProvider";
@@ -15,7 +14,6 @@ type DetailPageShellProps = {
   descriptionClassName?: string;
   headerClassName?: string;
   descriptionWidthClassName?: string;
-  showDivider?: boolean;
   children: ReactNode;
 };
 
@@ -28,7 +26,6 @@ export function DetailPageShell({
   descriptionClassName = "text-base leading-[1.7] text-muted",
   headerClassName = "max-w-[760px]",
   descriptionWidthClassName = "max-w-[680px]",
-  showDivider = true,
   children,
 }: DetailPageShellProps) {
   return (
@@ -55,8 +52,6 @@ export function DetailPageShell({
               </Reveal>
             </div>
           </header>
-
-          {showDivider ? <SectionDivider /> : null}
 
           <main className="mx-auto w-full max-w-[1180px] px-5 pb-10 sm:px-8 sm:pb-14 lg:px-10 lg:pb-16 xl:px-12">
             {children}

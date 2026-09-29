@@ -17,7 +17,6 @@ export default function ExperiencePage() {
       descriptionClassName="text-[16px] leading-[1.6] text-muted"
       headerClassName="w-full"
       descriptionWidthClassName="w-full"
-      showDivider
     >
       <section
         id="professional-experience"

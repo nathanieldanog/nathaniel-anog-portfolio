@@ -10,7 +10,7 @@ export function Certifications() {
     <section
       id="certifications"
       aria-labelledby="certifications-heading"
-      className="scroll-mt-16 bg-background text-foreground lg:scroll-mt-0"
+      className="scroll-mt-16 bg-background text-foreground min-[1024px]:scroll-mt-0"
     >
       <div className="mx-auto w-full max-w-[1280px] px-5 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12 xl:px-12">
         <Reveal

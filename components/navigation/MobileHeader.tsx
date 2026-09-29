@@ -93,7 +93,7 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
   }
 
   return (
-    <header className="mobile-site-header sticky top-0 z-40 flex h-16 items-center justify-between border-b border-border bg-surface px-4 sm:px-6 lg:hidden">
+    <header className="mobile-site-header sticky top-0 z-40 flex h-16 items-center justify-between border-b border-border bg-surface px-4 sm:px-6 min-[1024px]:hidden">
       <Link
         href="/"
         className="min-w-0 font-display text-[18px] font-semibold leading-tight tracking-[-0.025em] text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-surface"

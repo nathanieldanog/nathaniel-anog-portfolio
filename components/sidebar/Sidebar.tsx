@@ -44,7 +44,7 @@ export function Sidebar({
       aria-hidden={!isOpen}
       inert={!isOpen}
       data-sidebar-state={isOpen ? "open" : "closed"}
-      className={`desktop-sidebar fixed inset-y-0 left-0 z-30 hidden h-svh w-[220px] overflow-hidden border-r border-border bg-surface lg:block xl:w-[280px] ${
+      className={`desktop-sidebar fixed inset-y-0 left-0 z-30 hidden h-svh w-[220px] overflow-hidden border-r border-border bg-surface min-[1024px]:block xl:w-[280px] ${
         isOpen ? "translate-x-0" : "pointer-events-none -translate-x-full"
       }`}
     >

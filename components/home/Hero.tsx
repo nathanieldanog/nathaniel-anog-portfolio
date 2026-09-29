@@ -93,7 +93,7 @@ export function Hero() {
     <section
       id="home-hero"
       aria-labelledby="home-heading"
-      className="inspired-hero relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-background text-foreground lg:min-h-[calc(100svh-8rem)]"
+      className="inspired-hero relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-background text-foreground min-[1024px]:min-h-[calc(100svh-8rem)]"
     >
       <div
         aria-hidden="true"

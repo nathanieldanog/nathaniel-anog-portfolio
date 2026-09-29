@@ -52,7 +52,7 @@ export function SidebarLayout({
         title="Open sidebar"
         onClick={openSidebar}
         data-sidebar-state={isSidebarOpen ? "open" : "closed"}
-        className="sidebar-open-button fixed left-4 top-5 z-40 hidden size-9 cursor-pointer items-center justify-center rounded-md border border-border bg-surface text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background lg:inline-flex"
+        className="sidebar-open-button fixed left-4 top-5 z-40 hidden size-9 cursor-pointer items-center justify-center rounded-md border border-border bg-surface text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background min-[1024px]:inline-flex"
       >
         <Menu
           aria-hidden="true"
@@ -63,10 +63,10 @@ export function SidebarLayout({
 
       <main
         id={mainId}
-        className={`sidebar-main min-h-[calc(100svh-4rem)] lg:min-h-svh ${
+        className={`sidebar-main min-h-[calc(100svh-4rem)] min-[1024px]:min-h-svh ${
           isSidebarOpen
-            ? "lg:ml-[220px] xl:ml-[280px]"
-            : "lg:mx-auto lg:w-full"
+            ? "min-[1024px]:ml-[220px] xl:ml-[280px]"
+            : "min-[1024px]:mx-auto min-[1024px]:w-full"
         }`}
       >
         <RouteTransition>{children}</RouteTransition>

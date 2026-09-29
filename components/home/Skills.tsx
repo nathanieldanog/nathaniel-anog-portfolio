@@ -1,8 +1,7 @@
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 import { Reveal } from "@/components/motion/Reveal";
 import { FeaturedSkillsGrid } from "@/components/skills/FeaturedSkillsGrid";
 import { featuredSkills } from "@/data/skills";
+import { ViewAllLink } from "./ViewAllLink";
 
 export function Skills() {
   return (
@@ -24,13 +23,10 @@ export function Skills() {
             Skills
           </h2>
 
-          <Link
+          <ViewAllLink
             href="/skills"
-            className="motion-button motion-button--secondary inline-flex h-12 min-w-[150px] shrink-0 items-center justify-center gap-4 rounded-[4px] border border-foreground/65 bg-background/70 px-6 text-[13px] font-bold uppercase tracking-[0.01em] text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          >
-            View all
-            <ArrowRight aria-hidden="true" className="motion-action-icon motion-icon-forward size-4" />
-          </Link>
+            className="hidden lg:inline-flex"
+          />
         </Reveal>
 
         <Reveal stagger delay={80} className="mt-8 sm:mt-10">
@@ -47,6 +43,8 @@ export function Skills() {
           showOthersTile
           className="mt-8 sm:mt-10"
         />
+
+        <ViewAllLink href="/skills" className="mt-8 flex w-full lg:hidden" />
       </div>
     </section>
   );

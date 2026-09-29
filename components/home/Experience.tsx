@@ -1,7 +1,6 @@
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 import { ExperienceShowcase } from "@/components/experience/ExperienceShowcase";
 import { Reveal } from "@/components/motion/Reveal";
+import { ViewAllLink } from "./ViewAllLink";
 
 export function Experience() {
   return (
@@ -22,17 +21,20 @@ export function Experience() {
           >
             Experience
           </h2>
-          <Link
+          <ViewAllLink
             href="/experience"
-            aria-label="View all experience details"
-            className="motion-button motion-button--secondary inline-flex h-12 min-w-[150px] shrink-0 items-center justify-center gap-4 rounded-[4px] border border-foreground/65 bg-background/70 px-6 text-[13px] font-bold uppercase tracking-[0.01em] text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          >
-            View all
-            <ArrowRight aria-hidden="true" className="motion-action-icon motion-icon-forward size-4" />
-          </Link>
+            ariaLabel="View all experience details"
+            className="hidden lg:inline-flex"
+          />
         </Reveal>
 
         <ExperienceShowcase />
+
+        <ViewAllLink
+          href="/experience"
+          ariaLabel="View all experience details"
+          className="mt-8 flex w-full lg:hidden"
+        />
       </div>
     </section>
   );

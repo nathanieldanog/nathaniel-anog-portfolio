@@ -1,8 +1,7 @@
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 import { CertificationCard } from "@/components/certifications/CertificationCard";
 import { Reveal } from "@/components/motion/Reveal";
 import { certifications } from "@/data/certifications";
+import { ViewAllLink } from "./ViewAllLink";
 
 const featuredCertifications = certifications.slice(0, 3);
 
@@ -26,13 +25,10 @@ export function Certifications() {
             Certifications
           </h2>
 
-          <Link
+          <ViewAllLink
             href="/certifications"
-            className="motion-button motion-button--secondary inline-flex h-12 min-w-[150px] shrink-0 items-center justify-center gap-4 rounded-[4px] border border-foreground/65 bg-background/70 px-6 text-[13px] font-bold uppercase tracking-[0.01em] text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          >
-            View all
-            <ArrowRight aria-hidden="true" className="motion-action-icon motion-icon-forward size-4" />
-          </Link>
+            className="hidden lg:inline-flex"
+          />
         </Reveal>
 
         <Reveal
@@ -48,6 +44,8 @@ export function Certifications() {
             />
           ))}
         </Reveal>
+
+        <ViewAllLink href="/certifications" className="mt-8 flex w-full lg:hidden" />
       </div>
     </section>
   );

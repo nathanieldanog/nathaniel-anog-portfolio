@@ -1,8 +1,7 @@
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 import { FeaturedProjectsCarousel } from "@/components/home/FeaturedProjectsCarousel";
 import { Reveal } from "@/components/motion/Reveal";
 import { projects } from "@/data/projects";
+import { ViewAllLink } from "./ViewAllLink";
 
 const featuredProjects = projects.filter((project) => project.featured);
 
@@ -31,19 +30,18 @@ export function FeaturedProjects() {
             </h2>
           </div>
 
-          <Link
+          <ViewAllLink
             href="/projects"
-            className="motion-button motion-button--secondary inline-flex h-12 min-w-[150px] shrink-0 items-center justify-center gap-4 rounded-[4px] border border-foreground/65 bg-background/70 px-6 text-[13px] font-bold uppercase tracking-[0.01em] text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          >
-            View all
-            <ArrowRight aria-hidden="true" className="motion-action-icon motion-icon-forward size-4" />
-          </Link>
+            className="hidden lg:inline-flex"
+          />
         </Reveal>
 
         <FeaturedProjectsCarousel
           projects={featuredProjects}
           showHighlights
         />
+
+        <ViewAllLink href="/projects" className="mt-8 flex w-full lg:hidden" />
       </div>
     </section>
   );

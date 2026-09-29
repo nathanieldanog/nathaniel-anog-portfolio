@@ -162,7 +162,7 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
             </button>
           </div>
 
-          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-[clamp(0.5rem,1.25dvh,1.25rem)] sm:px-7">
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-[clamp(0.5rem,1.25dvh,1.25rem)] sm:px-6">
             <nav
               aria-label="Mobile navigation"
               className="mt-[clamp(0.375rem,1.2dvh,1rem)]"
@@ -177,7 +177,7 @@ export function MobileHeader({ activeItem = "Home" }: { activeItem?: NavigationL
                         href={item.href}
                         aria-current={activeItem === item.label ? "page" : undefined}
                         onClick={closeMenu}
-                        className={`mobile-menu-link flex h-[clamp(2rem,6dvh,3rem)] items-center gap-4 rounded-[6px] px-3 text-[15px] text-foreground ${
+                        className={`mobile-menu-link -mx-2 flex h-[clamp(2rem,6dvh,3rem)] items-center gap-4 rounded-[6px] px-2 text-[15px] text-foreground ${
                           activeItem === item.label
                             ? "bg-surface-hover font-semibold"
                             : "font-normal"

@@ -92,7 +92,9 @@ export function Hero() {
       <div aria-hidden="true" className="hero-grid-background absolute inset-0" />
 
       <div className="relative mx-auto grid w-full max-w-[1280px] flex-1 grid-cols-1 items-center gap-8 px-5 pt-12 sm:px-8 sm:pt-16 lg:grid-cols-[minmax(0,1.08fr)_minmax(300px,0.92fr)] lg:gap-4 lg:px-10 lg:pt-8 xl:px-12">
-        <div className="relative z-30 max-w-[600px] py-4 lg:py-16">
+        <Portrait className="hero-entrance hero-entrance--portrait lg:order-2" />
+
+        <div className="relative z-30 max-w-[600px] py-4 lg:order-1 lg:py-16">
           <h1
             id="home-heading"
             className="hero-entrance hero-entrance--heading text-[48px] font-normal leading-[0.95] tracking-[-0.055em] text-foreground"
@@ -148,8 +150,6 @@ export function Hero() {
             ))}
           </div>
         </div>
-
-        <Portrait className="hero-entrance hero-entrance--portrait" />
       </div>
     </section>
   );

@@ -1,7 +1,6 @@
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 import { Reveal } from "@/components/motion/Reveal";
 import { education } from "@/data/education";
+import { ViewAllLink } from "./ViewAllLink";
 
 const featuredHonors = [
   {
@@ -34,13 +33,10 @@ export function Education() {
             </h2>
           </div>
 
-          <Link
+          <ViewAllLink
             href="/education"
-            className="motion-button motion-button--secondary inline-flex h-12 min-w-[150px] shrink-0 items-center justify-center gap-4 rounded-[4px] border border-foreground/65 bg-background/70 px-6 text-[13px] font-bold uppercase tracking-[0.01em] text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          >
-            View all
-            <ArrowRight aria-hidden="true" className="motion-action-icon motion-icon-forward size-4" />
-          </Link>
+            className="hidden lg:inline-flex"
+          />
         </Reveal>
 
         <Reveal as="article" stagger delay={100} className="mt-8 w-full sm:mt-10">
@@ -68,6 +64,8 @@ export function Education() {
             ))}
           </ul>
         </Reveal>
+
+        <ViewAllLink href="/education" className="mt-8 flex w-full lg:hidden" />
       </div>
     </section>
   );

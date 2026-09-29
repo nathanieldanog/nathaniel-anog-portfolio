@@ -61,14 +61,14 @@ function Portrait({ className = "" }: { className?: string }) {
       <div
         role="img"
         aria-label="Portrait placeholder"
-        className={`relative z-10 h-[460px] w-full self-center bg-surface-hover sm:h-[580px] lg:h-[min(80svh,820px)] ${className}`}
+        className={`relative z-10 h-[460px] w-full self-center bg-surface-hover sm:h-[580px] lg:h-[min(80svh,720px)] min-[1024px]:h-[min(80svh,820px)] ${className}`}
       />
     );
   }
 
   return (
     <div
-      className={`relative z-10 h-[460px] w-full self-center sm:h-[580px] lg:h-[min(80svh,820px)] ${className}`}
+      className={`relative z-10 h-[460px] w-full self-center sm:h-[580px] lg:h-[min(80svh,720px)] min-[1024px]:h-[min(80svh,820px)] ${className}`}
     >
       <div
         aria-hidden="true"
@@ -93,7 +93,7 @@ export function Hero() {
     <section
       id="home-hero"
       aria-labelledby="home-heading"
-      className="inspired-hero relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-background text-foreground min-[1024px]:min-h-[calc(100svh-8rem)]"
+      className="inspired-hero relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-background text-foreground lg:min-h-[min(calc(100svh-4rem),48rem)] min-[1024px]:min-h-[calc(100svh-8rem)]"
     >
       <div
         aria-hidden="true"

@@ -57,7 +57,7 @@ function CardContent({ certification, compact = false }: CertificationCardProps)
         </span>
       ) : (
         <span className="mt-auto pt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted">
-          Training completed
+          In progress
         </span>
       )}
     </>

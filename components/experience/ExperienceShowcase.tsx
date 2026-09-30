@@ -41,7 +41,7 @@ export function ExperienceShowcase() {
               {experience.responsibilities.map((responsibility) => (
                 <li
                   key={responsibility.title}
-                  className="border-b border-border py-5 last:border-b-0 lg:last:border-b"
+                  className="border-b border-border py-5 last:border-b-0 last:pb-0 lg:last:border-b lg:last:pb-5"
                 >
                   <h4 className="text-[15px] font-semibold text-foreground">
                     {responsibility.title}

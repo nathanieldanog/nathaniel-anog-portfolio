@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
 import { ExperienceShowcase } from "@/components/experience/ExperienceShowcase";
 import { DetailPageShell } from "@/components/pages/DetailPageShell";
+import { createPageMetadata } from "@/data/site";
 
-export const metadata: Metadata = {
-  title: "Experience | Nathaniel Anog",
+export const metadata = createPageMetadata({
+  title: "Experience",
   description: "Technical experience and leadership responsibilities of Nathaniel Anog.",
-};
+  path: "/experience",
+});
 
 export default function ExperiencePage() {
   return (

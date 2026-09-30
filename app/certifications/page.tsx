@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
 import { CertificationCard } from "@/components/certifications/CertificationCard";
 import { Reveal } from "@/components/motion/Reveal";
 import { DetailPageShell } from "@/components/pages/DetailPageShell";
 import { certifications } from "@/data/certifications";
+import { createPageMetadata } from "@/data/site";
 
-export const metadata: Metadata = {
-  title: "Certifications | Nathaniel Anog",
+export const metadata = createPageMetadata({
+  title: "Certifications",
   description:
-    "Certifications and training in web development, cloud, networking, and cybersecurity.",
-};
+    "Nathaniel Anog's certifications and training in web development, cloud computing, networking, and cybersecurity.",
+  path: "/certifications",
+});
 
 const certificationGroups = [
   { title: "Web Development", id: "web-development-certifications" },

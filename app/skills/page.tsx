@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { MousePointer2 } from "lucide-react";
 import Image from "next/image";
 import { Reveal } from "@/components/motion/Reveal";
@@ -9,12 +8,14 @@ import {
   professionalSkills,
   technicalSkills,
 } from "@/data/skills";
+import { createPageMetadata } from "@/data/site";
 
-export const metadata: Metadata = {
-  title: "Skills | Nathaniel Anog",
+export const metadata = createPageMetadata({
+  title: "Skills",
   description:
     "Technical skills, development tools, and professional strengths of Nathaniel Anog.",
-};
+  path: "/skills",
+});
 
 type SkillLogo = {
   src: string;

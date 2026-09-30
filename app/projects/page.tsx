@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import { FeaturedProjectsCarousel } from "@/components/home/FeaturedProjectsCarousel";
 import { Reveal } from "@/components/motion/Reveal";
 import { MobileHeader } from "@/components/navigation/MobileHeader";
 import { QuickActionsProvider } from "@/components/search/QuickActionsProvider";
 import { SidebarLayout } from "@/components/sidebar/SidebarLayout";
 import { projects } from "@/data/projects";
+import { createPageMetadata } from "@/data/site";
 
-export const metadata: Metadata = {
-  title: "Projects | Nathaniel Anog",
+export const metadata = createPageMetadata({
+  title: "Projects",
   description: "Applications and systems designed and developed by Nathaniel Anog.",
-};
+  path: "/projects",
+});
 
 export default function ProjectsPage() {
   return (

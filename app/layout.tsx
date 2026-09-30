@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat, Nunito_Sans } from "next/font/google";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { THEME_STORAGE_KEY } from "@/components/theme/theme";
+import { siteConfig } from "@/data/site";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -19,8 +20,38 @@ const nunitoSans = Nunito_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "Personal portfolio website.",
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.homeTitle,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  keywords: [
+    siteConfig.name,
+    "software engineer",
+    "web developer",
+    "mobile developer",
+    "Computer Engineering",
+    "Metro Manila",
+    "Philippines",
+  ],
+  category: "technology",
+  referrer: "origin-when-cross-origin",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 const themeInitializationScript = `

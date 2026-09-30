@@ -1,14 +1,16 @@
-import type { Metadata } from "next";
 import { Reveal } from "@/components/motion/Reveal";
 import { MobileHeader } from "@/components/navigation/MobileHeader";
 import { QuickActionsProvider } from "@/components/search/QuickActionsProvider";
 import { SidebarLayout } from "@/components/sidebar/SidebarLayout";
 import { education } from "@/data/education";
+import { createPageMetadata } from "@/data/site";
 
-export const metadata: Metadata = {
-  title: "Education | Nathaniel Anog",
-  description: "Academic background, distinctions, coursework, and achievements.",
-};
+export const metadata = createPageMetadata({
+  title: "Education",
+  description:
+    "Nathaniel Anog's Computer Engineering education, academic distinctions, coursework, and achievements.",
+  path: "/education",
+});
 
 const academicStats = [
   { label: "General weighted average", value: education.gwa },

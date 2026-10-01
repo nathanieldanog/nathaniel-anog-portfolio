@@ -134,8 +134,7 @@ export function Hero() {
             </a>
             <a
               href={profile.resumePath}
-              target="_blank"
-              rel="noreferrer"
+              download="Nathaniel-Anog-Resume.pdf"
               className="resume-download-button motion-button motion-button--secondary inline-flex h-12 min-w-[220px] items-center justify-center gap-4 rounded-[4px] border border-foreground/65 bg-background/70 px-7 text-[13px] font-bold uppercase tracking-[0.01em] text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               Download resume

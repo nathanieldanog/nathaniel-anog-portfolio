@@ -104,31 +104,20 @@ export function ProjectDemoGallery({
             showNextImage();
           }
         }}
-        className="project-demo-dialog fixed inset-0 z-[120] m-auto hidden h-dvh max-h-none w-full max-w-none items-center justify-center bg-black/80 p-3 text-white backdrop:bg-black/80 open:flex sm:p-6"
+        className="project-demo-dialog fixed inset-0 z-[120] m-0 hidden h-dvh max-h-none w-full max-w-none bg-black p-0 text-white backdrop:bg-black open:block"
       >
-        <div className="flex h-[min(96dvh,1080px)] w-full max-w-[720px] flex-col overflow-hidden rounded-md border border-white/15 bg-[#0a0b0d] shadow-2xl">
-          <header className="flex shrink-0 items-center justify-between gap-4 border-b border-white/15 px-4 py-3 sm:px-5">
-            <div className="min-w-0">
-              <h2 id={titleId} className="truncate text-[16px] font-bold text-white">
-                {projectTitle} demo
-              </h2>
-              <p aria-live="polite" className="mt-0.5 text-[13px] text-white/65">
-                {activeImage?.title} · {activeIndex + 1} of {images.length}
-              </p>
-            </div>
-
-            <button
-              type="button"
-              aria-label={`Close ${projectTitle} demo`}
-              onClick={closeGallery}
-              className="inline-flex size-10 shrink-0 items-center justify-center rounded-md border border-white/20 text-white transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-reduce:transition-none"
-            >
-              <X aria-hidden="true" className="size-5" />
-            </button>
-          </header>
+        <div className="relative h-dvh w-full overflow-hidden bg-black">
+          <h2 id={titleId} className="sr-only">
+            {projectTitle} demo
+          </h2>
 
           <div
-            className="flex min-h-0 flex-1 touch-pan-y items-center justify-center overflow-hidden px-3 py-2 sm:px-5 sm:py-4"
+            className="flex h-full w-full touch-pan-y items-center justify-center overflow-hidden"
+            onClick={(event) => {
+              if (event.target === event.currentTarget) {
+                closeGallery();
+              }
+            }}
             onTouchStart={(event) => {
               touchStartXRef.current = event.changedTouches[0]?.clientX ?? null;
             }}
@@ -141,48 +130,68 @@ export function ProjectDemoGallery({
                 alt={activeImage.alt}
                 width={941}
                 height={1672}
-                sizes="(max-width: 640px) calc(100vw - 3rem), 620px"
-                className="h-full w-auto max-w-full object-contain"
+                sizes="100vw"
+                onClick={(event) => event.stopPropagation()}
+                className="h-auto max-h-dvh w-auto max-w-full object-contain"
               />
             ) : null}
           </div>
 
-          <footer className="flex shrink-0 items-center justify-between gap-3 border-t border-white/15 px-3 py-3 sm:px-5">
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex items-start justify-between gap-4 bg-gradient-to-b from-black/75 via-black/25 to-transparent p-3 pb-12 sm:p-4 sm:pb-14">
+            <p
+              aria-live="polite"
+              className="rounded-full bg-black/55 px-3 py-1.5 text-[13px] font-semibold text-white backdrop-blur-sm"
+            >
+              {activeImage?.title} · {activeIndex + 1} of {images.length}
+            </p>
             <button
               type="button"
-              aria-label="Show previous demo image"
-              onClick={showPreviousImage}
-              className="inline-flex size-10 shrink-0 items-center justify-center rounded-md border border-white/20 text-white transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-reduce:transition-none"
+              aria-label={`Close ${projectTitle} demo`}
+              onClick={closeGallery}
+              className="pointer-events-auto inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-black/65 text-white backdrop-blur-sm transition-colors hover:bg-black/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-reduce:transition-none"
             >
-              <ArrowLeft aria-hidden="true" className="size-5" />
+              <X aria-hidden="true" className="size-5" />
             </button>
+          </div>
 
-            <div className="flex min-w-0 items-center justify-center gap-2" aria-label="Choose demo image">
-              {images.map((image, index) => (
-                <button
-                  key={image.src}
-                  type="button"
-                  aria-label={`Show ${image.title}`}
-                  aria-current={index === activeIndex ? "true" : undefined}
-                  onClick={() => setActiveIndex(index)}
-                  className={`size-2.5 rounded-full border transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white motion-reduce:transition-none ${
-                    index === activeIndex
-                      ? "border-white bg-white"
-                      : "border-white/50 bg-transparent hover:border-white"
-                  }`}
-                />
-              ))}
-            </div>
+          <button
+            type="button"
+            aria-label="Show previous demo image"
+            onClick={showPreviousImage}
+            className="absolute left-2 top-1/2 z-10 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-sm transition-colors hover:bg-black/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-reduce:transition-none sm:left-4 sm:size-11"
+          >
+            <ArrowLeft aria-hidden="true" className="size-5" />
+          </button>
 
-            <button
-              type="button"
-              aria-label="Show next demo image"
-              onClick={showNextImage}
-              className="inline-flex size-10 shrink-0 items-center justify-center rounded-md border border-white/20 text-white transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-reduce:transition-none"
-            >
-              <ArrowRight aria-hidden="true" className="size-5" />
-            </button>
-          </footer>
+          <button
+            type="button"
+            aria-label="Show next demo image"
+            onClick={showNextImage}
+            className="absolute right-2 top-1/2 z-10 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-sm transition-colors hover:bg-black/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-reduce:transition-none sm:right-4 sm:size-11"
+          >
+            <ArrowRight aria-hidden="true" className="size-5" />
+          </button>
+
+          <div
+            role="group"
+            aria-label="Choose demo image"
+            className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center justify-center gap-2 rounded-full bg-black/60 px-3 py-2.5 backdrop-blur-sm sm:bottom-4"
+          >
+            {images.map((image, index) => (
+              <button
+                key={image.src}
+                type="button"
+                aria-label={`Show ${image.title}`}
+                aria-current={index === activeIndex ? "true" : undefined}
+                onClick={() => setActiveIndex(index)}
+                className={`size-2.5 rounded-full border transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white motion-reduce:transition-none ${
+                  index === activeIndex
+                    ? "border-white bg-white"
+                    : "border-white/55 bg-transparent hover:border-white"
+                }`}
+              />
+            ))}
+          </div>
         </div>
       </dialog>
     </>

@@ -549,7 +549,9 @@ h3 {
 }
 
 html:has(.mobile-menu-dialog[open]),
-body:has(.mobile-menu-dialog[open]) {
+body:has(.mobile-menu-dialog[open]),
+html:has(.project-demo-dialog[open]),
+body:has(.project-demo-dialog[open]) {
   overflow: hidden;
 }
 

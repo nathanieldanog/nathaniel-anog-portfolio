@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { SVGProps } from "react";
 import { Reveal } from "@/components/motion/Reveal";
+import { ProjectDemoGallery } from "@/components/projects/ProjectDemoGallery";
 import type { Project } from "@/data/projects";
 
 function GitHubIcon(props: SVGProps<SVGSVGElement>) {
@@ -85,9 +86,9 @@ export function FeaturedProjectsCarousel({
                   </dd>
                 </div>
                 <div className="flex items-start justify-between gap-6 border-t border-border py-3">
-                  <dt className="font-semibold text-foreground">Category</dt>
+                  <dt className="font-semibold text-foreground">Focus</dt>
                   <dd className="max-w-[65%] text-right font-semibold text-muted">
-                    {project.category}
+                    {project.focus}
                   </dd>
                 </div>
                 <div className="flex items-start justify-between gap-6 border-y border-border py-3">
@@ -100,13 +101,30 @@ export function FeaturedProjectsCarousel({
             </div>
 
             <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
-              <Link
-                href={`/projects#${project.slug}`}
-                className="project-action inline-flex items-center gap-2 border-b-2 border-foreground pb-1.5 text-[14px] font-bold uppercase tracking-[0.02em] text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
-              >
-                View project
-                <ArrowRight aria-hidden="true" className="project-action-arrow size-4" />
-              </Link>
+              {project.demoUrl ? (
+                <a
+                  href={project.demoUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="project-action inline-flex items-center gap-2 border-b-2 border-foreground pb-1.5 text-[14px] font-bold uppercase tracking-[0.02em] text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
+                >
+                  View project
+                  <ArrowRight aria-hidden="true" className="project-action-arrow size-4" />
+                </a>
+              ) : project.demoImages.length > 0 ? (
+                <ProjectDemoGallery
+                  images={project.demoImages}
+                  projectTitle={project.title}
+                />
+              ) : (
+                <Link
+                  href={`/projects#${project.slug}`}
+                  className="project-action inline-flex items-center gap-2 border-b-2 border-foreground pb-1.5 text-[14px] font-bold uppercase tracking-[0.02em] text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
+                >
+                  View project
+                  <ArrowRight aria-hidden="true" className="project-action-arrow size-4" />
+                </Link>
+              )}
 
               {project.githubUrl ? (
                 <a

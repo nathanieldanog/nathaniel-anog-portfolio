@@ -9,7 +9,7 @@ function ProjectImage({ project }: { project: Project }) {
   const imageExists = existsSync(join(process.cwd(), "public", relativeImagePath));
 
   return (
-    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md border border-border bg-surface-hover">
+    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-md border border-border bg-surface-hover">
       {imageExists ? (
         <Image
           src={project.image}

@@ -14,8 +14,8 @@ export function ExperienceShowcase() {
         >
           <div className="relative min-h-[340px] overflow-hidden rounded-[6px] border border-border bg-surface-hover">
             <Image
-              src="/images/experience-it-support.png"
-              alt="Computer training room with networking equipment and IT support tools"
+              src="/images/experience-it-support.jpg"
+              alt="Desktop computer and Cisco networking equipment used for IT support work"
               fill
               sizes="(min-width: 960px) 36vw, 100vw"
               className="object-cover object-center"

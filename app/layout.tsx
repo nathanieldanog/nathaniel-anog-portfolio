@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat, Nunito_Sans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { THEME_STORAGE_KEY } from "@/components/theme/theme";
 import { siteConfig } from "@/data/site";
@@ -94,6 +95,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
 
       <body>
         <ThemeProvider>{children}</ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
